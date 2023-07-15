@@ -33,6 +33,23 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# playwright
 /test-results/
 /playwright-report/
 /playwright/.cache/
+
+# Easy way to create temporary files/folders that won't accidentally be added to git
+*.local.*
+
+# Panda CSS
+ds
+
+# Seo stuff created at build time
+public/sitemap.xml
+public/sitemap-?.xml
+public/robots.txt
+
+# Generated GraphQL files
+schema.generated.graphql
+src/graphql/generated/
