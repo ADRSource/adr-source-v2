@@ -1,0 +1,3 @@
+**/*.cjs
+**/*.js
+src/graphql/generated/*

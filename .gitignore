@@ -42,9 +42,6 @@ next-env.d.ts
 # Easy way to create temporary files/folders that won't accidentally be added to git
 *.local.*
 
-# Panda CSS
-ds
-
 # Seo stuff created at build time
 public/sitemap.xml
 public/sitemap-?.xml
