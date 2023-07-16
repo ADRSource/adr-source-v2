@@ -1,4 +1,4 @@
 export const PATHS = {
-	absolute: process.env.VERCEL_URL ?? 'https://adrsource.com',
+	absolute: `https://${process.env.VERCEL_URL ?? 'adrsource.com'}`,
 	home: '/',
 } as const;
