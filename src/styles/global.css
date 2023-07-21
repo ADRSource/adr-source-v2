@@ -3,6 +3,61 @@
 @tailwind utilities;
 
 @layer base {
+	:root {
+		--colors-black: #1b1b1b;
+		--colors-gold: #d6a06f;
+		--colors-white: #ffffff;
+
+		/* Navigation */
+		--colors-nav-bg: var(--colors-black);
+		--colors-nav-content: var(--colors-white);
+		--colors-nav-link: var(--colors-white);
+		--colors-nav-link-active: var(--colors-gold);
+	}
+
+	/**
+	 * Dark mode colors (default)
+	 */
+	:root,
+	[data-color-mode='dark'] {
+		/* Text */
+		--colors-text-base: var(--colors-gold);
+
+		/* Background */
+		--colors-bg-base: var(--colors-black);
+
+		/* Buttons */
+		--colors-btn-bg: var(--colors-white);
+		--colors-btn-content: var(--colors-black);
+		--colors-btn-ring: var(--colors-gold);
+		--colors-btn-border: var(--colors-gold);
+
+		/* Borders */
+		--colors-border-base: var(--colors-gold);
+	}
+
+	/**
+	 * Light mode colors
+	 */
+	[data-color-mode='light'] {
+		--colors-accent: var(--colors-gold);
+
+		/* Text */
+		--colors-text-base: var(--colors-black);
+
+		/* Background */
+		--colors-bg-base: var(--colors-white);
+
+		/* Buttons */
+		--colors-btn-bg: var(--colors-black);
+		--colors-btn-content: var(--colors-white);
+		--colors-btn-ring: var(--colors-gold);
+		--colors-btn-border: var(--colors-gold);
+
+		/* Borders */
+		--colors-border-base: var(--colors-gold);
+	}
+
 	html {
 		text-rendering: optimizeLegibility;
 		-webkit-font-smoothing: antialiased;
