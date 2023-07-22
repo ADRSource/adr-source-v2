@@ -1,19 +1,13 @@
 export default function Home() {
 	return (
-		<main className='p-6 stack-y-10'>
-			<h1 className='text-token-base text-2xl font-bold text-blue-600'>Home</h1>
-			<div className='stack-x-5 md:stack-y-10'>
+		<main className='p-1 stack-y-10 bg-bg-base min-h-screen'>
+			<nav className='bg-nav-bg text-nav-content border-border-base border rounded-full p-5'>
 				<ul className='stack-y-3'>
-					<li>list item</li>
-					<li>list item</li>
-					<li>list item</li>
+					<li>nav item</li>
+					<li>nav item</li>
+					<li>nav item</li>
 				</ul>
-				<ul className='stack-y-[300px]'>
-					<li>list item</li>
-					<li>list item</li>
-					<li>list item</li>
-				</ul>
-			</div>
+			</nav>
 		</main>
 	);
 }
