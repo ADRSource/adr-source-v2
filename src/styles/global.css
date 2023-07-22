@@ -4,6 +4,58 @@
 
 @layer base {
 	:root {
+		/* Space */
+		--spacing-none: 0;
+		--spacing-1: 5px;
+		--spacing-2: 10px;
+		--spacing-3: 20px;
+		--spacing-4: 40px;
+		--spacing-5: 60px;
+		--spacing-6: 80px;
+		--spacing-7: 120px;
+		--spacing-8: 240px;
+
+		/* Sizes */
+		--sizes-full: 100%;
+		--sizes-prose: 65ch;
+		--sizes-desktop: 1024px;
+		--sizes-screenW: 100vw;
+		--sizes-screenH: 100vh;
+
+		/* Radii */
+		--radii-pill: 9999px;
+		--radii-circle: 50%;
+
+		/* Font Weights */
+		--fontWeights-regular: 400;
+		--fontWeights-medium: 500;
+		--fontWeights-bold: 700;
+
+		/* Font Sizes */
+		--fontSizes-small: 12px;
+		--fontSizes-base: 16px;
+		--fontSizes-1: 20px;
+		--fontSizes-2: 24px;
+		--fontSizes-3: 32px;
+		--fontSizes-4: 48px;
+		--fontSizes-5: 96px;
+		--fontSizes-6: 140px;
+
+		/* Leading */
+		--leading-0: 1;
+		--leading-1: 1.25;
+		--leading-2: 1.5;
+		--leading-3: 1.75;
+
+		/* Stacking */
+		--zIndices-init: 0;
+		--zIndices-nuclear: 9999;
+
+		/**
+		 * ~~ Colors ~~
+		 */
+
+		/* Base Colors */
 		--colors-black: #1b1b1b;
 		--colors-gold: #d6a06f;
 		--colors-white: #ffffff;
