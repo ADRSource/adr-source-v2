@@ -8,29 +8,9 @@ module.exports = withTV({
 	content: ['./src/**/*.{js,ts,jsx,tsx,mdx}'],
 
 	theme: {
-		colors: {
-			black: 'var(--colors-black)',
-			gold: 'var(--colors-gold)',
-			nav: {
-				bg: 'var(--colors-nav-bg)',
-				content: 'var(--colors-nav-content)',
-				link: 'var(--colors-nav-link)',
-				linkActive: 'var(--colors-nav-link-active)',
-			},
-			text: {
-				base: 'var(--colors-text-base)',
-			},
-			bg: {
-				base: 'var(--colors-bg-base)',
-			},
-			btn: {
-				bg: 'var(--colors-btn-bg)',
-				content: 'var(--colors-btn-content)',
-				ring: 'var(--colors-btn-ring)',
-				border: 'var(--colors-btn-border)',
-			},
-			border: {
-				base: 'var(--colors-border-base)',
+		extend: {
+			colors: {
+				gold: '#d6a06f',
 			},
 		},
 		spacing: {
