@@ -13,7 +13,7 @@ export function Navigation() {
 			<p className={text()}>This is text</p>
 			<p className={text()}>This is text</p>
 			<button
-				className='text-red-500'
+				className="text-red-500"
 				onClick={() => {
 					setToggle(!toggle);
 				}}
