@@ -1,19 +1,19 @@
-const { withTV } = require('tailwind-variants/transformer');
 const stack = require('./tailwind/plugins/stack');
 const linkbox = require('./tailwind/plugins/linkbox');
 const debug = require('./tailwind/plugins/debug');
+const inset = require('./tailwind/plugins/inset');
 
 /** @type {import('tailwindcss').Config} */
-module.exports = withTV({
-	content: ['./src/**/*.{js,ts,jsx,tsx,mdx}'],
+module.exports = {
+	content: ['./index.html', './src/**/*.{js,ts,jsx,tsx,mdx}'],
 
 	theme: {
-		fontFamily: {
-			sans: 'var(--font-sans)',
-			serif: 'var(--font-serif)',
-			primary: 'var(--font-sans)',
-		},
 		extend: {
+			fontFamily: {
+				sans: 'var(--font-sans)',
+				serif: 'var(--font-serif)',
+				primary: 'var(--font-sans)',
+			},
 			colors: {
 				brand: {
 					black: '#1B1B1B',
@@ -22,6 +22,10 @@ module.exports = withTV({
 					green: '#46A758',
 					blue: '#0090FF',
 				},
+			},
+			fontSize: {
+				'10xl': '12.5rem', // 200px
+				super: '17.5rem', // 280px
 			},
 		},
 		spacing: {
@@ -33,20 +37,8 @@ module.exports = withTV({
 			5: '80px',
 			6: '120px',
 			7: '240px',
-		},
-		fontSize: {
-			small: '12px',
-			base: '16px',
-			1: '20px',
-			2: '24px',
-			3: '32px',
-			4: '48px',
-			5: '64px',
-			6: '96px',
-			7: '128px',
-			8: '200px',
-			9: '280px',
+			'nav-height': 'var(--nav-height)',
 		},
 	},
-	plugins: [stack, linkbox, debug],
-});
+	plugins: [stack, linkbox, debug, inset],
+};

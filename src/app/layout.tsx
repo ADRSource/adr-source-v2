@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { Gloock, Inter } from 'next/font/google';
+import { Footer } from '~/components/footer';
 import { Navigation } from '~/components/navigation';
 import { PATHS } from '~/constants/paths.constants';
 import '~/styles/global.css';
@@ -14,11 +15,12 @@ const inter = Inter({
 
 const gloock = Gloock({
 	display: 'swap',
-	preload: false,
+	preload: true,
 	weight: '400',
 	subsets: ['latin'],
 	variable: '--font-serif',
 	fallback: ['serif'],
+	adjustFontFallback: false,
 });
 
 const TITLE = 'ADRsource';
@@ -45,14 +47,18 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 	return (
 		<html lang="en" className={`${inter.variable} ${gloock.variable}`}>
 			<head>
+				<meta name="theme-color" content="#1B1B1B" />
 				<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
 				<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
 				<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
 				<link rel="manifest" href="/site.webmanifest" />
 			</head>
-			<body>
+			<body className="isolate flex min-h-screen flex-col bg-brand-black text-brand-copper">
 				<Navigation />
-				{children}
+				<div className="z-10 flex-1 pt-[calc(theme(spacing.1)_+_theme(spacing.nav-height))] md:pt-[calc(theme(spacing.2)_+_theme(spacing.nav-height))]">
+					{children}
+				</div>
+				<Footer />
 			</body>
 		</html>
 	);
