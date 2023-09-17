@@ -1,3 +1,5 @@
+import { ButtonLink } from '~/components/ui/button';
+
 export default function Home() {
 	return (
 		<main className="stack-y-10 bg-bg-base min-h-screen p-1">
@@ -8,7 +10,9 @@ export default function Home() {
 					<li>nav item</li>
 				</ul>
 			</nav>
-			<p className="space-x-1">test</p>
+			<ButtonLink href="/about" size="large">
+				Schedule
+			</ButtonLink>
 		</main>
 	);
 }
