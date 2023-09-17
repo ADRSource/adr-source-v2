@@ -8,21 +8,31 @@ module.exports = withTV({
 	content: ['./src/**/*.{js,ts,jsx,tsx,mdx}'],
 
 	theme: {
+		fontFamily: {
+			sans: 'var(--font-sans)',
+			serif: 'var(--font-serif)',
+			primary: 'var(--font-sans)',
+		},
 		extend: {
 			colors: {
-				gold: '#d6a06f',
+				brand: {
+					black: '#1B1B1B',
+					copper: '#F8C596',
+					red: '#BB5C52',
+					green: '#46A758',
+					blue: '#0090FF',
+				},
 			},
 		},
 		spacing: {
 			0: '0',
-			1: '5px',
-			2: '10px',
-			3: '20px',
-			4: '40px',
-			5: '60px',
-			6: '80px',
-			7: '120px',
-			8: '240px',
+			1: '8px',
+			2: '24px',
+			3: '40px',
+			4: '56px',
+			5: '80px',
+			6: '120px',
+			7: '240px',
 		},
 		fontSize: {
 			small: '12px',
@@ -33,7 +43,9 @@ module.exports = withTV({
 			4: '48px',
 			5: '64px',
 			6: '96px',
-			7: '140px',
+			7: '128px',
+			8: '200px',
+			9: '280px',
 		},
 	},
 	plugins: [stack, linkbox, debug],

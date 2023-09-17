@@ -8,6 +8,7 @@ export default function Home() {
 					<li>nav item</li>
 				</ul>
 			</nav>
+			<p className="space-x-1">test</p>
 		</main>
 	);
 }
