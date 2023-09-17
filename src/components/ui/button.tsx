@@ -10,13 +10,14 @@ interface ButtonLinkProps
 	children?: React.ReactNode;
 }
 export const ButtonLink = React.forwardRef<HTMLAnchorElement, ButtonLinkProps>(
-	({ className, size, children, ...rest }, ref) => {
+	({ className, size, outline, children, ...rest }, ref) => {
 		return (
 			<Link
 				{...rest}
 				ref={ref}
 				className={root({
 					size,
+					outline,
 					className,
 				})}
 			>
@@ -34,15 +35,22 @@ export const ButtonLink = React.forwardRef<HTMLAnchorElement, ButtonLinkProps>(
 ButtonLink.displayName = 'ButtonLink';
 
 const root = tv({
-	base: 'font-sans stack-x-[calc(theme(spacing.1)_/_2)]/inline items-center bg-white ring-1 ring-brand-copper rounded-full uppercase font-medium text-brand-black leading-none select-none',
+	base: 'decoration-inherit font-sans stack-x-[calc(theme(spacing.1)_/_2)]/inline items-center bg-white border border-solid rounded-full uppercase font-medium leading-none select-none',
 	variants: {
 		size: {
-			medium: 'min-h-[30px] px-2 py-1 text-small',
-			large: 'min-h-[50px] px-3 py-[20px] text-1',
+			medium: 'min-h-[30px] px-2 py-1 text-xs text-brand-black',
+			large: 'min-h-[50px] px-3 py-[20px] ring-offset-3 text-xl text-brand-black',
+		},
+		outline: {
+			copper:
+				'focus-visible:ring-brand-copper border-brand-copper focus-visible:ring-offset-brand-black',
+			black:
+				'focus-visible:ring-brand-black border-brand-black focus-visible:ring-offset-brand-copper',
 		},
 	},
 	defaultVariants: {
 		size: 'medium',
+		outline: 'copper',
 	},
 });
 
@@ -53,8 +61,5 @@ const icon = tv({
 			medium: 'w-[15px] h-[15px]',
 			large: 'w-[28px] h-[28px]',
 		},
-	},
-	defaultVariants: {
-		size: 'medium',
 	},
 });

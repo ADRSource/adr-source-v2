@@ -3,10 +3,27 @@
 @tailwind utilities;
 
 @layer base {
+	:root {
+		--nav-height: 60px;
+		@media (min-width: 768px) {
+			--nav-height: 78px;
+		}
+	}
+
 	html {
 		text-rendering: optimizeLegibility;
 		-webkit-font-smoothing: antialiased;
 		font-family: var(--font-sans);
 		height: 100%;
+
+		@apply font-sans text-base text-brand-copper;
+	}
+
+	*:focus:not(:focus-visible) {
+		@apply !outline-none;
+	}
+
+	:focus-visible {
+		@apply outline-none ring-2 ring-brand-copper ring-offset-2 ring-offset-brand-black;
 	}
 }
