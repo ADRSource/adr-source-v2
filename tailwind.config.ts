@@ -1,3 +1,4 @@
+import { withTV } from 'tailwind-variants/transformer';
 import { Config } from 'tailwindcss';
 import debug from './tailwind/plugins/debug';
 import inset from './tailwind/plugins/inset';
@@ -5,7 +6,11 @@ import linkbox from './tailwind/plugins/linkbox';
 import stack from './tailwind/plugins/stack';
 
 const config: Config = {
-	content: ['./index.html', './src/**/*.{js,ts,jsx,tsx,mdx}'],
+	content: [
+		'./src/pages/**/*.{js,ts,jsx,tsx,mdx}',
+		'./src/components/**/*.{js,ts,jsx,tsx,mdx}',
+		'./src/app/**/*.{js,ts,jsx,tsx,mdx}',
+	],
 
 	theme: {
 		extend: {
@@ -43,4 +48,4 @@ const config: Config = {
 	plugins: [stack, linkbox, debug, inset],
 };
 
-export default config;
+export default withTV(config);
