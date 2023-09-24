@@ -10,8 +10,10 @@ import {
 } from 'framer-motion';
 import { mergeRefs } from 'react-merge-refs';
 import useMeasure from 'react-use-measure';
+import { useMediaQuery } from '~/hooks/use-media-query';
 
 export function Marquee({ children }: { children: React.ReactNode }) {
+	const isMobile = useMediaQuery('(max-width: 880px)');
 	const containerRef = React.useRef<HTMLDivElement>(null);
 	const [containerMeasureRef, { width: containerWidth }] = useMeasure({ debounce: 100 });
 	const [textMeasureRef, { width: textWidth }] = useMeasure({ debounce: 100 });
@@ -47,7 +49,8 @@ export function Marquee({ children }: { children: React.ReactNode }) {
 			<motion.p
 				style={
 					{
-						x: translateX,
+						x: isMobile ? translateX : '-50%',
+						left: isMobile ? '0' : '50%',
 					} as React.CSSProperties
 				}
 				className="leading-0 absolute left-0 top-0 whitespace-nowrap text-center font-serif text-[max(128px,14.5vw)] leading-[85%]"
