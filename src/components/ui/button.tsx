@@ -34,32 +34,42 @@ export const ButtonLink = React.forwardRef<HTMLAnchorElement, ButtonLinkProps>(
 );
 ButtonLink.displayName = 'ButtonLink';
 
-const root = tv({
-	base: 'decoration-inherit font-sans stack-x-[calc(theme(spacing.1)_/_2)]/inline items-center bg-white border border-solid rounded-full uppercase font-medium leading-none select-none',
-	variants: {
-		size: {
-			medium: 'min-h-[30px] px-2 py-1 text-xs text-brand-black',
-			large: 'min-h-[50px] px-3 py-[20px] ring-offset-3 text-xl text-brand-black',
+const root = tv(
+	{
+		base: 'decoration-inherit font-sans stack-x-[4px]/inline items-center bg-white border border-solid rounded-full uppercase font-medium leading-none select-none',
+		variants: {
+			size: {
+				small: 'min-h-[30px] px-2 py-1 text-xs text-brand-black',
+				large: 'min-h-[50px] px-3 py-[20px] ring-offset-3 text-xl text-brand-black',
+			},
+			outline: {
+				copper:
+					'focus-visible:ring-brand-copper border-brand-copper focus-visible:ring-offset-brand-black',
+				black:
+					'focus-visible:ring-brand-black border-brand-black focus-visible:ring-offset-brand-copper',
+			},
 		},
-		outline: {
-			copper:
-				'focus-visible:ring-brand-copper border-brand-copper focus-visible:ring-offset-brand-black',
-			black:
-				'focus-visible:ring-brand-black border-brand-black focus-visible:ring-offset-brand-copper',
+		defaultVariants: {
+			size: 'small',
+			outline: 'copper',
 		},
 	},
-	defaultVariants: {
-		size: 'medium',
-		outline: 'copper',
+	{
+		responsiveVariants: ['md'],
 	},
-});
+);
 
-const icon = tv({
-	base: 'w-[15px] h-[15px]',
-	variants: {
-		size: {
-			medium: 'w-[15px] h-[15px]',
-			large: 'w-[28px] h-[28px]',
+const icon = tv(
+	{
+		base: 'w-[15px] h-[15px]',
+		variants: {
+			size: {
+				small: 'w-[15px] h-[15px]',
+				large: 'w-[28px] h-[28px]',
+			},
 		},
 	},
-});
+	{
+		responsiveVariants: ['md'],
+	},
+);
