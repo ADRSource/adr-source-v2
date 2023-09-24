@@ -17,7 +17,7 @@ export function Marquee({ children }: { children: React.ReactNode }) {
 	const [textMeasureRef, { width: textWidth }] = useMeasure({ debounce: 100 });
 	const { scrollYProgress } = useScroll({
 		target: containerRef,
-		offset: ['75% end', '175% end'],
+		offset: ['end end', '200% end'],
 	});
 	const textWidthDelta = textWidth - containerWidth;
 
@@ -26,17 +26,17 @@ export function Marquee({ children }: { children: React.ReactNode }) {
 		damping: 30,
 		restDelta: 0.001,
 	});
-	const translateX = useMotionTemplate`calc(100% - (${textWidth}px + ${
-		textWidthDelta * springScrollYProgress.get()
+	const translateX = useMotionTemplate`calc(100% - (${
+		textWidth + textWidthDelta * springScrollYProgress.get()
 	}px))`;
 	useMotionValueEvent(springScrollYProgress, 'change', (v) => {
-		translateX.set(`calc(100% - (${textWidth}px + ${textWidthDelta * v}px))`);
+		translateX.set(`calc(100% - (${textWidth + textWidthDelta * v}px))`);
 	});
 
 	return (
 		<div
 			ref={mergeRefs([containerRef, containerMeasureRef])}
-			className="relative z-10 col-span-full row-span-full h-full w-full overflow-hidden debug"
+			className="h z-10-full relative col-span-full row-span-full w-full overflow-hidden"
 		>
 			<p
 				aria-hidden
