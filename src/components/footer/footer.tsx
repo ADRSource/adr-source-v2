@@ -1,8 +1,9 @@
 import Link from 'next/link';
+import * as React from 'react';
 import { PATHS } from '~/constants/paths.constants';
-import { IconLogo } from './icons/IconLogo';
-import { ButtonLink } from './ui/button';
-import { heading } from './ui/text';
+import { IconLogo } from '../icons/IconLogo';
+import { heading } from '../ui/text';
+import { CallToAction } from './call-to-action';
 
 export function Footer() {
 	return (
@@ -55,29 +56,6 @@ export function Footer() {
 				</div>
 			</div>
 		</footer>
-	);
-}
-
-function CallToAction() {
-	return (
-		<div className="grid grid-cols-1 grid-rows-1 place-items-center border-y border-brand-black">
-			<div className="relative z-10 col-span-full row-span-full h-full w-full overflow-hidden">
-				<p
-					aria-hidden
-					className="leading-0 invisible whitespace-nowrap text-center font-serif text-[max(128px,14.5vw)] leading-[85%]"
-				>
-					When it counts
-				</p>
-				<p className="leading-0 absolute whitespace-nowrap text-center font-serif text-[max(128px,14.5vw)] leading-[85%] inset-center">
-					When it counts
-				</p>
-			</div>
-			<div className="relative z-20 col-span-full row-span-full">
-				<ButtonLink href={PATHS.schedule} size="large" outline="black">
-					Schedule
-				</ButtonLink>
-			</div>
-		</div>
 	);
 }
 
