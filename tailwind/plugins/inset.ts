@@ -1,6 +1,6 @@
-const plugin = require('tailwindcss/plugin');
+import plugin from 'tailwindcss/plugin';
 
-module.exports = plugin(function ({ addUtilities }) {
+const inset = plugin(function ({ addUtilities }) {
 	addUtilities({
 		'.inset-center': {
 			top: '50%',
@@ -17,3 +17,5 @@ module.exports = plugin(function ({ addUtilities }) {
 		},
 	});
 });
+
+export default inset;

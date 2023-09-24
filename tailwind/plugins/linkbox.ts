@@ -1,12 +1,12 @@
-const plugin = require('tailwindcss/plugin');
+import plugin from 'tailwindcss/plugin';
 
-module.exports = plugin(function ({ addComponents }) {
+const linkBox = plugin(function ({ addComponents }) {
 	addComponents({
 		'.linkBox': {
 			position: 'relative',
 			'& :where(a, abbr)': {
 				position: 'relative',
-				zIndex: 1,
+				zIndex: '1',
 			},
 		},
 		'.linkOverlay': {
@@ -16,9 +16,11 @@ module.exports = plugin(function ({ addComponents }) {
 				display: 'block',
 				position: 'absolute',
 				cursor: 'inherit',
-				inset: 0,
-				zIndex: 0,
+				inset: '0',
+				zIndex: '0',
 			},
 		},
 	});
 });
+
+export default linkBox;

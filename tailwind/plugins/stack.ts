@@ -1,9 +1,9 @@
-const plugin = require('tailwindcss/plugin');
+import plugin from 'tailwindcss/plugin';
 
-module.exports = plugin(function ({ matchUtilities, theme }) {
+const stack = plugin(function ({ matchUtilities, theme }) {
 	matchUtilities(
 		{
-			'stack-y': (value, { modifier }) => {
+			'stack-y': (value: string, { modifier }) => {
 				const BASE_STYLE = {
 					'flex-direction': 'column',
 					gap: value,
@@ -19,7 +19,7 @@ module.exports = plugin(function ({ matchUtilities, theme }) {
 					...BASE_STYLE,
 				};
 			},
-			'stack-x': (value, { modifier }) => {
+			'stack-x': (value: string, { modifier }) => {
 				const BASE_STYLE = {
 					'flex-direction': 'row',
 					gap: value,
@@ -45,3 +45,5 @@ module.exports = plugin(function ({ matchUtilities, theme }) {
 		},
 	);
 });
+
+export default stack;

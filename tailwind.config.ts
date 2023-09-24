@@ -1,10 +1,10 @@
-const stack = require('./tailwind/plugins/stack');
-const linkbox = require('./tailwind/plugins/linkbox');
-const debug = require('./tailwind/plugins/debug');
-const inset = require('./tailwind/plugins/inset');
+import { Config } from 'tailwindcss';
+import debug from './tailwind/plugins/debug';
+import inset from './tailwind/plugins/inset';
+import linkbox from './tailwind/plugins/linkbox';
+import stack from './tailwind/plugins/stack';
 
-/** @type {import('tailwindcss').Config} */
-module.exports = {
+const config: Config = {
 	content: ['./index.html', './src/**/*.{js,ts,jsx,tsx,mdx}'],
 
 	theme: {
@@ -42,3 +42,5 @@ module.exports = {
 	},
 	plugins: [stack, linkbox, debug, inset],
 };
+
+export default config;
