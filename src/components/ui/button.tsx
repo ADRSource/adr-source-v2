@@ -61,12 +61,14 @@ const root = tv(
 
 const icon = tv(
 	{
-		base: 'w-[15px] h-[15px]',
 		variants: {
 			size: {
 				small: 'w-[15px] h-[15px]',
 				large: 'w-[28px] h-[28px]',
 			},
+		},
+		defaultVariants: {
+			size: 'small',
 		},
 	},
 	{

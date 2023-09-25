@@ -26,4 +26,8 @@
 	:focus-visible {
 		@apply outline-none ring-2 ring-brand-copper ring-offset-2 ring-offset-brand-black;
 	}
+
+	::selection {
+		@apply bg-brand-copper/40;
+	}
 }

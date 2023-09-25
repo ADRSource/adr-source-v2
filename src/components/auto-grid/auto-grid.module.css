@@ -1,0 +1,17 @@
+.root {
+	--grid-column-count: 1;
+	--grid-item-min-width: 100%;
+	--grid-layout-gap-x: 0;
+	--grid-layout-gap-y: 0;
+	--gap-count: calc(var(--grid-column-count) - 1);
+	--total-gap-width: calc(var(--gap-count) * var(--grid-layout-gap-x));
+	--grid-item-max-width: calc((100% - var(--total-gap-width)) / var(--grid-column-count));
+
+	@apply grid;
+	grid-template-columns: repeat(
+		auto-fill,
+		minmax(max(var(--grid-item-min-width), var(--grid-item-max-width)), 1fr)
+	);
+	column-gap: var(--grid-layout-gap-x);
+	row-gap: var(--grid-layout-gap-y);
+}

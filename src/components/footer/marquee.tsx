@@ -2,6 +2,7 @@
 import * as React from 'react';
 
 import {
+	MotionValue,
 	motion,
 	useMotionTemplate,
 	useMotionValueEvent,
@@ -10,10 +11,10 @@ import {
 } from 'framer-motion';
 import { mergeRefs } from 'react-merge-refs';
 import useMeasure from 'react-use-measure';
+import { useIsClient } from '~/hooks/use-is-client';
 import { useMediaQuery } from '~/hooks/use-media-query';
 
 export function Marquee({ children }: { children: React.ReactNode }) {
-	const isMobile = useMediaQuery('(max-width: 880px)');
 	const containerRef = React.useRef<HTMLDivElement>(null);
 	const [containerMeasureRef, { width: containerWidth }] = useMeasure({ debounce: 100 });
 	const [textMeasureRef, { width: textWidth }] = useMeasure({ debounce: 100 });
@@ -38,7 +39,7 @@ export function Marquee({ children }: { children: React.ReactNode }) {
 	return (
 		<div
 			ref={mergeRefs([containerRef, containerMeasureRef])}
-			className="h z-10-full relative col-span-full row-span-full w-full overflow-hidden"
+			className="relative z-10 col-span-full row-span-full h-full w-full select-none overflow-hidden"
 		>
 			<p
 				aria-hidden
@@ -46,6 +47,23 @@ export function Marquee({ children }: { children: React.ReactNode }) {
 			>
 				{children}
 			</p>
+			<MarqueeText ref={textMeasureRef} translateX={translateX}>
+				{children}
+			</MarqueeText>
+		</div>
+	);
+}
+
+interface MarqueeTextProps {
+	translateX: MotionValue<string>;
+	children: React.ReactNode;
+}
+const MarqueeText = React.forwardRef<HTMLParagraphElement, MarqueeTextProps>(
+	({ translateX, children }, ref) => {
+		const isMobile = useMediaQuery('(max-width: 880px)');
+		const isClient = useIsClient();
+
+		return isClient ? (
 			<motion.p
 				style={
 					{
@@ -54,10 +72,12 @@ export function Marquee({ children }: { children: React.ReactNode }) {
 					} as React.CSSProperties
 				}
 				className="leading-0 absolute left-0 top-0 whitespace-nowrap text-center font-serif text-[max(128px,14.5vw)] leading-[85%]"
-				ref={textMeasureRef}
+				ref={ref}
 			>
 				{children}
 			</motion.p>
-		</div>
-	);
-}
+		) : null;
+	},
+);
+
+MarqueeText.displayName = 'MarqueeText';

@@ -7,7 +7,7 @@ import { CallToAction } from './call-to-action';
 
 export function Footer() {
 	return (
-		<footer className="z-20 w-full px-1 md:p-2">
+		<footer className="z-20 w-full px-1 selection:bg-brand-black/80 selection:text-brand-copper md:p-2">
 			<div className="rounded-lg bg-brand-copper pb-4 pt-5 text-brand-black md:pt-6">
 				<CallToAction />
 				<div className="justify-between px-2 pt-5 stack-y-3 md:px-4 md:pt-6 md:stack-x-3">
