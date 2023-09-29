@@ -43,7 +43,7 @@ const config: Config = {
 			1: '8px',
 			2: createFluidValue(16, 24),
 			3: createFluidValue(24, 40),
-			4: createFluidValue(64, 48),
+			4: createFluidValue(32, 64),
 			5: createFluidValue(40, 80),
 			6: createFluidValue(64, 120),
 			7: createFluidValue(120, 240),
