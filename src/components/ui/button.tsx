@@ -1,12 +1,12 @@
-import Link from 'next/link';
+import Link, { LinkProps } from 'next/link';
 import * as React from 'react';
 import { VariantProps, tv } from 'tailwind-variants';
 import { IconArrowTopRight } from '../icons/IconArrowTopRight';
 
 interface ButtonLinkProps
 	extends VariantProps<typeof root>,
-		Omit<React.ComponentPropsWithoutRef<'a'>, 'href'> {
-	href: string;
+		Omit<React.ComponentPropsWithoutRef<'a'>, keyof LinkProps>,
+		LinkProps {
 	children?: React.ReactNode;
 }
 export const ButtonLink = React.forwardRef<HTMLAnchorElement, ButtonLinkProps>(
@@ -75,3 +75,45 @@ const icon = tv(
 		responsiveVariants: ['md'],
 	},
 );
+
+interface IconButtonLinkProps
+	extends VariantProps<typeof iconButtonRoot>,
+		Omit<React.ComponentPropsWithoutRef<'a'>, keyof LinkProps>,
+		LinkProps {
+	children?: React.ReactNode;
+}
+export const IconButtonLink = React.forwardRef<HTMLAnchorElement, IconButtonLinkProps>(
+	({ className, size, children, ...rest }, ref) => {
+		return (
+			<Link
+				{...rest}
+				ref={ref}
+				className={iconButtonRoot({
+					size,
+					className,
+				})}
+			>
+				{children}
+			</Link>
+		);
+	},
+);
+IconButtonLink.displayName = 'IconButtonLink';
+
+const iconButtonRoot = tv({
+	base: 'text-black bg-white rounded-full grid place-items-center border border-solid border-brand-copper',
+	variants: {
+		size: {
+			small: 'h-[30px] w-[30px]',
+		},
+		outline: {
+			copper:
+				'focus-visible:ring-brand-copper border-brand-copper focus-visible:ring-offset-brand-black',
+			black:
+				'focus-visible:ring-brand-black border-brand-black focus-visible:ring-offset-brand-copper',
+		},
+	},
+	defaultVariants: {
+		size: 'small',
+	},
+});

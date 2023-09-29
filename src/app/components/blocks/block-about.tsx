@@ -8,6 +8,7 @@ export function BlockAbout() {
 				<h2
 					className={heading({
 						type: '3',
+						className: 'text-center md:text-left',
 					})}
 				>
 					About
