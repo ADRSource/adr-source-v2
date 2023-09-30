@@ -33,11 +33,11 @@ export function BlockHero() {
 				</p>
 				<div
 					aria-hidden
-					className="pointer-events-none absolute bottom-0 left-0 z-10 aspect-square w-[50%] -translate-x-1/2 translate-y-[33%] bg-brand-blue opacity-30 blur-[250px]"
+					className="pointer-events-none absolute bottom-0 left-0 z-10 aspect-square w-[50%] -translate-x-1/2 translate-y-[33%] rounded-full bg-brand-blue opacity-10 blur-[70px]"
 				/>
 				<div
 					aria-hidden
-					className="pointer-events-none absolute right-0 top-0 z-10 aspect-square w-[50%] -translate-y-[33%] translate-x-1/2 bg-brand-red opacity-30 blur-[250px]"
+					className="pointer-events-none absolute right-0 top-0 z-10 aspect-square w-[50%] -translate-y-[33%] translate-x-1/2 rounded-full bg-brand-red opacity-20 blur-[70px]"
 				/>
 				<div className="absolute top-0 z-0 h-full w-full opacity-30">
 					<Image
