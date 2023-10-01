@@ -4,7 +4,7 @@ import { createFluidValue } from 'tailwind/create-fluid-value';
 export function BlockHero() {
 	return (
 		<section className="w-full">
-			<div className="relative overflow-x-clip py-6 stack-y-3">
+			<div className="relative overflow-x-clip py-6">
 				<h1 className="sr-only relative z-10">ADR Source</h1>
 				<p className="relative z-20 whitespace-nowrap px-2 stack-y-2">
 					<span className="relative w-min items-center stack-y-3">
