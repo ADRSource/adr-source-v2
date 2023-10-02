@@ -6,7 +6,7 @@ export function BlockHero() {
 		<section className="w-full">
 			<div className="relative overflow-x-clip py-6">
 				<h1 className="sr-only relative z-10">ADR Source</h1>
-				<p className="relative z-20 whitespace-nowrap px-2 stack-y-2">
+				<p className="relative z-20 mx-auto w-full max-w-[1792px] whitespace-nowrap px-2 stack-y-2">
 					<span className="relative w-min items-center stack-y-3">
 						<span
 							className="block font-sans uppercase leading-none"
@@ -14,13 +14,13 @@ export function BlockHero() {
 						>
 							Your source for a
 						</span>
-						<span className="block font-serif text-[max(72px,15.55vw)] capitalize leading-[80%]">
+						<span className="block font-serif text-[clamp(72px,15.55vw,280px)] capitalize leading-[80%]">
 							trusted
 						</span>
 					</span>
 
 					<span className="relative w-min items-center self-end stack-y-3">
-						<span className="block font-serif text-[max(72px,15.55vw)] capitalize leading-[80%]">
+						<span className="block font-serif text-[clamp(72px,15.55vw,280px)] capitalize leading-[80%]">
 							neutral
 						</span>
 						<span
