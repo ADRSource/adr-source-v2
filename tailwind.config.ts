@@ -33,6 +33,7 @@ const config: Config = {
 				'10xl': '12.5rem', // 200px
 				super: '17.5rem', // 280px
 				'heading-3': createFluidValue(48, 128),
+				'heading-5': createFluidValue(24, 48),
 			},
 			maxWidth: {
 				block: '1600px',

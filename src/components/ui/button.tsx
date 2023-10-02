@@ -21,7 +21,7 @@ export const ButtonLink = React.forwardRef<HTMLAnchorElement, ButtonLinkProps>(
 					className,
 				})}
 			>
-				<span>{children}</span>
+				<span className="flex">{children}</span>
 				<IconArrowTopRight
 					aria-hidden
 					className={icon({

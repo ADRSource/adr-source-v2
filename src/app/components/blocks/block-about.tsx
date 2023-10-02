@@ -5,7 +5,7 @@ import { heading } from '~/components/ui/text';
 export function BlockAbout() {
 	return (
 		<Container>
-			<div className="relative py-6 stack-y-3 md:py-7">
+			<div className="relative py-6 stack-y-3">
 				<h2
 					className={heading({
 						type: '3',
