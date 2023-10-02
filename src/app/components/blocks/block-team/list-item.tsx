@@ -27,7 +27,7 @@ export function ListItem({ member }: ListItemProps) {
 			ref={containerRef}
 		>
 			<p className={heading({ type: '5' })}>{member.name}</p>
-			<div className="items-center opacity-25 transition-opacity stack-x-3 group-hover:opacity-100">
+			<div className="items-center opacity-100  transition-opacity stack-x-3 group-hover:opacity-100 md:opacity-25">
 				<div className="hidden md:block">
 					<IconLink
 						className="p-1 text-xs font-medium uppercase leading-none text-white transition-colors hover:text-brand-copper"
@@ -46,7 +46,7 @@ export function ListItem({ member }: ListItemProps) {
 				</div>
 			</div>
 			<motion.div
-				className="pointer-events-none absolute inset-0 z-30 "
+				className="pointer-events-none absolute inset-0 z-30 hidden md:block "
 				animate={{
 					x: x - (left ?? 0),
 					y: y - (top ?? 0),

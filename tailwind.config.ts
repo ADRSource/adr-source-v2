@@ -52,6 +52,9 @@ const config: Config = {
 		},
 	},
 	plugins: [stack, linkbox, debug, inset],
+	future: {
+		hoverOnlyWhenSupported: true,
+	},
 };
 
 export default withTV(config);
