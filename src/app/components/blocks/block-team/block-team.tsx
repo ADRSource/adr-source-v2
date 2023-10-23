@@ -1,6 +1,6 @@
 import { Container } from '~/components/container';
 import { heading } from '~/components/ui/text';
-import { ListItem } from './list-item';
+import { MemberListItem } from '../../member-list-item';
 
 export function BlockTeam() {
 	return (
@@ -17,7 +17,7 @@ export function BlockTeam() {
 				<div>
 					<ul className="mx-auto max-w-[1058px]">
 						{TEAM_MEMBERS.map((member) => {
-							return <ListItem key={member.name} member={member} />;
+							return <MemberListItem key={member.name} member={member} />;
 						})}
 					</ul>
 				</div>

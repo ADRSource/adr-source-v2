@@ -5,7 +5,7 @@ import { ButtonLink } from './ui/button';
 
 export function Navigation() {
 	return (
-		<nav className="fixed top-1 z-30 h-nav-height w-full px-1 inset-x-center md:top-2 md:px-2">
+		<nav className="fixed top-1 z-30 h-nav-height w-full px-2 inset-x-center md:top-2 md:px-2">
 			<div className="mx-auto flex h-full w-full max-w-[922px] items-center rounded-full border border-solid border-brand-copper bg-brand-black/70 backdrop-blur-sm backdrop-saturate-150 ">
 				<ul className="relative flex w-full items-center gap-1 px-1 py-1 pl-[calc(theme(spacing.1)_*_2)] md:justify-between md:px-2 md:stack-x-2">
 					<li>
