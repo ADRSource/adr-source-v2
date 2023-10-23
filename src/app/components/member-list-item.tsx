@@ -9,14 +9,15 @@ import { ButtonLink, IconButtonLink } from '~/components/ui/button';
 import { IconLink } from '~/components/ui/link';
 import { heading } from '~/components/ui/text';
 
-interface ListItemProps {
+interface MemberListItemProps {
 	member: {
 		name: string;
 		url: string;
 		headshot: string;
 	};
+	children?: React.ReactNode;
 }
-export function ListItem({ member }: ListItemProps) {
+export function MemberListItem({ member, children }: MemberListItemProps) {
 	const containerRef = React.useRef<HTMLLIElement>(null);
 	const { x, y } = useMousePosition();
 	const { left, top } = containerRef.current?.getBoundingClientRect() ?? {};
@@ -26,7 +27,10 @@ export function ListItem({ member }: ListItemProps) {
 			className="group linkBox flex items-center justify-between border-b border-solid border-brand-copper py-2 first:border-t"
 			ref={containerRef}
 		>
-			<p className={heading({ type: '5' })}>{member.name}</p>
+			<div className="items-baseline stack-x-1">
+				<p className={heading({ type: '5' })}>{member.name}</p>
+				{children}
+			</div>
 			<div className="items-center opacity-100  transition-opacity stack-x-3 group-hover:opacity-100 md:opacity-25">
 				<div className="hidden md:block">
 					<IconLink

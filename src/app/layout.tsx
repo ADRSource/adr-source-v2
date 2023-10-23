@@ -55,6 +55,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 			</head>
 			<body className="isolate flex min-h-screen flex-col bg-brand-black text-brand-copper">
 				<Navigation />
+				{/* TODO: Hunter - reconsider this layout to account for the fact that on some cases the body content should be above the footer */}
 				<div className="z-10 flex-1 pt-[calc(theme(spacing.1)_+_theme(spacing.nav-height))] md:pt-[calc(theme(spacing.2)_+_theme(spacing.nav-height))]">
 					{children}
 				</div>
