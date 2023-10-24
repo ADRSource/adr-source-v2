@@ -30,7 +30,7 @@ export const metadata: Metadata = {
 	metadataBase: new URL(PATHS.absolute),
 	robots: 'noindex, nofollow', // TODO: change this to 'index, follow' when the site is ready
 	title: {
-		template: `%s | ${TITLE}`,
+		template: `%s - ${TITLE}`,
 		default: TITLE,
 	},
 	description: DESCRIPTION,

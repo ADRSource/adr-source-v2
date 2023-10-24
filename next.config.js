@@ -12,6 +12,11 @@ const nextConfig = {
 				destination: '/team/scott-baughan',
 				permanent: true,
 			},
+			{
+				source: '/values',
+				destination: '/about',
+				permanent: true,
+			},
 		];
 	},
 	eslint: {
