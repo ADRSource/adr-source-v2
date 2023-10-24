@@ -1,5 +1,16 @@
+import { Metadata } from 'next';
 import { ColorBlurContainer } from '~/components/color-blur-container';
 import { heading } from '~/components/ui/text';
+
+export const generateMetadata = ({ params }: { params: { member: string } }): Metadata => {
+	// TODO: Update this to pull data from the CMS
+	return {
+		title: params.member,
+		openGraph: {
+			title: params.member,
+		},
+	};
+};
 
 export default function Member() {
 	return (
