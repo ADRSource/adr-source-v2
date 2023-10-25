@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import { createFluidValue } from 'tailwind/create-fluid-value';
+import { ColorBlurContainer } from '~/components/color-blur-container';
 
 export function BlockHero() {
 	return (
@@ -31,14 +32,7 @@ export function BlockHero() {
 						</span>
 					</span>
 				</p>
-				<div
-					aria-hidden
-					className="pointer-events-none absolute bottom-0 left-0 z-10 aspect-square w-[50%] -translate-x-1/2 translate-y-[33%] rounded-full bg-brand-blue opacity-10 blur-[70px]"
-				/>
-				<div
-					aria-hidden
-					className="pointer-events-none absolute right-0 top-0 z-10 aspect-square w-[50%] -translate-y-[33%] translate-x-1/2 rounded-full bg-brand-red opacity-20 blur-[70px]"
-				/>
+				<ColorBlurContainer />
 				<div className="absolute top-0 z-0 h-full w-full opacity-30">
 					<Image
 						alt=""

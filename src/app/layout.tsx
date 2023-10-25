@@ -53,12 +53,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 				<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
 				<link rel="manifest" href="/site.webmanifest" />
 			</head>
-			<body className="isolate flex min-h-screen flex-col bg-brand-black text-brand-copper">
+			<body className="relative isolate flex min-h-screen flex-col bg-brand-black text-brand-copper">
 				<Navigation />
-				{/* TODO: Hunter - reconsider this layout to account for the fact that on some cases the body content should be above the footer */}
-				<div className="z-10 flex-1 pt-[calc(theme(spacing.1)_+_theme(spacing.nav-height))] md:pt-[calc(theme(spacing.2)_+_theme(spacing.nav-height))]">
-					{children}
-				</div>
+				{children}
 				<Footer />
 			</body>
 		</html>

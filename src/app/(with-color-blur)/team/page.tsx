@@ -1,8 +1,7 @@
 import { Metadata } from 'next';
-import { ColorBlurContainer } from '~/components/color-blur-container';
 import { heading, text } from '~/components/ui/text';
 import { PATHS } from '~/constants/paths.constants';
-import { MemberListItem } from '../../components/member-list-item';
+import { MemberListItem } from '../../../components/member-list-item';
 
 const TITLE = 'Our Team';
 const DESCRIPTION = `At ADRsource, we are proud to have a team of highly experienced and skilled mediators. You can learn more about our mediators and find the right one for your dispute by visiting our team page and clicking on the individual mediators' profiles. Don't let your dispute linger any longer, take the first step towards resolution with ADRsource.`;
@@ -21,7 +20,6 @@ export const metadata: Metadata = {
 export default function Team() {
 	return (
 		<div className="isolate">
-			<ColorBlurContainer />
 			<main className="relative z-20 min-h-screen">
 				<div className="relative overflow-x-clip px-2 pb-7 pt-6 stack-y-4">
 					<h1

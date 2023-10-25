@@ -1,5 +1,4 @@
 import { Metadata } from 'next';
-import { ColorBlurContainer } from '~/components/color-blur-container';
 import { heading, text } from '~/components/ui/text';
 import { PATHS } from '~/constants/paths.constants';
 
@@ -20,7 +19,6 @@ export const metadata: Metadata = {
 export default function About() {
 	return (
 		<div className="isolate">
-			<ColorBlurContainer />
 			<main className="relative z-20 min-h-screen">
 				<div className="relative overflow-x-clip px-2 pb-7 pt-6 stack-y-6">
 					<div className="mx-auto max-w-[1058px] border-b border-brand-copper pb-6 stack-y-6">

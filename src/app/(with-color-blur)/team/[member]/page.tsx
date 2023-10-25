@@ -1,5 +1,4 @@
 import { Metadata } from 'next';
-import { ColorBlurContainer } from '~/components/color-blur-container';
 import { heading } from '~/components/ui/text';
 
 export const generateMetadata = ({ params }: { params: { member: string } }): Metadata => {
@@ -15,7 +14,6 @@ export const generateMetadata = ({ params }: { params: { member: string } }): Me
 export default function Member() {
 	return (
 		<div className="isolate">
-			<ColorBlurContainer />
 			<main className="min-h-screen">
 				<div className="relative overflow-x-clip py-6 stack-y-4">
 					<h1
