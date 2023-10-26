@@ -38,7 +38,7 @@ export default function Team() {
 									<p
 										className={text({
 											type: 'body',
-											className: 'leading-none',
+											className: 'text-sm leading-none md:text-base',
 										})}
 									>
 										{member.role}

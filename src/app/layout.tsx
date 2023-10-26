@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { Gloock, Inter } from 'next/font/google';
 import { Footer } from '~/components/footer/footer';
-import { Navigation } from '~/components/navigation';
+import { Navigation } from '~/components/navigation/navigation';
 import { PATHS } from '~/constants/paths.constants';
 import '~/styles/global.css';
 
