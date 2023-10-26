@@ -17,6 +17,8 @@
 	},
 	"dependencies": {
 		"@radix-ui/react-visually-hidden": "^1.0.3",
+		"@react-aria/focus": "^3.14.3",
+		"@react-aria/overlays": "^3.18.1",
 		"@uidotdev/usehooks": "^2.3.1",
 		"framer-motion": "^10.16.4",
 		"graphql": "^16.8.1",

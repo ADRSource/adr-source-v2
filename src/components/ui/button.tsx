@@ -10,7 +10,7 @@ interface ButtonLinkProps
 	children?: React.ReactNode;
 }
 export const ButtonLink = React.forwardRef<HTMLAnchorElement, ButtonLinkProps>(
-	({ className, size, outline, children, ...rest }, ref) => {
+	({ className, size, stripped, outline, children, ...rest }, ref) => {
 		return (
 			<Link
 				{...rest}
@@ -19,6 +19,7 @@ export const ButtonLink = React.forwardRef<HTMLAnchorElement, ButtonLinkProps>(
 					size,
 					outline,
 					className,
+					stripped,
 				})}
 			>
 				<span className="flex">{children}</span>
@@ -47,6 +48,9 @@ const root = tv(
 					'focus-visible:ring-brand-copper border-brand-copper focus-visible:ring-offset-brand-black',
 				black:
 					'focus-visible:ring-brand-black border-brand-black focus-visible:ring-offset-brand-copper',
+			},
+			stripped: {
+				true: 'bg-transparent border-0 text-white',
 			},
 		},
 		defaultVariants: {
