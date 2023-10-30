@@ -3,7 +3,12 @@ const nextConfig = {
 	reactStrictMode: true,
 	swcMinify: true,
 	images: {
-		domains: ['media.graphassets.com'],
+		remotePatterns: [
+			{
+				hostname: 'media.graphassets.com',
+				protocol: 'https',
+			},
+		],
 	},
 	async redirects() {
 		return [
