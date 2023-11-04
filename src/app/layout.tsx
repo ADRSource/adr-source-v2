@@ -1,27 +1,9 @@
 import type { Metadata } from 'next';
-import { Gloock, Inter } from 'next/font/google';
 import { Footer } from '~/components/footer/footer';
 import { Navigation } from '~/components/navigation/navigation';
 import { PATHS } from '~/constants/paths.constants';
+import { gloock, inter } from '~/styles/fonts';
 import '~/styles/global.css';
-
-const inter = Inter({
-	display: 'swap',
-	preload: true,
-	subsets: ['latin'],
-	variable: '--font-sans',
-	fallback: ['system-ui', 'sans-serif'],
-});
-
-const gloock = Gloock({
-	display: 'swap',
-	preload: true,
-	weight: '400',
-	subsets: ['latin'],
-	variable: '--font-serif',
-	fallback: ['serif'],
-	adjustFontFallback: false,
-});
 
 const TITLE = 'ADRsource';
 const DESCRIPTION = `ADR Source is a company that provides mediation and alternative dispute resolution services. The company's team of experienced mediators has successfully handled thousands of cases across a wide range of civil litigation matters. ADR Source is dedicated to helping parties resolve their disputes in a timely and efficient manner, using the latest online mediation technologies. The company is committed to providing top-quality services and ensuring the satisfaction of its clients.`;

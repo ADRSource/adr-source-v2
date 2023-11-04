@@ -35,7 +35,7 @@ export const ButtonLink = React.forwardRef<HTMLAnchorElement, ButtonLinkProps>(
 );
 ButtonLink.displayName = 'ButtonLink';
 
-const root = tv(
+export const root = tv(
 	{
 		base: 'decoration-inherit font-sans stack-x-[4px]/inline items-center bg-white border border-solid rounded-full uppercase font-medium leading-none select-none',
 		variants: {
