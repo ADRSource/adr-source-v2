@@ -21,7 +21,7 @@ export default function Member() {
 		<div className="isolate">
 			<main className="min-h-screen">
 				<div className="mx-auto w-full max-w-[1750px] pb-7">
-					<div className="relative overflow-x-clip px-2 pt-6 stack-y-4">
+					<header className="relative overflow-x-clip px-2 pt-6 stack-y-4">
 						<h1
 							className={heading({
 								type: '3',
@@ -33,8 +33,8 @@ export default function Member() {
 						<div className="hidden md:block">
 							<CallToActionBar />
 						</div>
-					</div>
-					<div className="grid grid-cols-1 justify-items-center divide-brand-copper/40 border-b border-brand-copper/40 md:grid-cols-2 md:divide-x">
+					</header>
+					<section className="grid grid-cols-1 justify-items-center divide-brand-copper/40 border-b border-brand-copper/40 md:grid-cols-2 md:divide-x">
 						<div className="px-2 py-6 stack-y-5 md:stack-y-4">
 							<div className="relative aspect-[9/10] w-full max-w-[449px] overflow-clip rounded-lg">
 								<Image
@@ -114,7 +114,31 @@ export default function Member() {
 								</div>
 							</div>
 						</div>
-					</div>
+					</section>
+					<section className="grid grid-cols-1 divide-brand-copper/40 border-b border-solid border-brand-copper/40 md:grid-cols-2 md:divide-x">
+						<div className="w-full max-w-[449px]  justify-self-center px-2 py-6 stack-y-4">
+							<h2 className={heading({ type: '4', className: 'text-7xl' })}>Schedule</h2>
+							<p className={text({ type: 'body' })}>
+								To schedule an appointment online, click on your preferred available date. Our staff
+								will contact you once they receive your appointment request form.
+							</p>
+						</div>
+						<div className="px-2 py-6">
+							<div className="!flex-col-reverse stack-y-2">
+								<h3 className="text-center text-base uppercase">Richard&apos;s Calendar</h3>
+								<div className="mx-auto w-full max-w-[449px] self-center overflow-y-auto rounded-lg border border-solid border-brand-copper bg-white/70 p-2 backdrop-blur-sm backdrop-saturate-150">
+									<div className="mx-auto w-full rounded-lg bg-white p-1">
+										<iframe
+											width="310"
+											height="400"
+											className="mx-auto overflow-clip"
+											src="https://nadn.org/smallcalendar/335040921"
+										/>
+									</div>
+								</div>
+							</div>
+						</div>
+					</section>
 				</div>
 			</main>
 		</div>
