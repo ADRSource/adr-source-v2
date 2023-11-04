@@ -20,6 +20,8 @@
 		"@react-aria/focus": "^3.14.3",
 		"@react-aria/overlays": "^3.18.1",
 		"@uidotdev/usehooks": "^2.3.1",
+		"@zag-js/pagination": "^0.27.1",
+		"@zag-js/react": "^0.27.1",
 		"framer-motion": "^10.16.4",
 		"graphql": "^16.8.1",
 		"graphql-request": "^6.1.0",

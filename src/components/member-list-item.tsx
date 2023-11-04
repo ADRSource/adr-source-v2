@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 import Image from 'next/image';
 import * as React from 'react';
 import { IconArrowTopRight } from '~/components/icons/IconArrowTopRight';
-import { ButtonLink, IconButtonLink } from '~/components/ui/button';
+import { ButtonLink, CircleButton } from '~/components/ui/button';
 import { IconLink } from '~/components/ui/link';
 import { heading } from '~/components/ui/text';
 
@@ -44,9 +44,9 @@ export function MemberListItem({ member, children }: MemberListItemProps) {
 					<ButtonLink href={member.url}>View Bio</ButtonLink>
 				</div>
 				<div className="md:hidden">
-					<IconButtonLink className="linkOverlay" href={member.url}>
+					<CircleButton className="linkOverlay" href={member.url}>
 						<IconArrowTopRight />
-					</IconButtonLink>
+					</CircleButton>
 				</div>
 			</div>
 			<motion.div
