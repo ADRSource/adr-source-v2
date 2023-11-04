@@ -1,7 +1,8 @@
 import { AutoGrid } from '~/components/auto-grid/auto-grid';
+import { Card, CardBody, CardTag } from '~/components/card';
 import { Container } from '~/components/container';
 import { IconArrowTopRight } from '~/components/icons/IconArrowTopRight';
-import { ButtonLink, IconButtonLink } from '~/components/ui/button';
+import { ButtonLink, CircleButton } from '~/components/ui/button';
 import { heading, text } from '~/components/ui/text';
 
 export function BlockResources() {
@@ -28,9 +29,13 @@ export function BlockResources() {
 										</h3>
 										<p className={text({ type: 'body' })}>{card.description}</p>
 									</CardBody>
-									<IconButtonLink href={card.link} size="small" className="linkOverlay">
+									<CircleButton
+										href={card.link}
+										size="small"
+										className="linkOverlay opacity-25 transition-opacity group-hover:opacity-100"
+									>
 										<IconArrowTopRight />
-									</IconButtonLink>
+									</CircleButton>
 								</Card>
 							);
 						})}
@@ -45,28 +50,6 @@ export function BlockResources() {
 			</div>
 		</Container>
 	);
-}
-
-function Card({ children }: { children?: React.ReactNode }) {
-	return (
-		<div className="linkBox rounded-md border border-solid border-brand-copper bg-brand-black px-4 py-5 stack-y-3">
-			{children}
-		</div>
-	);
-}
-
-function CardTag({ children }: { children: React.ReactNode }) {
-	return (
-		<div>
-			<div className="inline-flex rounded-full border border-solid border-brand-copper bg-brand-black p-1">
-				<p className={text({ type: 'tag', className: 'leading-none' })}>{children}</p>
-			</div>
-		</div>
-	);
-}
-
-function CardBody({ children }: { children: React.ReactNode }) {
-	return <div className="stack-y-2">{children}</div>;
 }
 
 const TEST_CARD_DATA = [

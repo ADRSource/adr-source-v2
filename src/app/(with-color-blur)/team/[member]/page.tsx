@@ -2,7 +2,7 @@ import { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 import { IconArrowTopRight } from '~/components/icons/IconArrowTopRight';
-import { IconButtonLink } from '~/components/ui/button';
+import { CircleButton } from '~/components/ui/button';
 import { heading, text } from '~/components/ui/text';
 import { PATHS } from '~/constants/paths.constants';
 
@@ -90,13 +90,13 @@ export default function Member() {
 										</li>
 										<li className="linkbox relative flex justify-between rounded-lg border border-solid border-brand-copper/5 bg-brand-black p-2 text-base font-bold text-brand-copper">
 											<p>Case manager: Norma Abreu</p>
-											<IconButtonLink
+											<CircleButton
 												aria-label="Visit Norma's page"
 												className="linkOverlay"
 												href={`${PATHS.team}/norma-abreu`}
 											>
 												<IconArrowTopRight aria-hidden />
-											</IconButtonLink>
+											</CircleButton>
 										</li>
 									</ul>
 								</div>

@@ -81,19 +81,20 @@ const icon = tv(
 );
 
 interface IconButtonLinkProps
-	extends VariantProps<typeof iconButtonRoot>,
+	extends VariantProps<typeof circleButtonRoot>,
 		Omit<React.ComponentPropsWithoutRef<'a'>, keyof LinkProps>,
 		LinkProps {
 	children?: React.ReactNode;
 }
-export const IconButtonLink = React.forwardRef<HTMLAnchorElement, IconButtonLinkProps>(
-	({ className, size, children, ...rest }, ref) => {
+export const CircleButton = React.forwardRef<HTMLAnchorElement, IconButtonLinkProps>(
+	({ className, size, ghost, children, ...rest }, ref) => {
 		return (
 			<Link
 				{...rest}
 				ref={ref}
-				className={iconButtonRoot({
+				className={circleButtonRoot({
 					size,
+					ghost,
 					className,
 				})}
 			>
@@ -102,10 +103,10 @@ export const IconButtonLink = React.forwardRef<HTMLAnchorElement, IconButtonLink
 		);
 	},
 );
-IconButtonLink.displayName = 'IconButtonLink';
+CircleButton.displayName = 'IconButtonLink';
 
-const iconButtonRoot = tv({
-	base: 'text-black bg-white rounded-full grid place-items-center border border-solid border-brand-copper',
+const circleButtonRoot = tv({
+	base: 'group text-black bg-white rounded-full grid place-items-center border border-solid border-brand-copper',
 	variants: {
 		size: {
 			small: 'h-[30px] w-[30px]',
@@ -115,6 +116,9 @@ const iconButtonRoot = tv({
 				'focus-visible:ring-brand-copper border-brand-copper focus-visible:ring-offset-brand-black',
 			black:
 				'focus-visible:ring-brand-black border-brand-black focus-visible:ring-offset-brand-copper',
+		},
+		ghost: {
+			true: 'bg-brand-black text-brand-copper border-brand-copper/25 hover:border-brand-copper transition-colors',
 		},
 	},
 	defaultVariants: {

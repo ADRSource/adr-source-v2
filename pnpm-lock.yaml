@@ -17,6 +17,12 @@ dependencies:
   '@uidotdev/usehooks':
     specifier: ^2.3.1
     version: 2.3.1(react-dom@18.2.0)(react@18.2.0)
+  '@zag-js/pagination':
+    specifier: ^0.27.1
+    version: 0.27.1
+  '@zag-js/react':
+    specifier: ^0.27.1
+    version: 0.27.1(react-dom@18.2.0)(react@18.2.0)
   framer-motion:
     specifier: ^10.16.4
     version: 10.16.4(react-dom@18.2.0)(react@18.2.0)
@@ -1198,6 +1204,61 @@ packages:
     dependencies:
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
+    dev: false
+
+  /@zag-js/anatomy@0.27.1:
+    resolution: {integrity: sha512-zwcHQzXMOONC5en3Wy9X+fI++6NDBAl77GjorLNlKUMmhZP/anLG1Ff7Nme/Y7oMiXLDyYUkzq2jsSyb9gMI2g==}
+    dev: false
+
+  /@zag-js/core@0.27.1:
+    resolution: {integrity: sha512-UTOVOAyCO+Z5q6KTCSfskRs6+MKbPuRrxemqjXbCd/GCQwloxMn5+bKLWvBDlwZVwEo7jh6iTVG1S/Ooa5m2DA==}
+    dependencies:
+      '@zag-js/store': 0.27.1
+      klona: 2.0.6
+    dev: false
+
+  /@zag-js/dom-query@0.27.1:
+    resolution: {integrity: sha512-2qpQsJVn6K3VaYZTRthgrGMIGKfvQzw71kRlRUaUvLMz3cg/uHMM62qiK6h7hWHwVzNOcSdCKCxYlKjyBYHnZA==}
+    dev: false
+
+  /@zag-js/pagination@0.27.1:
+    resolution: {integrity: sha512-3UtIhsV194reBt1NNMfq/12kE6UwrOTLaWfHgg2fSSWhuRHSI0Le/gH0s2OPHuJFkV85YeFXh29byBbnNu2KhQ==}
+    dependencies:
+      '@zag-js/anatomy': 0.27.1
+      '@zag-js/core': 0.27.1
+      '@zag-js/dom-query': 0.27.1
+      '@zag-js/types': 0.27.1
+      '@zag-js/utils': 0.27.1
+    dev: false
+
+  /@zag-js/react@0.27.1(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-msZSTwd6JzVQbQcl5vlp6iplocoxF4ck9xgVocMCVRQA6dOR5GEi9nWIPrvbPIoCeYHWOQNeu6amGTnHkA/Npw==}
+    peerDependencies:
+      react: '>=18.0.0'
+      react-dom: '>=18.0.0'
+    dependencies:
+      '@zag-js/core': 0.27.1
+      '@zag-js/store': 0.27.1
+      '@zag-js/types': 0.27.1
+      proxy-compare: 2.5.1
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+    dev: false
+
+  /@zag-js/store@0.27.1:
+    resolution: {integrity: sha512-tue+W6Qtenz57/v6hOb7xv2sNz9jYVgOt3jQ+q8DNRs2U/JdIEpDpIavjO3D8nBt4W4Apy0EbB1VpdapyKu4Lw==}
+    dependencies:
+      proxy-compare: 2.5.1
+    dev: false
+
+  /@zag-js/types@0.27.1:
+    resolution: {integrity: sha512-OKd5LmZL7tvMxtAXC/RAAZce9J6zt3UramD60GWZC17vXEeE1iOhIjUU63zhjQPiDH5McmTO9YGuHDs+qhy5fQ==}
+    dependencies:
+      csstype: 3.1.2
+    dev: false
+
+  /@zag-js/utils@0.27.1:
+    resolution: {integrity: sha512-KNnqN9eqN7mMxvdGMF8bOfc6o9CflNEeo97LKlBZIdIiMoPnLXaYHhk7fM7rL2GhTxIVqtXTrn0xnnlXAuOXMg==}
     dev: false
 
   /acorn-jsx@5.3.2(acorn@8.10.0):
@@ -2730,6 +2791,11 @@ packages:
       json-buffer: 3.0.1
     dev: true
 
+  /klona@2.0.6:
+    resolution: {integrity: sha512-dhG34DXATL5hSxJbIexCft8FChFXtmskoZYnoPWjXQuebWYCNkVeV3KkGegCK9CP1oswI/vQibS2GY7Em/sJJA==}
+    engines: {node: '>= 8'}
+    dev: false
+
   /language-subtag-registry@0.3.22:
     resolution: {integrity: sha512-tN0MCzyWnoz/4nHS6uxdlFWoUZT7ABptwKPQ52Ea7URk6vll88bWBVhodtnlfEuCcKWNGoc+uGbw1cwa9IKh/w==}
     dev: true
@@ -3676,6 +3742,10 @@ packages:
       object-assign: 4.1.1
       react-is: 16.13.1
     dev: true
+
+  /proxy-compare@2.5.1:
+    resolution: {integrity: sha512-oyfc0Tx87Cpwva5ZXezSp5V9vht1c7dZBhvuV/y3ctkgMVUmiAGDVeeB0dKhGSyT0v1ZTEQYpe/RXlBVBNuCLA==}
+    dev: false
 
   /punycode@2.3.0:
     resolution: {integrity: sha512-rRV+zQD8tVFys26lAGR9WUuS4iUAngJScM+ZRSKtvl5tKeZ2t5bvdNFdNHBW9FWR4guGHlgmsZ1G7BSm2wTbuA==}
