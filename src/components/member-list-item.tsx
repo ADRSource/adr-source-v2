@@ -35,7 +35,10 @@ export function MemberListItem({ member, children }: MemberListItemProps) {
 				<div className="hidden md:block">
 					<IconLink
 						className="p-1 text-xs font-medium uppercase leading-none text-white transition-colors hover:text-brand-copper"
-						href="/schedule"
+						href={{
+							pathname: member.url,
+							hash: 'schedule',
+						}}
 					>
 						Calendar <span className="sr-only">for {member.name}</span>
 					</IconLink>
