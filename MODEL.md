@@ -6,64 +6,74 @@
 - `case-managers` can manage many `neutrals`.
 - `neutrals` can only be managed by one `case-manager`.
 
-## Page - Home
+## HomePage
 
 - [seo](#component---seo)
 
-## Page - Resources
+## ResourcesPage
 
 - [seo](#component---seo)
 
-## Page - Resource
+## ResourcePage
 
-- [seo](#component---seo)
-- title - string
-- slug - string
-- author - TeamMember
-- publishedAt - date
-- type - enum (article, news, webinar)
-- content - rich text
+- [seo](#component---seo) (required)
+- title - string (required)
+- publishDate - date
+- slug - string (required) (unique)
+- author - [Neutral](#neutral) | [CaseManager](#casemanager)
+- [ResourceType](#resourcetype) (required)
+- resourceContent - rich text
 
-## Page - About
+## ResourceType
 
-- [seo](#component---seo)
+- [ResourcePages](#resourcepage)[]
 
-## Page - Schedule
-
-- [seo](#component---seo)
-
-## Page - Team
+## AboutPage
 
 - [seo](#component---seo)
 
-## Page - Member
+## SchedulePage
 
 - [seo](#component---seo)
-- slug - string
-- role - enum (neutral, case-manager)
+
+## TeamPage
+
+- [seo](#component---seo)
+
+## MemberPage
+
+- internalName - string (required)
+- [seo](#component---seo) (required)
+- slug - string (required) (unique)
 - member - [Neutral](#neutral) | [CaseManager](#casemanager)
 
 ## Neutral
 
-- [baseMemberInfo](#basememberinfo)
-- [caseManager](#casemanager)
+- internalName - string (required)
+- [info](#basememberinfo) (required)
+- [MemberPage](#memberpage)
 - focusAreas - string[]
-- nadnId - string
+- nadnId - string (required) (unique)
+- [ResourcePages](#resourcepage)[]
 - experienceStartDate - date <!-- use to calc YOE -->
+- [CaseManager](#casemanager)
 
 ## CaseManager
 
-- [baseMemberInfo](#basememberinfo)
-- [neutrals](#neutral)[]
+- internalName - string (required)
+- [info](#component---basememberinfo)
+- [Neutrals](#neutral)[]
+- [MemberPage](#memberpage)[]
+- [ResourcePages](#resourcepage)[]
 
-## BaseMemberInfo
+## Component - BaseMemberInfo
 
+- headshot - Asset
 - name - string
 - email - string
 - phone - string
 - linkedIn - string
 - bio - rich text
-- photo - Asset
 
 ## Component - Seo
 
