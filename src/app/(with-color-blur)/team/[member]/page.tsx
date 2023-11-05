@@ -117,7 +117,10 @@ export default function Member() {
 					</section>
 
 					{/* SCHEDULE SECTION */}
-					<section className="border-b border-solid border-brand-copper/40 py-6 ">
+					<section
+						id="schedule"
+						className="scroll-mt-nav-height border-b border-solid border-brand-copper/40 py-6 "
+					>
 						<div className="mx-auto grid w-full max-w-7xl grid-cols-1 gap-y-5 rounded-lg bg-brand-black/70 md:grid-cols-2">
 							<div className="w-full max-w-[449px]  justify-self-center px-2 stack-y-4 md:py-6">
 								<h2
