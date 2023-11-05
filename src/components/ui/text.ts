@@ -7,7 +7,7 @@ export const heading = tv({
 			'1': 'text-super font-serif',
 			'2': 'text-10xl font-serif',
 			'3': 'text-heading-3 font-serif',
-			'4': 'text-8xl font-serif',
+			'4': 'text-heading-4 font-serif',
 			'5': 'text-heading-5 font-sans uppercase tracking-tighter',
 			'6': 'text-xl font-medium md:font-normal md:text-2xl font-sans',
 		},

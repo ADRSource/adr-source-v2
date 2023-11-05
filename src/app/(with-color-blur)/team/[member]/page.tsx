@@ -115,25 +115,36 @@ export default function Member() {
 							</div>
 						</div>
 					</section>
-					<section className="grid grid-cols-1 divide-brand-copper/40 border-b border-solid border-brand-copper/40 md:grid-cols-2 md:divide-x">
-						<div className="w-full max-w-[449px]  justify-self-center px-2 py-6 stack-y-4">
-							<h2 className={heading({ type: '4', className: 'text-7xl' })}>Schedule</h2>
-							<p className={text({ type: 'body' })}>
-								To schedule an appointment online, click on your preferred available date. Our staff
-								will contact you once they receive your appointment request form.
-							</p>
-						</div>
-						<div className="px-2 py-6">
-							<div className="!flex-col-reverse stack-y-2">
-								<h3 className="text-center text-base uppercase">Richard&apos;s Calendar</h3>
-								<div className="mx-auto w-full max-w-[449px] self-center overflow-y-auto rounded-lg border border-solid border-brand-copper bg-white/70 p-2 backdrop-blur-sm backdrop-saturate-150">
-									<div className="mx-auto w-full rounded-lg bg-white p-1">
-										<iframe
-											width="310"
-											height="400"
-											className="mx-auto overflow-clip"
-											src="https://nadn.org/smallcalendar/335040921"
-										/>
+
+					{/* SCHEDULE SECTION */}
+					<section className="border-b border-solid border-brand-copper/40 py-6 ">
+						<div className="mx-auto grid w-full max-w-7xl grid-cols-1 gap-y-5 rounded-lg bg-brand-black/70 md:grid-cols-2">
+							<div className="w-full max-w-[449px]  justify-self-center px-2 stack-y-4 md:py-6">
+								<h2
+									className={heading({
+										type: '4',
+										className: 'text-center text-7xl md:text-left',
+									})}
+								>
+									Schedule
+								</h2>
+								<p className={text({ type: 'body', className: 'text-center md:text-left' })}>
+									To schedule an appointment online, click on your preferred available date. Our
+									staff will contact you once they receive your appointment request form.
+								</p>
+							</div>
+							<div className="px-2 md:py-6">
+								<div>
+									<h3 className="sr-only">Richard&apos;s Calendar</h3>
+									<div className="mx-auto w-full max-w-[449px] self-center overflow-y-auto rounded-lg border border-solid border-brand-copper bg-white/70 p-2 backdrop-blur-sm backdrop-saturate-150">
+										<div className="mx-auto w-full rounded-lg bg-white p-1">
+											<iframe
+												width="310"
+												height="400"
+												className="mx-auto overflow-clip"
+												src="https://nadn.org/smallcalendar/335040921"
+											/>
+										</div>
 									</div>
 								</div>
 							</div>
