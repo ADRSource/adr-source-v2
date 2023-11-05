@@ -1,20 +1,35 @@
 import { Metadata } from 'next';
+import { getAboutPage } from '~/api/about';
 import { heading, text } from '~/components/ui/text';
 import { PATHS } from '~/constants/paths.constants';
 
-const TITLE = 'About';
-const DESCRIPTION = `Mediation is a powerful tool for resolving disputes, and finding the right mediator is crucial to the success of the process. These are our values.`;
-export const metadata: Metadata = {
-	title: TITLE,
-	description: DESCRIPTION,
-	openGraph: {
-		title: TITLE,
-		description: DESCRIPTION,
-		url: `${PATHS.absolute}${PATHS.about}`,
-		type: 'website',
-		locale: 'en_US',
-	},
-};
+export async function generateMetadata(): Promise<Metadata> {
+	try {
+		const data = await getAboutPage();
+		const { seo } = data.aboutPage ?? {};
+
+		const title = seo?.title ?? '';
+		const description = seo?.description ?? '';
+		const index = Boolean(seo?.index);
+
+		return {
+			title,
+			description,
+			robots: index ? 'index, follow' : 'noindex, nofollow',
+			openGraph: {
+				title,
+				description,
+				type: 'website',
+				locale: 'en_US',
+				url: `${PATHS.absolute}${PATHS.about}`,
+			},
+		};
+	} catch (_error) {
+		console.error('Error generating metadata for about page');
+
+		return {};
+	}
+}
 
 export default function About() {
 	return (
