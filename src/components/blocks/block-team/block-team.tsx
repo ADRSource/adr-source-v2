@@ -1,8 +1,12 @@
+import { getNeutralsList } from '~/api/team';
 import { Container } from '~/components/container';
 import { heading } from '~/components/ui/text';
 import { MemberListItem } from '../../member-list-item';
 
-export function BlockTeam() {
+export async function BlockTeam() {
+	const result = await getNeutralsList();
+	const { neutrals } = result;
+
 	return (
 		<Container>
 			<div className="relative overflow-x-clip py-6 stack-y-4">
@@ -16,8 +20,18 @@ export function BlockTeam() {
 				</h2>
 				<div>
 					<ul className="mx-auto max-w-[1058px]">
-						{TEAM_MEMBERS.map((member) => {
-							return <MemberListItem key={member.name} member={member} />;
+						{neutrals.map(({ memberPage }) => {
+							const { member, slug } = memberPage ?? {};
+
+							if (!member || member.__typename !== 'Neutral') return null;
+
+							const m = {
+								url: slug ?? '',
+								name: member.info.name,
+								headshot: member.info.headshot.url,
+							};
+
+							return <MemberListItem key={member.id} member={m} />;
 						})}
 					</ul>
 				</div>
@@ -25,26 +39,3 @@ export function BlockTeam() {
 		</Container>
 	);
 }
-
-const TEAM_MEMBERS = [
-	{
-		name: 'Scott Baughan',
-		url: '/team/scott-baughan',
-		headshot: '/images/team/scott-headshot.jpg',
-	},
-	{
-		name: 'Richard Lord',
-		url: '/team/richard-lord',
-		headshot: '/images/team/richard-headshot.jpg',
-	},
-	{
-		name: 'Bob Henry',
-		url: '/team/bob-henry',
-		headshot: '/images/team/bob-henry-headshot.jpeg',
-	},
-	{
-		name: 'Andy Hament',
-		url: '/team/andy-hament',
-		headshot: '/images/team/andy-hament-headshot.jpg',
-	},
-];

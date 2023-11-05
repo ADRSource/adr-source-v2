@@ -1,23 +1,45 @@
 import { Metadata } from 'next';
-import { heading, text } from '~/components/ui/text';
+import { getCaseManagersList, getNeutralsList, getTeamPage } from '~/api/team';
+import { MemberListItem } from '~/components/member-list-item';
+import { heading } from '~/components/ui/text';
 import { PATHS } from '~/constants/paths.constants';
-import { MemberListItem } from '../../../components/member-list-item';
 
-const TITLE = 'Our Team';
-const DESCRIPTION = `At ADRsource, we are proud to have a team of highly experienced and skilled mediators. You can learn more about our mediators and find the right one for your dispute by visiting our team page and clicking on the individual mediators' profiles. Don't let your dispute linger any longer, take the first step towards resolution with ADRsource.`;
-export const metadata: Metadata = {
-	title: TITLE,
-	description: DESCRIPTION,
-	openGraph: {
-		title: TITLE,
-		description: DESCRIPTION,
-		url: `${PATHS.absolute}${PATHS.team}`,
-		type: 'website',
-		locale: 'en_US',
-	},
-};
+export async function generateMetadata(): Promise<Metadata> {
+	try {
+		const data = await getTeamPage();
+		const { seo } = data.teamPage ?? {};
 
-export default function Team() {
+		const title = seo?.title ?? '';
+		const description = seo?.description ?? '';
+		const index = Boolean(seo?.index);
+
+		return {
+			title,
+			description,
+			robots: index ? 'index, follow' : 'noindex, nofollow',
+			openGraph: {
+				title,
+				description,
+				type: 'website',
+				locale: 'en_US',
+				url: `${PATHS.absolute}${PATHS.team}`,
+			},
+		};
+	} catch (_error) {
+		console.error('Error generating metadata for about page');
+
+		return {};
+	}
+}
+
+export default async function Team() {
+	const [neutralsResult, caseManagersResult] = await Promise.all([
+		getNeutralsList(),
+		getCaseManagersList(),
+	]);
+	const { neutrals } = neutralsResult;
+	const { caseManagers } = caseManagersResult;
+
 	return (
 		<div className="isolate">
 			<main className="relative z-20 min-h-screen">
@@ -31,63 +53,46 @@ export default function Team() {
 						Team
 					</h1>
 
-					<ul className="mx-auto max-w-[1058px]">
-						{TEAM_MEMBERS.map((member) => {
-							return (
-								<MemberListItem key={member.name} member={member}>
-									<p
-										className={text({
-											type: 'body',
-											className: 'text-sm leading-none md:text-base',
-										})}
-									>
-										{member.role}
-									</p>
-								</MemberListItem>
-							);
-						})}
-					</ul>
+					<div className="mx-auto w-full max-w-[1058px] stack-y-6">
+						<div className="stack-y-3">
+							<h2 className={heading({ type: '6' })}>Neutrals</h2>
+							<ul>
+								{neutrals.map(({ memberPage }) => {
+									const { member, slug } = memberPage ?? {};
+
+									if (!member || member.__typename !== 'Neutral') return null;
+
+									const m = {
+										url: slug ?? '',
+										name: member.info.name,
+										headshot: member.info.headshot.url,
+									};
+
+									return <MemberListItem key={member.id} member={m} />;
+								})}
+							</ul>
+						</div>
+						<div className="stack-y-3">
+							<h2 className={heading({ type: '6' })}>Case Managers</h2>
+							<ul>
+								{caseManagers.map(({ memberPage }) => {
+									const { member, slug } = memberPage ?? {};
+
+									if (!member || member.__typename !== 'CaseManager') return null;
+
+									const m = {
+										url: slug ?? '',
+										name: member.info.name,
+										headshot: member.info.headshot.url,
+									};
+
+									return <MemberListItem hasSchedule={false} key={member.id} member={m} />;
+								})}
+							</ul>
+						</div>
+					</div>
 				</div>
 			</main>
 		</div>
 	);
 }
-
-const TEAM_MEMBERS = [
-	{
-		name: 'Scott Baughan',
-		url: '/team/scott-baughan',
-		headshot: '/images/team/scott-headshot.jpg',
-		role: 'Neutral',
-	},
-	{
-		name: 'Richard Lord',
-		url: '/team/richard-lord',
-		headshot: '/images/team/richard-headshot.jpg',
-		role: 'Neutral',
-	},
-	{
-		name: 'Bob Henry',
-		url: '/team/bob-henry',
-		headshot: '/images/team/bob-henry-headshot.jpeg',
-		role: 'Neutral',
-	},
-	{
-		name: 'Andy Hament',
-		url: '/team/andy-hament',
-		headshot: '/images/team/andy-hament-headshot.jpg',
-		role: 'Neutral',
-	},
-	{
-		name: 'Norma Abreu',
-		url: '/team/norma-abreu',
-		headshot: '/images/team/andy-hament-headshot.jpg',
-		role: 'Case Manager',
-	},
-	{
-		name: 'Paulina Carrasco',
-		url: '/team/paulina-carrasco',
-		headshot: '/images/team/andy-hament-headshot.jpg',
-		role: 'Case Manager',
-	},
-];

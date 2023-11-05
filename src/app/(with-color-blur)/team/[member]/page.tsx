@@ -215,7 +215,9 @@ function CallToActionBar() {
 			</Link>
 			<Link
 				className="block py-2 text-xs font-medium uppercase leading-none md:py-0 md:text-center"
-				href={PATHS.schedule}
+				href={{
+					hash: '#schedule',
+				}}
 			>
 				Calendar
 			</Link>

@@ -8,6 +8,7 @@ import { IconArrowTopRight } from '~/components/icons/IconArrowTopRight';
 import { ButtonLink, CircleButton } from '~/components/ui/button';
 import { IconLink } from '~/components/ui/link';
 import { heading } from '~/components/ui/text';
+import { PATHS } from '~/constants/paths.constants';
 
 interface MemberListItemProps {
 	member: {
@@ -15,39 +16,43 @@ interface MemberListItemProps {
 		url: string;
 		headshot: string;
 	};
+	hasSchedule?: boolean;
 	children?: React.ReactNode;
 }
-export function MemberListItem({ member, children }: MemberListItemProps) {
+export function MemberListItem({ member, hasSchedule = true, children }: MemberListItemProps) {
 	const containerRef = React.useRef<HTMLLIElement>(null);
 	const { x, y } = useMousePosition();
 	const { left, top } = containerRef.current?.getBoundingClientRect() ?? {};
+	const url = `${PATHS.team}/${member.url}`;
 
 	return (
 		<li
-			className="group linkBox flex items-center justify-between border-b border-solid border-brand-copper py-2 first:border-t"
+			className="group linkBox flex items-center justify-between border-b border-solid border-brand-copper/40 py-2 transition-colors first:border-t hover:border-brand-copper"
 			ref={containerRef}
 		>
 			<div className="items-baseline stack-x-1">
 				<p className={heading({ type: '5' })}>{member.name}</p>
 				{children}
 			</div>
-			<div className="items-center opacity-100  transition-opacity stack-x-3 group-hover:opacity-100 md:opacity-25">
+			<div className="items-center opacity-100 transition-opacity stack-x-3 group-hover:opacity-100 md:opacity-25">
+				{Boolean(hasSchedule) && (
+					<div className="hidden md:block">
+						<IconLink
+							className="p-1 text-xs font-medium uppercase leading-none text-white transition-colors hover:text-brand-copper"
+							href={{
+								pathname: url,
+								hash: 'schedule',
+							}}
+						>
+							Calendar <span className="sr-only">for {member.name}</span>
+						</IconLink>
+					</div>
+				)}
 				<div className="hidden md:block">
-					<IconLink
-						className="p-1 text-xs font-medium uppercase leading-none text-white transition-colors hover:text-brand-copper"
-						href={{
-							pathname: member.url,
-							hash: 'schedule',
-						}}
-					>
-						Calendar <span className="sr-only">for {member.name}</span>
-					</IconLink>
-				</div>
-				<div className="hidden md:block">
-					<ButtonLink href={member.url}>View Bio</ButtonLink>
+					<ButtonLink href={url}>View Bio</ButtonLink>
 				</div>
 				<div className="md:hidden">
-					<CircleButton className="linkOverlay" href={member.url}>
+					<CircleButton className="linkOverlay" href={url}>
 						<IconArrowTopRight />
 					</CircleButton>
 				</div>
