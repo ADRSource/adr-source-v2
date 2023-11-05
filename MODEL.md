@@ -8,21 +8,21 @@
 
 ## HomePage
 
-- [seo](#component---seo)
+- [seo](#component---seo) (required)
 
 ## ResourcesPage
 
-- [seo](#component---seo)
+- [seo](#component---seo) (required)
 
 ## ResourcePage
 
 - [seo](#component---seo) (required)
 - title - string (required)
-- publishDate - date
+- publishDate - date (required)
 - slug - string (required) (unique)
 - author - [Neutral](#neutral) | [CaseManager](#casemanager)
-- [ResourceType](#resourcetype) (required)
-- resourceContent - rich text
+- [ResourceType](#resourcetype)
+- resourceContent - rich text (required)
 
 ## ResourceType
 
@@ -30,15 +30,15 @@
 
 ## AboutPage
 
-- [seo](#component---seo)
+- [seo](#component---seo) (required)
 
 ## SchedulePage
 
-- [seo](#component---seo)
+- [seo](#component---seo) (required)
 
 ## TeamPage
 
-- [seo](#component---seo)
+- [seo](#component---seo) (required)
 
 ## MemberPage
 
@@ -61,28 +61,28 @@
 ## CaseManager
 
 - internalName - string (required)
-- [info](#component---basememberinfo)
+- [info](#component---basememberinfo) (required)
 - [Neutrals](#neutral)[]
 - [MemberPage](#memberpage)[]
 - [ResourcePages](#resourcepage)[]
 
 ## Component - BaseMemberInfo
 
-- headshot - Asset
-- name - string
-- email - string
-- phone - string
-- linkedIn - string
-- bio - rich text
+- headshot - Asset (required)
+- name - string (required)
+- email - string (required)
+- phone - string (required)
+- linkedIn - string (required)
+- bio - rich text (required)
 
 ## Component - Seo
 
-- title - string
-- description - string
+- title - string (required)
+- description - string (required)
 - index - boolean
 
 ## Component - Link
 
-- internalName - string
-- url - string
-- text - string?
+- internalName - string (required)
+- url - string (required)
+- text - string (required)
