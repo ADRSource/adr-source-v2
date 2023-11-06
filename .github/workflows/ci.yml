@@ -1,4 +1,9 @@
 name: CI
+env:
+  CMS_ENV: ${{ secrets.CMS_ENV }}
+  CMS_PREVIEW_TOKEN: ${{ secrets.CMS_PREVIEW_TOKEN }}
+  CMS_PROD_TOKEN: ${{ secrets.CMS_PROD_TOKEN }}
+  CMS_SPACE: ${{ secrets.CMS_SPACE }}
 on:
   push:
     branches: [main, master]
