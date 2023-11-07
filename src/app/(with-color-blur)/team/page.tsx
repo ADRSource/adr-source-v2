@@ -37,8 +37,8 @@ export default async function Team() {
 		getNeutralsList(),
 		getCaseManagersList(),
 	]);
-	const { neutrals } = neutralsResult;
-	const { caseManagers } = caseManagersResult;
+	const { neutralList } = neutralsResult;
+	const { caseManagerList } = caseManagersResult;
 
 	return (
 		<div className="isolate">
@@ -57,36 +57,38 @@ export default async function Team() {
 						<div className="stack-y-3">
 							<h2 className={heading({ type: '6' })}>Neutrals</h2>
 							<ul>
-								{neutrals.map(({ memberPage }) => {
-									const { member, slug } = memberPage ?? {};
+								{neutralList?.neutrals.map((neutral) => {
+									const { memberPage } = neutral;
+									const { slug } = memberPage ?? {};
 
-									if (!member || member.__typename !== 'Neutral') return null;
+									if (!memberPage) return null;
 
 									const m = {
 										url: slug ?? '',
-										name: member.info.name,
-										headshot: member.info.headshot.url,
+										name: neutral.info.name,
+										headshot: neutral.info.headshot.url,
 									};
 
-									return <MemberListItem key={member.id} member={m} />;
+									return <MemberListItem key={neutral.id} member={m} />;
 								})}
 							</ul>
 						</div>
 						<div className="stack-y-3">
 							<h2 className={heading({ type: '6' })}>Case Managers</h2>
 							<ul>
-								{caseManagers.map(({ memberPage }) => {
-									const { member, slug } = memberPage ?? {};
+								{caseManagerList?.caseManagers.map((caseManager) => {
+									const { memberPage } = caseManager;
+									const { slug } = memberPage ?? {};
 
-									if (!member || member.__typename !== 'CaseManager') return null;
+									if (!memberPage) return null;
 
 									const m = {
 										url: slug ?? '',
-										name: member.info.name,
-										headshot: member.info.headshot.url,
+										name: caseManager.info.name,
+										headshot: caseManager.info.headshot.url,
 									};
 
-									return <MemberListItem hasSchedule={false} key={member.id} member={m} />;
+									return <MemberListItem hasSchedule={false} key={caseManager.id} member={m} />;
 								})}
 							</ul>
 						</div>
