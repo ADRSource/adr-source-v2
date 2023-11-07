@@ -1,9 +1,9 @@
+import { unstable_cache as cache } from 'next/cache';
 import { cmsRequest } from '~/graphql/cms';
 
-export function getAboutPage() {
-	return cmsRequest({
-		next: {
-			tags: ['about'],
-		},
-	}).GetAboutPage();
-}
+const ABOUT_TAGS = {
+	all: ['about'],
+};
+export const getAboutPage = cache(async () => {
+	return cmsRequest().GetAboutPage();
+}, ABOUT_TAGS.all);

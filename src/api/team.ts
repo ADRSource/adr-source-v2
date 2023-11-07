@@ -1,13 +1,8 @@
+import { unstable_cache as cache } from 'next/cache';
 import { cmsRequest } from '~/graphql/cms';
 
-export const TEAM_TAGS = {
+const TEAM_TAGS = {
 	all: ['team'],
 };
 
-export function getTeamPage() {
-	return cmsRequest({
-		next: {
-			tags: TEAM_TAGS.all,
-		},
-	}).GetTeamPage();
-}
+export const getTeamPage = cache(async () => cmsRequest().GetTeamPage(), TEAM_TAGS.all);
