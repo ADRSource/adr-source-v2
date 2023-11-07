@@ -1,6 +1,6 @@
 import { Metadata } from 'next';
 import { getHomePage } from '~/api/home';
-import { prefetchNeutralsList } from '~/api/team';
+import { prefetchNeutralsList } from '~/api/member';
 import { BlockAbout } from '~/components/blocks/block-about';
 import { BlockHero } from '~/components/blocks/block-hero';
 import { BlockResources } from '~/components/blocks/block-resources';

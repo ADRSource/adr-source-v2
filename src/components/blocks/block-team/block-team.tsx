@@ -1,4 +1,4 @@
-import { getNeutralsList } from '~/api/team';
+import { getNeutralsList } from '~/api/member';
 import { Container } from '~/components/container';
 import { heading } from '~/components/ui/text';
 import { MemberListItem } from '../../member-list-item';
