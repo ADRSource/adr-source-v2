@@ -10,12 +10,16 @@ function getAuthHeader() {
 	return `Bearer ${isEnabled ? process.env.CMS_PREVIEW_TOKEN : process.env.CMS_PROD_TOKEN}`;
 }
 
-const client = new GraphQLClient(CMS_URL, {
-	headers: {
-		Authorization: getAuthHeader(),
-	},
-});
+function getClient({ next }: { next?: NextFetchRequestConfig }) {
+	return new GraphQLClient(CMS_URL, {
+		headers: {
+			Authorization: getAuthHeader(),
+		},
+		fetch,
+		next,
+	});
+}
 
-export function cmsRequest() {
-	return getSdk(client);
+export function cmsRequest({ next }: { next?: NextFetchRequestConfig } = {}) {
+	return getSdk(getClient({ next }));
 }
