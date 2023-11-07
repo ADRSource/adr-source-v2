@@ -14,19 +14,16 @@ export const GetTeamPage = gql`
 
 export const GetNeutralList = gql`
 	query GetNeutralList {
-		neutrals(orderBy: createdAt_DESC) {
-			memberPage {
-				slug
-				member {
-					... on Neutral {
-						__typename
-						id
-						info {
-							name
-							headshot {
-								url(transformation: { document: { output: { format: webp } } })
-							}
-						}
+		neutralList(where: { id: "clonox8ds7npt0bk1jsjz6wb9" }) {
+			neutrals {
+				id
+				memberPage {
+					slug
+				}
+				info {
+					name
+					headshot {
+						url(transformation: { document: { output: { format: webp } } })
 					}
 				}
 			}
@@ -36,19 +33,16 @@ export const GetNeutralList = gql`
 
 export const GetCaseManagerList = gql`
 	query GetCaseManagerList {
-		caseManagers(orderBy: createdAt_DESC) {
-			memberPage {
-				slug
-				member {
-					... on CaseManager {
-						__typename
-						id
-						info {
-							name
-							headshot {
-								url(transformation: { document: { output: { format: webp } } })
-							}
-						}
+		caseManagerList(where: { id: "clonp2m207nw30bk1grlirghc" }) {
+			caseManagers {
+				id
+				memberPage {
+					slug
+				}
+				info {
+					name
+					headshot {
+						url(transformation: { document: { output: { format: webp } } })
 					}
 				}
 			}

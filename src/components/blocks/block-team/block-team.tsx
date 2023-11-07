@@ -5,7 +5,7 @@ import { MemberListItem } from '../../member-list-item';
 
 export async function BlockTeam() {
 	const result = await getNeutralsList();
-	const { neutrals } = result;
+	const { neutralList } = result;
 
 	return (
 		<Container>
@@ -20,18 +20,19 @@ export async function BlockTeam() {
 				</h2>
 				<div>
 					<ul className="mx-auto max-w-[1058px]">
-						{neutrals.map(({ memberPage }) => {
-							const { member, slug } = memberPage ?? {};
+						{neutralList?.neutrals.map((neutral) => {
+							const { memberPage } = neutral;
+							const { slug } = memberPage ?? {};
 
-							if (!member || member.__typename !== 'Neutral') return null;
+							if (!memberPage) return null;
 
 							const m = {
 								url: slug ?? '',
-								name: member.info.name,
-								headshot: member.info.headshot.url,
+								name: neutral.info.name,
+								headshot: neutral.info.headshot.url,
 							};
 
-							return <MemberListItem key={member.id} member={m} />;
+							return <MemberListItem key={neutral.id} member={m} />;
 						})}
 					</ul>
 				</div>
