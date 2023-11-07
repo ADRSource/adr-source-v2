@@ -1,5 +1,5 @@
 import { verifyWebhookSignature } from '@hygraph/utils';
-import { revalidateTag } from 'next/cache';
+import { revalidatePath, revalidateTag } from 'next/cache';
 import { headers } from 'next/headers';
 import { NextRequest, NextResponse } from 'next/server';
 
@@ -8,14 +8,8 @@ export async function GET(request: NextRequest) {
 	const body = await request.json();
 	const signature = headers().get('gcms-signature');
 	const tag = request.nextUrl.searchParams.get('tag');
+	const path = request.nextUrl.searchParams.get('path');
 	const secret = process.env.CMS_WEBHOOK_SECRET;
-
-	if (tag == null) {
-		return NextResponse.json({
-			status: 401,
-			message: 'Tag does not exist. You must provide a tag to revalidate.',
-		});
-	}
 
 	if (signature == null) {
 		return NextResponse.json({
@@ -41,19 +35,52 @@ export async function GET(request: NextRequest) {
 		});
 	}
 
-	try {
-		console.log('Revalidating tag:', tag);
-		revalidateTag(tag);
+	switch (true) {
+		case path !== null && tag !== null: {
+			return NextResponse.json({
+				status: 401,
+				message: 'Only one query parameter can be provided. Either path or tag.',
+			});
+		}
+		case path !== null: {
+			try {
+				console.log('Revalidating path:', path);
+				revalidatePath(path!);
 
-		return NextResponse.json({
-			status: 200,
-			message: `Revalidation successful for: ${tag}`,
-			now: Date.now(),
-		});
-	} catch (_error) {
-		return NextResponse.json({
-			status: 500,
-			message: `Revalidation failed for: ${tag}`,
-		});
+				return NextResponse.json({
+					status: 200,
+					message: `Revalidation successful for: ${path}`,
+					now: Date.now(),
+				});
+			} catch (_error) {
+				return NextResponse.json({
+					status: 500,
+					message: `Revalidation failed for: ${path}`,
+				});
+			}
+		}
+		case tag !== null: {
+			try {
+				console.log('Revalidating tag:', tag);
+				revalidateTag(tag!);
+
+				return NextResponse.json({
+					status: 200,
+					message: `Revalidation successful for: ${tag}`,
+					now: Date.now(),
+				});
+			} catch (_error) {
+				return NextResponse.json({
+					status: 500,
+					message: `Revalidation failed for: ${tag}`,
+				});
+			}
+		}
+		default: {
+			return NextResponse.json({
+				status: 401,
+				message: 'A valid query parameter must be provided.',
+			});
+		}
 	}
 }
