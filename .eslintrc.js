@@ -13,6 +13,7 @@ module.exports = {
 		'no-implicit-coercion': 'error',
 		'no-unneeded-ternary': 'warn',
 		'@typescript-eslint/no-unnecessary-condition': 'warn',
+		'@typescript-eslint/no-non-null-assertion': 'off',
 		'@typescript-eslint/no-unused-vars': [
 			'error',
 			{
