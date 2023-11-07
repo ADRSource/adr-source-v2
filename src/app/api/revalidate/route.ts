@@ -3,7 +3,7 @@ import { revalidatePath, revalidateTag } from 'next/cache';
 import { headers } from 'next/headers';
 import { NextRequest, NextResponse } from 'next/server';
 
-export async function GET(request: NextRequest) {
+export async function POST(request: NextRequest) {
 	// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 	const body = await request.json();
 	const signature = headers().get('gcms-signature');
