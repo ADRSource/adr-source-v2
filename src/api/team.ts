@@ -1,29 +1,13 @@
 import { cmsRequest } from '~/graphql/cms';
 
+export const TEAM_TAGS = {
+	all: ['team'],
+};
+
 export function getTeamPage() {
 	return cmsRequest({
 		next: {
-			tags: ['team'],
+			tags: TEAM_TAGS.all,
 		},
 	}).GetTeamPage();
-}
-
-export function prefetchNeutralsList() {
-	return getNeutralsList();
-}
-
-export function getNeutralsList() {
-	return cmsRequest({
-		next: {
-			tags: ['neutralsList'],
-		},
-	}).GetNeutralList();
-}
-
-export function getCaseManagersList() {
-	return cmsRequest({
-		next: {
-			tags: ['caseManagersList'],
-		},
-	}).GetCaseManagerList();
 }

@@ -1,5 +1,6 @@
 import { Metadata } from 'next';
-import { getCaseManagersList, getNeutralsList, getTeamPage } from '~/api/team';
+import { getCaseManagersList, getNeutralsList } from '~/api/member';
+import { getTeamPage } from '~/api/team';
 import { MemberListItem } from '~/components/member-list-item';
 import { heading } from '~/components/ui/text';
 import { PATHS } from '~/constants/paths.constants';
