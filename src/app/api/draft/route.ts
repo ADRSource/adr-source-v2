@@ -9,7 +9,7 @@ export function GET(request: Request) {
 	const secret = searchParams.get('secret');
 	const slug = searchParams.get('slug') ?? '';
 
-	if (secret !== 'MY_SECRET_TOKEN') {
+	if (secret !== process.env.DRAFT_SECRET) {
 		return new Response('Invalid token', { status: 401 });
 	}
 
