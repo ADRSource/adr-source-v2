@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { DraftModeControls } from '~/components/draft-mode-controls';
 import { Footer } from '~/components/footer/footer';
 import { Navigation } from '~/components/navigation/navigation';
 import { PATHS } from '~/constants/paths.constants';
@@ -39,6 +40,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 				<Navigation />
 				{children}
 				<Footer />
+				<DraftModeControls />
 			</body>
 		</html>
 	);
