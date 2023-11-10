@@ -11,3 +11,31 @@ export const GetResourcesPage = gql`
 	}
 	${SeoFragment}
 `;
+
+export const GetResources = gql`
+	query GetResources($first: Int = 12, $skip: Int = 0) {
+		resourcePages(first: $first, skip: $skip, orderBy: createdAt_DESC) {
+			title
+			slug
+			excerpt {
+				raw
+			}
+			resourceType {
+				type
+			}
+		}
+		resourcePagesConnection {
+			pageInfo {
+				pageSize
+			}
+		}
+	}
+`;
+
+export const GetResourceBySlug = gql`
+	query GetResourceBySlug($slug: String!) {
+		resourcePage(where: { slug: $slug }) {
+			title
+		}
+	}
+`;
