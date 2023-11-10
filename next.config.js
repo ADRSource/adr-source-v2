@@ -32,6 +32,11 @@ const nextConfig = {
 		// We can safely ignore build errors when using TypeScript because we're type-checking the code in CI
 		ignoreBuildErrors: true,
 	},
+	// logging: {
+	// 	fetches: {
+	// 		fullUrl: true,
+	// 	},
+	// },
 };
 
 module.exports = nextConfig;
