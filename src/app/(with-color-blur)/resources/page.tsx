@@ -51,9 +51,7 @@ export default async function Resources({
 	const skip = (getPageParam(PARAM_KEY, searchParams) - 1) * LIMIT;
 	const data = await getResources(LIMIT, skip);
 	const { resourcePages, resourcePagesConnection } = data;
-	const {
-		pageInfo: { pageSize },
-	} = resourcePagesConnection;
+	const pageSize = Math.ceil(resourcePagesConnection.aggregate.count / LIMIT);
 
 	return (
 		<Container>
@@ -96,7 +94,7 @@ export default async function Resources({
 						);
 					})}
 				</AutoGrid>
-				{pageSize != null && (
+				{pageSize > 0 && (
 					<Pagination
 						pageSize={pageSize}
 						paramKey={PARAM_KEY}

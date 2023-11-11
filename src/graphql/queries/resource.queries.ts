@@ -25,8 +25,8 @@ export const GetResources = gql`
 			}
 		}
 		resourcePagesConnection {
-			pageInfo {
-				pageSize
+			aggregate {
+				count
 			}
 		}
 	}
