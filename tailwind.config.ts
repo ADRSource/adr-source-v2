@@ -24,6 +24,7 @@ const config: Config = {
 				brand: {
 					black: '#1B1B1B',
 					copper: '#F8C596',
+					toffee: '#e0a76d',
 					red: '#BB5C52',
 					green: '#46A758',
 					blue: '#0090FF',
@@ -52,7 +53,7 @@ const config: Config = {
 			'nav-height': 'var(--nav-height)',
 		},
 	},
-	plugins: [stack, linkbox, debug, inset],
+	plugins: [stack, linkbox, debug, inset, require('@tailwindcss/typography')],
 	future: {
 		hoverOnlyWhenSupported: true,
 	},
