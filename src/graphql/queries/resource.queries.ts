@@ -14,7 +14,7 @@ export const GetResourcesPage = gql`
 
 export const GetResources = gql`
 	query GetResources($first: Int = 12, $skip: Int = 0) {
-		resourcePages(first: $first, skip: $skip, orderBy: createdAt_DESC) {
+		resourcePages(first: $first, skip: $skip, orderBy: publishDate_DESC) {
 			title
 			slug
 			excerpt {
@@ -35,7 +35,48 @@ export const GetResources = gql`
 export const GetResourceBySlug = gql`
 	query GetResourceBySlug($slug: String!) {
 		resourcePage(where: { slug: $slug }) {
+			seo {
+				...SeoInfo
+			}
 			title
+			publishDate
+			slug
+			author {
+				... on Neutral {
+					info {
+						name
+					}
+					memberPage {
+						slug
+					}
+				}
+				... on CaseManager {
+					info {
+						name
+					}
+					memberPage {
+						slug
+					}
+				}
+			}
+			resourceType {
+				type
+			}
+			resourceContent {
+				json
+				references {
+					__typename
+					... on MemberPage {
+						id
+						slug
+					}
+					... on Asset {
+						id
+						mimeType
+					}
+				}
+			}
 		}
 	}
+	${SeoFragment}
 `;

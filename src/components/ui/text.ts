@@ -21,7 +21,7 @@ export const text = tv({
 	base: 'text-left leading-tight font-normal font-sans',
 	variants: {
 		type: {
-			body: 'text-base max-w-prose',
+			body: 'text-base max-w-prose w-full',
 			legal: 'text-xs',
 			highlight: 'text-base font-semibold',
 			tag: 'text-xs uppercase tracking-tighter',
