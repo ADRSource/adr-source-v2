@@ -41,6 +41,9 @@ export const GetResourceBySlug = gql`
 			title
 			publishDate
 			slug
+			excerpt {
+				text
+			}
 			author {
 				... on Neutral {
 					info {
