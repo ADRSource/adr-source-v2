@@ -29,7 +29,7 @@ export default async function Image({ params }: { params: { slug: string } }) {
 		markup: (
 			<div tw="flex h-full w-full">
 				<img
-					tw="flex absolute top-10 right-10 m-0"
+					tw="flex absolute top-10 right-15 m-0"
 					style={{
 						width: 132,
 					}}
