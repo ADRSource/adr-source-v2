@@ -2,6 +2,7 @@ import { withTV } from 'tailwind-variants/transformer';
 import { Config } from 'tailwindcss';
 import { createFluidValue } from './tailwind/create-fluid-value';
 import debug from './tailwind/plugins/debug';
+import glass from './tailwind/plugins/glass';
 import inset from './tailwind/plugins/inset';
 import linkbox from './tailwind/plugins/linkbox';
 import stack from './tailwind/plugins/stack';
@@ -53,7 +54,7 @@ const config: Config = {
 			'nav-height': 'var(--nav-height)',
 		},
 	},
-	plugins: [stack, linkbox, debug, inset, require('@tailwindcss/typography')],
+	plugins: [stack, linkbox, debug, inset, glass],
 	future: {
 		hoverOnlyWhenSupported: true,
 	},
