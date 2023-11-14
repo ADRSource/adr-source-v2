@@ -1,3 +1,4 @@
+import { Analytics } from '@vercel/analytics/react';
 import type { Metadata } from 'next';
 import { DraftModeControls } from '~/components/draft-mode-controls';
 import { Footer } from '~/components/footer/footer';
@@ -41,6 +42,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 				{children}
 				<Footer />
 				<DraftModeControls />
+				<Analytics />
 			</body>
 		</html>
 	);
