@@ -14,8 +14,9 @@ export function MobileNavigation() {
 	return (
 		<NavigationDrawerProvider>
 			<header className="fixed inset-0 z-30 block h-nav-height w-full px-2 inset-x-center md:hidden">
-				<div className="mx-auto mt-2 flex h-full w-full max-w-[922px] items-center rounded-full border border-solid border-brand-copper bg-brand-black/70 backdrop-blur-sm backdrop-saturate-150">
-					<div className="relative flex w-full items-center gap-1 px-1 py-1">
+				<div className="relative mx-auto mt-2 grid h-full w-full max-w-[922px] place-items-center">
+					<div className="absolute z-10 h-full w-full rounded-full border border-solid border-brand-copper bg-brand-black/70 backdrop-blur-sm backdrop-saturate-150" />
+					<div className="relative z-20 flex w-full items-center gap-1 px-1 py-1">
 						<div className="flex-1">
 							<Link href={PATHS.home} className="absolute left-2 inset-y-center">
 								<IconLogo className="h-[25px] w-auto" />
