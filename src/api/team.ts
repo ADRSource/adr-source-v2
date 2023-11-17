@@ -1,13 +1,13 @@
 import { cmsRequest } from '~/graphql/cms';
 
 export const TEAM_TAGS = {
-	all: ['team'],
+	team: 'GetTeamPage' as const,
 };
 
 export function getTeamPage() {
 	return cmsRequest({
 		next: {
-			tags: TEAM_TAGS.all,
+			tags: [TEAM_TAGS.team],
 		},
 	}).GetTeamPage();
 }

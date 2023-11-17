@@ -5,6 +5,8 @@ import { MemberListItem } from '~/components/member-list-item';
 import { heading } from '~/components/ui/text';
 import { PATHS } from '~/constants/paths.constants';
 
+export const revalidate = 300; // 5 minutes
+
 export async function generateMetadata(): Promise<Metadata> {
 	try {
 		const data = await getTeamPage();

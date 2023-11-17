@@ -7,6 +7,8 @@ import { BlockResources } from '~/components/blocks/block-resources';
 import { BlockTeam } from '~/components/blocks/block-team/block-team';
 import { PATHS } from '~/constants/paths.constants';
 
+export const revalidate = 300; // 5 minutes
+
 export async function generateMetadata(): Promise<Metadata> {
 	try {
 		const data = await getHomePage();
