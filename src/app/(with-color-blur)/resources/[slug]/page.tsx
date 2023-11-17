@@ -11,6 +11,8 @@ import { text } from '~/components/ui/text';
 import { PATHS } from '~/constants/paths.constants';
 import { createFluidValue } from '~/utils/create-fluid-value';
 
+export const revalidate = 300; // 5 minutes
+
 export async function generateMetadata({
 	params,
 }: {
@@ -78,7 +80,7 @@ export default async function Resource({ params }: { params: { slug: string } })
 								<span className="block">
 									<Link
 										href={`${PATHS.team}/${author.memberPage.slug}`}
-										className="text-brand-toffee font-medium uppercase"
+										className="font-medium uppercase text-brand-toffee"
 									>
 										{author.info.name}
 									</Link>
