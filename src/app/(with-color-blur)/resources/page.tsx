@@ -53,8 +53,8 @@ export default async function Resources({
 }) {
 	const skip = (getPageParam(PARAM_KEY, searchParams) - 1) * LIMIT;
 	const data = await getResources(LIMIT, skip);
-	const { resources, resourcePagesConnection } = data;
-	const pageSize = Math.ceil(resourcePagesConnection.aggregate.count / LIMIT);
+	const { resources, resourcesConnection } = data;
+	const pageSize = Math.ceil(resourcesConnection.aggregate.count / LIMIT);
 
 	return (
 		<Container>

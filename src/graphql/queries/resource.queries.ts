@@ -37,7 +37,7 @@ export const GetResources = gql`
 				}
 			}
 		}
-		resourcePagesConnection {
+		resourcesConnection {
 			aggregate {
 				count
 			}
