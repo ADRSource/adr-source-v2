@@ -14,14 +14,27 @@ export const GetResourcesPage = gql`
 
 export const GetResources = gql`
 	query GetResources($first: Int = 12, $skip: Int = 0) {
-		resourcePages(first: $first, skip: $skip, orderBy: publishDate_DESC) {
-			title
-			slug
-			excerpt {
-				raw
-			}
+		resources(first: $first, skip: $skip, orderBy: publishDate_DESC) {
+			id
 			resourceType {
 				type
+			}
+			resource {
+				__typename
+				... on InternalResource {
+					title
+					excerpt {
+						raw
+					}
+					slug
+				}
+				... on ExternalResource {
+					title
+					excerpt {
+						raw
+					}
+					url
+				}
 			}
 		}
 		resourcePagesConnection {
@@ -32,14 +45,19 @@ export const GetResources = gql`
 	}
 `;
 
-export const GetResourceBySlug = gql`
-	query GetResourceBySlug($slug: String!) {
-		resourcePage(where: { slug: $slug }) {
+export const GetInternalResourceBySlug = gql`
+	query GetInternalResourceBySlug($slug: String!) {
+		internalResource(where: { slug: $slug }) {
 			seo {
 				...SeoInfo
 			}
+			resource {
+				publishDate
+				resourceType {
+					type
+				}
+			}
 			title
-			publishDate
 			slug
 			excerpt {
 				text
@@ -61,9 +79,6 @@ export const GetResourceBySlug = gql`
 						slug
 					}
 				}
-			}
-			resourceType {
-				type
 			}
 			resourceContent {
 				json

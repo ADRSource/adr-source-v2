@@ -5,7 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import Balancer from 'react-wrap-balancer';
-import { getResourceBySlug } from '~/api/resource';
+import { getInternalResourceBySlug } from '~/api/resource';
 import { Container } from '~/components/container';
 import { text } from '~/components/ui/text';
 import { PATHS } from '~/constants/paths.constants';
@@ -19,11 +19,11 @@ export async function generateMetadata({
 	params: { slug: string };
 }): Promise<Metadata> {
 	try {
-		const data = await getResourceBySlug(params.slug);
+		const data = await getInternalResourceBySlug(params.slug);
 
-		if (!data.resourcePage) return {};
+		if (!data.internalResource) return {};
 
-		const { seo } = data.resourcePage;
+		const { seo } = data.internalResource;
 
 		const { title, description } = seo;
 		const index = Boolean(seo.index);
@@ -46,20 +46,22 @@ export async function generateMetadata({
 }
 
 export default async function Resource({ params }: { params: { slug: string } }) {
-	const data = await getResourceBySlug(params.slug);
+	const data = await getInternalResourceBySlug(params.slug);
 
-	if (!data.resourcePage) {
+	if (!data.internalResource) {
 		return notFound();
 	}
 
-	const { resourcePage } = data;
-	// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-	const { title, author, publishDate, resourceContent } = resourcePage;
-	const prettyDate = new Date(publishDate as number).toLocaleDateString('en-US', {
-		month: 'long',
-		day: 'numeric',
-		year: 'numeric',
-	});
+	const { internalResource } = data;
+	const { title, author, resourceContent, resource } = internalResource;
+	const prettyDate =
+		resource != null && typeof resource.publishDate === 'string'
+			? new Date(resource.publishDate).toLocaleDateString('en-US', {
+					month: 'long',
+					day: 'numeric',
+					year: 'numeric',
+			  })
+			: null;
 
 	return (
 		<Container>
@@ -87,7 +89,7 @@ export default async function Resource({ params }: { params: { slug: string } })
 								</span>
 							</p>
 						)}
-						<p>{prettyDate}</p>
+						{prettyDate != null && <p>{prettyDate}</p>}
 					</div>
 				</header>
 				<section className="flex flex-col items-center">

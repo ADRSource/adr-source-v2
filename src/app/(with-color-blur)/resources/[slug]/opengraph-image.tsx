@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import { getResourceBySlug } from '~/api/resource';
+import { getInternalResourceBySlug } from '~/api/resource';
 import { ogImageDefault } from '~/app/_utils/og-image-default';
 import { ogImageTemplate } from '~/app/_utils/og-image-template';
 
@@ -15,14 +15,14 @@ export const contentType = 'image/png';
 
 export default async function Image({ params }: { params: { slug: string } }) {
 	const { slug } = params;
-	const data = await getResourceBySlug(slug);
-	const { resourcePage } = data;
+	const data = await getInternalResourceBySlug(slug);
+	const { internalResource } = data;
 
-	if (!resourcePage) {
+	if (!internalResource) {
 		return await ogImageDefault({ size });
 	}
 
-	const { title, excerpt, resourceType } = resourcePage;
+	const { title, excerpt, resource } = internalResource;
 
 	return await ogImageTemplate({
 		size,
@@ -48,7 +48,7 @@ export default async function Image({ params }: { params: { slug: string } }) {
 								transform: 'translateY(-200%)',
 							}}
 						>
-							{resourceType?.type}
+							{resource?.resourceType?.type}
 						</p>
 						<h1
 							tw="m-0 mb-[28px]"
