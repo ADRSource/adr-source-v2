@@ -6,17 +6,23 @@ import { PATHS } from '~/constants/paths.constants';
 export async function GET() {
 	// Method to source urls from cms
 	const data = await getResources(1000, 0);
-	const { resourcePages } = data;
+	const { resources } = data;
 
 	return getServerSideSitemap(
-		resourcePages.map((resource) => {
-			const { slug } = resource;
-			return {
-				loc: `${PATHS.absolute}${PATHS.resources}/${slug}`,
-				changefreq: 'daily',
-				priority: 0.7,
-				lastmod: new Date().toISOString(),
-			};
-		}),
+		resources
+			.filter((r) => r.resource?.__typename === 'InternalResource')
+			.map((r) => {
+				const { resource } = r;
+
+				if (resource?.__typename !== 'InternalResource') return null;
+
+				return {
+					loc: `${PATHS.absolute}${PATHS.resources}/${resource.slug}`,
+					changefreq: 'daily' as const,
+					priority: 0.7,
+					lastmod: new Date().toISOString(),
+				};
+			})
+			.filter(Boolean),
 	);
 }

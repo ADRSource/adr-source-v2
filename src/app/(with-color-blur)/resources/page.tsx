@@ -8,6 +8,7 @@ import { AutoGrid } from '~/components/auto-grid/auto-grid';
 import { Card, CardBody, CardTag } from '~/components/card';
 import { Container } from '~/components/container';
 import { IconArrowTopRight } from '~/components/icons/IconArrowTopRight';
+import { IconExternalLink } from '~/components/icons/IconExternalLink';
 import { CircleButton } from '~/components/ui/button';
 import { heading, text } from '~/components/ui/text';
 import { PATHS } from '~/constants/paths.constants';
@@ -52,7 +53,7 @@ export default async function Resources({
 }) {
 	const skip = (getPageParam(PARAM_KEY, searchParams) - 1) * LIMIT;
 	const data = await getResources(LIMIT, skip);
-	const { resourcePages, resourcePagesConnection } = data;
+	const { resources, resourcePagesConnection } = data;
 	const pageSize = Math.ceil(resourcePagesConnection.aggregate.count / LIMIT);
 
 	return (
@@ -67,33 +68,72 @@ export default async function Resources({
 					Resources
 				</h1>
 				<AutoGrid count={3} itemMinWidth={350} gapX="24px" gapY="24px" className="relative z-20">
-					{resourcePages.map((resource, i) => {
-						const { title, resourceType, excerpt } = resource;
-						return (
-							<Card key={i}>
-								{resourceType?.type != null ? <CardTag>{resourceType.type}</CardTag> : null}
-								<CardBody>
-									<h3 className={heading({ type: '6', className: 'leading-none' })}>{title}</h3>
-									<RichText
-										content={excerpt.raw as RichTextContent}
-										renderers={{
-											p: ({ children }) => (
-												<p className={text({ type: 'body', className: 'line-clamp-3' })}>
-													{children}
-												</p>
-											),
-										}}
-									/>
-								</CardBody>
-								<CircleButton
-									href={`${PATHS.resources}/${resource.slug}`}
-									size="small"
-									className="linkOverlay opacity-25 transition-opacity group-hover:opacity-100"
-								>
-									<IconArrowTopRight />
-								</CircleButton>
-							</Card>
-						);
+					{resources.map((r, i) => {
+						const { resourceType } = r;
+
+						switch (r.resource?.__typename) {
+							case 'InternalResource': {
+								const { title, excerpt, slug } = r.resource;
+								return (
+									<Card key={i}>
+										{resourceType?.type != null ? <CardTag>{resourceType.type}</CardTag> : null}
+										<CardBody>
+											<h3 className={heading({ type: '6', className: 'leading-none' })}>{title}</h3>
+											<RichText
+												content={excerpt.raw as RichTextContent}
+												renderers={{
+													p: ({ children }) => (
+														<p className={text({ type: 'body', className: 'line-clamp-3' })}>
+															{children}
+														</p>
+													),
+												}}
+											/>
+										</CardBody>
+										<CircleButton
+											href={`${PATHS.resources}/${slug}`}
+											size="small"
+											className="linkOverlay opacity-25 transition-opacity group-hover:opacity-100"
+										>
+											<IconArrowTopRight />
+										</CircleButton>
+									</Card>
+								);
+							}
+							case 'ExternalResource': {
+								const { title, excerpt, url } = r.resource;
+								return (
+									<Card key={i}>
+										{resourceType?.type != null ? <CardTag>{resourceType.type}</CardTag> : null}
+										<CardBody>
+											<h3 className={heading({ type: '6', className: 'leading-none' })}>{title}</h3>
+											<RichText
+												content={excerpt.raw as RichTextContent}
+												renderers={{
+													p: ({ children }) => (
+														<p className={text({ type: 'body', className: 'line-clamp-3' })}>
+															{children}
+														</p>
+													),
+												}}
+											/>
+										</CardBody>
+										<CircleButton
+											href={url}
+											size="small"
+											className="linkOverlay opacity-25 transition-opacity group-hover:opacity-100"
+											target="_blank"
+											rel="noopener noreferrer"
+										>
+											<IconExternalLink aria-hidden />
+										</CircleButton>
+									</Card>
+								);
+							}
+							default: {
+								return null;
+							}
+						}
 					})}
 				</AutoGrid>
 				{pageSize > 0 && (
