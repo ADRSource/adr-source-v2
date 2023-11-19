@@ -1,22 +1,12 @@
 import { twMerge } from 'tailwind-merge';
-import { ColorBlurContainer } from '~/components/color-blur-container';
 import { IconLogoMark } from '~/components/icons/IconLogoMark';
-import styles from './loading.module.css';
+import styles from './page-loader.module.css';
 
-export default function Loading() {
-	return (
-		<div className="z-20 flex h-full min-h-screen flex-1 items-center justify-center pt-[calc(theme(spacing.1)_+_theme(spacing.nav-height))] md:pt-[calc(theme(spacing.2)_+_theme(spacing.nav-height))]">
-			<ColorBlurContainer />
-			<PageLoaderOptionA />
-		</div>
-	);
-}
-
-function PageLoaderOptionA() {
+export function PageLoader() {
 	return (
 		<div
 			className={twMerge(
-				'relative isolate z-20 grid grid-cols-1 grid-rows-1 place-items-center',
+				'relative isolate grid grid-cols-1 grid-rows-1 place-items-center',
 				styles.loading,
 			)}
 		>
