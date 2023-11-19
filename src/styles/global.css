@@ -15,6 +15,7 @@
 		-webkit-font-smoothing: antialiased;
 		font-family: var(--font-sans);
 		height: 100%;
+		scroll-behavior: smooth;
 
 		@apply font-sans text-base text-brand-copper;
 	}
