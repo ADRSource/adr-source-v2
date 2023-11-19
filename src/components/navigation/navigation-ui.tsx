@@ -6,7 +6,7 @@ import { PATHS } from '~/constants/paths.constants';
 export function ScheduleButtonLink() {
 	return (
 		<ButtonLink href={PATHS.schedule} className="right-2 block md:absolute md:inset-y-center">
-			Schedule
+			Scheduling
 		</ButtonLink>
 	);
 }

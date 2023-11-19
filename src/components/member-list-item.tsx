@@ -44,7 +44,7 @@ export function MemberListItem({ member, hasSchedule = true, children }: MemberL
 								hash: 'schedule',
 							}}
 						>
-							Calendar <span className="sr-only">for {member.name}</span>
+							Scheduling <span className="sr-only">for {member.name}</span>
 						</IconLink>
 					</div>
 				)}

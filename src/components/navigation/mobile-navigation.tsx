@@ -24,7 +24,7 @@ export function MobileNavigation() {
 							</Link>
 						</div>
 						<ButtonLink stripped className="pr-1" href={PATHS.schedule}>
-							Schedule
+							Scheduling
 						</ButtonLink>
 						<MobileNavigationTrigger />
 					</div>
