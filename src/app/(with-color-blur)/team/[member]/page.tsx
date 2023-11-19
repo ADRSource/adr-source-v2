@@ -305,7 +305,7 @@ function CallToActionBar({ role, info }: { role?: Role; info: BaseMemberInfoFrag
 									hash: '#schedule',
 								}}
 							>
-								Calendar
+								Scheduling
 							</Link>
 						);
 					}
@@ -315,7 +315,7 @@ function CallToActionBar({ role, info }: { role?: Role; info: BaseMemberInfoFrag
 								className="block py-2 text-xs font-medium uppercase leading-none md:py-0 md:text-center"
 								href={PATHS.schedule}
 							>
-								Calendar
+								Scheduling
 							</Link>
 						);
 					}
