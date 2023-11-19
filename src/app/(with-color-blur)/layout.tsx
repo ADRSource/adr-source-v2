@@ -7,7 +7,7 @@ export default function ColorBlurLayout({ children }: { children: React.ReactNod
 			<div className="z-20 flex-1 pt-[calc(theme(spacing.1)_+_theme(spacing.nav-height))] md:pt-[calc(theme(spacing.2)_+_theme(spacing.nav-height))]">
 				{children}
 			</div>
-			<div className="z-10">
+			<div className="absolute inset-0 z-10 h-full w-full overflow-clip">
 				<ColorBlurContainer />
 			</div>
 		</>
