@@ -78,7 +78,7 @@ export default async function Team() {
 						</div>
 						<div className="stack-y-3">
 							<h2 className={heading({ type: '6' })}>Case Managers</h2>
-							<ul>
+							<ul className="relative">
 								{caseManagerList?.caseManagers.map((caseManager) => {
 									const { memberPage } = caseManager;
 									const { slug } = memberPage ?? {};
