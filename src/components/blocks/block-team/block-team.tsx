@@ -19,7 +19,7 @@ export async function BlockTeam() {
 					Team
 				</h2>
 				<div>
-					<ul className="mx-auto max-w-[1058px]">
+					<ul className="relative mx-auto max-w-[1058px]">
 						{neutralList?.neutrals.map((neutral) => {
 							const { memberPage } = neutral;
 							const { slug } = memberPage ?? {};
