@@ -14,6 +14,10 @@ export function getResourcesPage() {
 	}).GetResourcesPage();
 }
 
+export function prefetchResources(first = 12, skip = 0) {
+	return getResources(first, skip);
+}
+
 export function getResources(first = 12, skip = 0) {
 	return cmsRequest({
 		next: {

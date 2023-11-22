@@ -21,20 +21,8 @@ export const GetResources = gql`
 			}
 			resource {
 				__typename
-				... on InternalResource {
-					title
-					excerpt {
-						raw
-					}
-					slug
-				}
-				... on ExternalResource {
-					title
-					excerpt {
-						raw
-					}
-					url
-				}
+				...InternalResourceInfo
+				...ExternalResourceInfo
 			}
 		}
 		resourcesConnection {
@@ -42,6 +30,22 @@ export const GetResources = gql`
 				count
 			}
 		}
+	}
+
+	fragment InternalResourceInfo on InternalResource {
+		title
+		excerpt {
+			raw
+		}
+		slug
+	}
+
+	fragment ExternalResourceInfo on ExternalResource {
+		title
+		excerpt {
+			raw
+		}
+		url
 	}
 `;
 

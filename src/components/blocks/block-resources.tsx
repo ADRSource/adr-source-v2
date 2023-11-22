@@ -1,11 +1,14 @@
+import { getResources } from '~/api/resource';
+import { ResourceCard } from '~/app/_components/resources/resource-card';
 import { AutoGrid } from '~/components/auto-grid/auto-grid';
-import { Card, CardBody, CardTag } from '~/components/card';
 import { Container } from '~/components/container';
-import { IconArrowTopRight } from '~/components/icons/IconArrowTopRight';
-import { ButtonLink, CircleButton } from '~/components/ui/button';
-import { heading, text } from '~/components/ui/text';
+import { ButtonLink } from '~/components/ui/button';
+import { heading } from '~/components/ui/text';
 
-export function BlockResources() {
+export async function BlockResources() {
+	const data = await getResources(3);
+	const { resources } = data;
+
 	return (
 		<Container>
 			<div className="relative py-7">
@@ -18,26 +21,12 @@ export function BlockResources() {
 					>
 						Resources
 					</h2>
-					<AutoGrid count={4} itemMinWidth={350} gapX="24px" gapY="24px" className="relative z-20">
-						{TEST_CARD_DATA.map((card, i) => {
-							return (
-								<Card key={i}>
-									<CardTag>{card.tag}</CardTag>
-									<CardBody>
-										<h3 className={heading({ type: '6', className: 'leading-none' })}>
-											{card.title}
-										</h3>
-										<p className={text({ type: 'body' })}>{card.description}</p>
-									</CardBody>
-									<CircleButton
-										href={card.link}
-										size="small"
-										className="linkOverlay opacity-25 transition-opacity group-hover:opacity-100"
-									>
-										<IconArrowTopRight />
-									</CircleButton>
-								</Card>
-							);
+					<AutoGrid count={3} itemMinWidth={350} gapX="24px" gapY="24px" className="relative z-20">
+						{resources.map((r, i) => {
+							const { resource, resourceType } = r;
+							if (resource == null) return null;
+
+							return <ResourceCard key={i} resource={resource} type={resourceType?.type} />;
 						})}
 					</AutoGrid>
 					<div className="flex justify-center">
@@ -51,34 +40,3 @@ export function BlockResources() {
 		</Container>
 	);
 }
-
-const TEST_CARD_DATA = [
-	{
-		tag: 'Article',
-		title: 'Doloremque',
-		description:
-			'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-		link: '/',
-	},
-	{
-		tag: 'Blog',
-		title: 'Adipiscing Elit',
-		description:
-			'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-		link: '/',
-	},
-	{
-		tag: 'News',
-		title: 'Lorem Ipsum',
-		description:
-			'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
-		link: '/',
-	},
-	{
-		tag: 'Article',
-		title: 'Doloremque',
-		description:
-			'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-		link: '/',
-	},
-];
