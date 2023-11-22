@@ -1,13 +1,11 @@
-import { RichText } from '@graphcms/rich-text-react-renderer';
 import { RichTextContent } from '@graphcms/rich-text-types';
 import { Metadata } from 'next';
-import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import Balancer from 'react-wrap-balancer';
 import { getInternalResourceBySlug } from '~/api/resource';
 import { Container } from '~/components/container';
-import { text } from '~/components/ui/text';
+import { RichText } from '~/components/rich-text/rich-text';
 import { PATHS } from '~/constants/paths.constants';
 import { createFluidValue } from '~/utils/create-fluid-value';
 
@@ -93,45 +91,12 @@ export default async function Resource({ params }: { params: { slug: string } })
 					</div>
 				</header>
 				<section className="flex flex-col items-center">
-					<RichText
-						content={resourceContent.json as RichTextContent}
-						renderers={{
-							p: ({ children }) => {
-								return (
-									<p
-										className={text({ type: 'body', className: 'mb-[1em] last:mb-0 empty:hidden' })}
-									>
-										{children}
-									</p>
-								);
-							},
-							img: ({ altText, src, width, height }) => {
-								if (src == null) return <></>;
-								return (
-									<Image
-										className="mb-4 w-full max-w-4xl overflow-clip rounded-lg bg-brand-black"
-										src={src}
-										alt={altText ?? ''}
-										width={width}
-										height={height}
-									/>
-								);
-							},
-							link: {
-								MemberPage: (props: { slug: string; children: React.ReactNode }) => {
-									return (
-										<Link
-											href={`${PATHS.team}/${props.slug}`}
-											className="text-brand-toffee underline"
-										>
-											{props.children}
-										</Link>
-									);
-								},
-							},
-						}}
-						references={resourceContent.references}
-					/>
+					<div>
+						<RichText
+							content={resourceContent.json as RichTextContent}
+							references={resourceContent.references}
+						/>
+					</div>
 				</section>
 			</article>
 		</Container>
