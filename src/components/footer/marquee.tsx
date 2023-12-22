@@ -15,12 +15,12 @@ export function Marquee({ text }: { text: string }) {
 		<div className="relative z-10 col-span-full row-span-full h-full w-full select-none overflow-hidden">
 			<p
 				aria-hidden
-				className="leading-0 invisible whitespace-nowrap text-center font-serif text-[max(128px,14.5vw)] leading-[85%]"
+				className="leading-0 invisible whitespace-nowrap text-center font-serif text-[max(128px,14.5vw)] leading-none"
 			>
 				{textRepeat}
 			</p>
 			<motion.p
-				className="leading-0 absolute left-0 top-0 whitespace-nowrap text-center font-serif text-[max(128px,14.5vw)] leading-[85%]"
+				className="leading-0 absolute left-0 top-0 whitespace-nowrap text-center font-serif text-[max(128px,14.5vw)] leading-none"
 				ref={textMeasureRef}
 				animate={{
 					x: [0, -width],
