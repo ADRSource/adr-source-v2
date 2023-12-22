@@ -1,3 +1,4 @@
+import { twMerge } from 'tailwind-merge';
 import { Container } from '~/components/container';
 import { ButtonLink } from '~/components/ui/button';
 import { heading } from '~/components/ui/text';
@@ -22,7 +23,12 @@ export function BlockAbout() {
 								key={index}
 								className="border-b border-solid border-brand-copper py-1 first:border-t"
 							>
-								<p className="mx-auto flex w-full max-w-[1324px] justify-center font-serif text-2xl leading-none md:text-5xl">
+								<p
+									className={twMerge(
+										'mx-auto flex w-full max-w-[1324px] justify-center',
+										heading({ type: '5' }),
+									)}
+								>
 									<span className="block w-full px-1 md:px-2">
 										<span className="w-full items-center justify-between rounded-md bg-brand-black p-2 stack-x-1">
 											<span className="block">{value}</span>
@@ -44,10 +50,4 @@ export function BlockAbout() {
 	);
 }
 
-const VALUES = [
-	'Foster open communication',
-	'Facilitate constructive dialogue',
-	'Achieve mutually agreeable solutions',
-	'Resolve conflicts peacefully',
-	'Preserve relationships',
-];
+const VALUES = ['Experience Matters', 'Diligent & Dedication', 'True Neutrality'];
