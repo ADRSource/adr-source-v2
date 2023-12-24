@@ -1,11 +1,16 @@
 import Link from 'next/link';
 import { twMerge } from 'tailwind-merge';
+import { IconCalendar } from '~/components/icons/IconCalendar';
 import { ButtonLink } from '~/components/ui/button';
 import { PATHS } from '~/constants/paths.constants';
 
 export function ScheduleButtonLink() {
 	return (
-		<ButtonLink href={PATHS.schedule} className="right-2 block md:absolute md:inset-y-center">
+		<ButtonLink
+			icon={<IconCalendar />}
+			href={PATHS.schedule}
+			className="right-2 block leading-none md:absolute md:inset-y-center"
+		>
 			Scheduling
 		</ButtonLink>
 	);

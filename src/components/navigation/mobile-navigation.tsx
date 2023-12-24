@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import * as React from 'react';
 import { twMerge } from 'tailwind-merge';
+import { IconCalendar } from '~/components/icons/IconCalendar';
 import { IconLogo } from '~/components/icons/IconLogo';
 import { NavigationLink } from '~/components/navigation/navigation-ui';
 import { ButtonLink } from '~/components/ui/button';
@@ -23,7 +24,12 @@ export function MobileNavigation() {
 								<span className="sr-only">Home</span>
 							</Link>
 						</div>
-						<ButtonLink stripped className="pr-1" href={PATHS.schedule}>
+						<ButtonLink
+							stripped
+							className="pr-1 leading-none"
+							icon={<IconCalendar />}
+							href={PATHS.schedule}
+						>
 							Scheduling
 						</ButtonLink>
 						<MobileNavigationTrigger />
