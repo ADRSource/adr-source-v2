@@ -54,11 +54,6 @@ export async function generateMetadata({
 
 type Role = NonNullable<MemberPageMember['__typename']>;
 
-const ROLE_NAME: Record<Role, string> = {
-	Neutral: 'Neutral',
-	CaseManager: 'Case Manager',
-};
-
 export default async function Member({ params }: { params: { member: string } }) {
 	const data = await getMemberPageBySlug(params.member);
 
@@ -82,7 +77,7 @@ export default async function Member({ params }: { params: { member: string } })
 						<h1
 							className={heading({
 								type: '3',
-								className: 'text-center',
+								className: 'mb-6 text-center md:mb-0',
 							})}
 						>
 							{name}
@@ -91,8 +86,8 @@ export default async function Member({ params }: { params: { member: string } })
 							<CallToActionBar role={member?.__typename} info={info} />
 						</div>
 					</header>
-					<section className="grid grid-cols-1 justify-items-center divide-brand-copper/40 border-b border-brand-copper/40 md:grid-cols-2 md:divide-x">
-						<div className="px-2 py-6 stack-y-5 md:stack-y-4">
+					<section className="grid grid-cols-1 justify-items-center gap-y-4 divide-brand-copper/40 border-b border-brand-copper/40 md:grid-cols-2 md:divide-x">
+						<div className="px-2 stack-y-5 md:py-6 md:stack-y-4">
 							<div className="relative aspect-[9/10] w-full max-w-[449px] overflow-clip rounded-lg">
 								<Image
 									priority
@@ -108,6 +103,7 @@ export default async function Member({ params }: { params: { member: string } })
 							<div className="block md:hidden">
 								<CallToActionBar role={member?.__typename} info={info} />
 							</div>
+
 							<div
 								className={text({
 									type: 'body',
@@ -118,141 +114,134 @@ export default async function Member({ params }: { params: { member: string } })
 								<RichText content={bio.raw as RichTextContent} />
 							</div>
 						</div>
-						<div className="w-full px-2 py-6">
-							<div className="mx-auto max-w-[380px] stack-y-4">
-								<div>
-									<h2 className="sr-only">Basic Information</h2>
-									{member?.__typename != null && <BasicInfoList member={member} />}
-								</div>
-								{member?.__typename === 'Neutral' && (
-									<div className="stack-y-3">
-										<h2 className={heading({ type: '6' })}>Areas of focus</h2>
-										<ul className="grid grid-cols-2 gap-x-2 gap-y-1">
-											{member.focusAreas.map((area) => {
-												return (
-													<li key={area}>
-														<p className="text-sm">{area}</p>
-													</li>
-												);
-											})}
-										</ul>
-									</div>
-								)}
+						<div className="w-full px-2 pb-6 md:py-6">
+							<div className="mx-auto max-w-[449px] stack-y-4">
+								{member?.__typename != null && <MemberInfo name={name} member={member} />}
 							</div>
 						</div>
 					</section>
-
-					{/* SCHEDULE SECTION */}
-					{member?.__typename === 'Neutral' && (
-						<section
-							id="schedule"
-							className="scroll-mt-nav-height border-b border-solid border-brand-copper/40 py-6 "
-						>
-							<div className="mx-auto grid w-full max-w-7xl grid-cols-1 gap-y-5 rounded-lg bg-brand-black/70 md:grid-cols-2">
-								<div className="w-full max-w-[449px]  justify-self-center px-2 stack-y-4 md:py-6">
-									<h2
-										className={heading({
-											type: '4',
-											className: 'text-center text-7xl md:text-left',
-										})}
-									>
-										Schedule
-									</h2>
-									<p className={text({ type: 'body', className: 'text-center md:text-left' })}>
-										To schedule an appointment online, click on your preferred available date. Our
-										staff will contact you once they receive your appointment request form.
-									</p>
-								</div>
-								<div className="px-2 md:py-6">
-									<div>
-										<h3 className="sr-only">{member.info.name}&apos;s Calendar</h3>
-										<div className="mx-auto w-full max-w-[449px] self-center overflow-y-auto rounded-lg border border-solid border-brand-copper bg-white/70 p-2 backdrop-blur-sm backdrop-saturate-150">
-											<div className="mx-auto w-full rounded-lg bg-white p-1">
-												<iframe
-													width="310"
-													height="400"
-													className="mx-auto overflow-clip"
-													src={`https://nadn.org/smallcalendar/${member.nadnId}`}
-												/>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</section>
-					)}
 				</div>
 			</main>
 		</div>
 	);
 }
 
-interface BasicInfoListProps {
-	member: MemberInfoNeutralFragment | MemberInfoCaseManagerFragment;
-}
-function BasicInfoList({ member }: BasicInfoListProps) {
+function MemberInfo({
+	member,
+	name,
+}: {
+	member: MemberInfoCaseManagerFragment | MemberInfoNeutralFragment;
+	name: string;
+}) {
 	switch (member.__typename) {
 		case 'Neutral': {
-			const yearsOfExperience =
-				new Date().getFullYear() - new Date(member.experienceStartDate as string).getFullYear();
-			const caseManager = member.caseManager;
-
-			return (
-				<ul className="stack-y-1">
-					<ListItem>Role: {ROLE_NAME[member.__typename]}</ListItem>
-					<ListItem>Years of experience: {yearsOfExperience}</ListItem>
-					<ListItem>Area of operation: Statewide</ListItem>
-					{caseManager != null && (
-						<ListItem className="linkBox relative flex justify-between">
-							<p>Case manager: {caseManager.info.name}</p>
-							<CircleButton
-								aria-label={`Visit ${caseManager.info.name}'s page`}
-								className="linkOverlay"
-								href={`${PATHS.team}/${caseManager.memberPage?.slug ?? ''}`}
-							>
-								<IconArrowTopRight aria-hidden />
-							</CircleButton>
-						</ListItem>
-					)}
-				</ul>
-			);
+			return <NeutralInfo name={name} member={member} />;
 		}
 		case 'CaseManager': {
-			const { neutrals } = member;
-			return (
-				<ul className="stack-y-4">
-					<ListItem>Role: {ROLE_NAME[member.__typename]}</ListItem>
-					<li className="stack-y-3">
-						<h3 className={heading({ type: '6' })}>Managed Neutrals</h3>
-						<ul className="stack-y-1">
-							{neutrals.map((neutral) => {
-								const { memberPage } = neutral;
-								const { slug } = memberPage ?? {};
-								const { name } = neutral.info;
-
-								return (
-									<ListItem key={neutral.id} className="linkBox relative flex justify-between">
-										<p>{name}</p>
-
-										<CircleButton
-											aria-label={`Visit ${name}'s page`}
-											className="linkOverlay"
-											href={`${PATHS.team}/${slug ?? ''}`}
-										>
-											<IconArrowTopRight aria-hidden />
-										</CircleButton>
-									</ListItem>
-								);
-							})}
-						</ul>
-					</li>
-				</ul>
-			);
+			return <CaseManagerInfo member={member} />;
 		}
 		default: {
 			return null;
 		}
 	}
+}
+
+function NeutralInfo({ member, name }: { member: MemberInfoNeutralFragment; name: string }) {
+	const { nadnId, focusAreas, caseManager } = member;
+
+	return (
+		<>
+			{/* SCHEDULE */}
+			<div className="stack-y-3">
+				<h2
+					id="schedule"
+					className={heading({
+						type: '6',
+						className: 'scroll-mt-[calc(var(--nav-height)_+_(theme(spacing.2)_*_2))]',
+					})}
+				>
+					Schedule with {name}
+				</h2>
+				<div className="stack-y-3">
+					<p className={text({ type: 'body', className: 'px-2 text-left md:px-0' })}>
+						To schedule an appointment online, click on your preferred available date. Our staff
+						will contact you once they receive your appointment request form.
+					</p>
+					<div className="mx-auto w-full max-w-[449px] self-center overflow-y-auto rounded-lg border border-solid border-brand-copper bg-white/70 backdrop-blur-sm backdrop-saturate-150 md:p-2">
+						<div className="mx-auto w-full rounded-lg bg-white p-1">
+							<iframe
+								width="310"
+								height="400"
+								className="mx-auto overflow-clip"
+								src={`https://nadn.org/smallcalendar/${nadnId}`}
+							/>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			{/* CASE MANAGER */}
+			{caseManager != null && (
+				<div className="stack-y-3">
+					<h2 className={heading({ type: '6' })}>Case Manager</h2>
+					<div className="linkBox relative flex justify-between rounded-lg border border-solid border-brand-copper/5 bg-brand-black p-2 text-base font-bold text-brand-copper">
+						<p>{caseManager.info.name}</p>
+						<CircleButton
+							aria-label={`Visit ${caseManager.info.name}'s page`}
+							className="linkOverlay"
+							href={`${PATHS.team}/${caseManager.memberPage?.slug ?? ''}`}
+						>
+							<IconArrowTopRight aria-hidden />
+						</CircleButton>
+					</div>
+				</div>
+			)}
+
+			{/* AREA OF FOCUS */}
+			<div className="stack-y-3">
+				<h2 className={heading({ type: '6' })}>Areas of focus</h2>
+				<ul className="grid grid-cols-2 gap-x-2 gap-y-1">
+					{focusAreas.map((area) => {
+						return (
+							<li key={area}>
+								<p className="text-sm">{area}</p>
+							</li>
+						);
+					})}
+				</ul>
+			</div>
+		</>
+	);
+}
+
+function CaseManagerInfo({ member }: { member: MemberInfoCaseManagerFragment }) {
+	const { neutrals } = member;
+	return (
+		<div className="stack-y-3">
+			<h3 className={heading({ type: '6' })}>Managed Neutrals</h3>
+			<ul className="stack-y-1">
+				{neutrals.map((neutral) => {
+					const { memberPage } = neutral;
+					const { slug } = memberPage ?? {};
+					const { name } = neutral.info;
+
+					return (
+						<ListItem key={neutral.id} className="linkBox relative flex justify-between">
+							<p>{name}</p>
+
+							<CircleButton
+								aria-label={`Visit ${name}'s page`}
+								className="linkOverlay"
+								href={`${PATHS.team}/${slug ?? ''}`}
+							>
+								<IconArrowTopRight aria-hidden />
+							</CircleButton>
+						</ListItem>
+					);
+				})}
+			</ul>
+		</div>
+	);
 }
 
 interface ListItemProps {
