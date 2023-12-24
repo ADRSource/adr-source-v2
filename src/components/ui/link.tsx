@@ -7,13 +7,14 @@ interface IconLinkProps
 	extends Omit<React.ComponentPropsWithoutRef<'a'>, keyof LinkProps>,
 		LinkProps {
 	children?: React.ReactNode;
+	icon?: React.ReactNode;
 }
 export const IconLink = React.forwardRef<HTMLAnchorElement, IconLinkProps>(
-	({ children, className, ...rest }, ref) => {
+	({ children, className, icon, ...rest }, ref) => {
 		return (
 			<Link {...rest} ref={ref} className={twMerge('items-center stack-x-[4px]', className)}>
 				<span className="flex">{children}</span>
-				<IconArrowTopRight aria-hidden />
+				{icon ?? <IconArrowTopRight aria-hidden />}
 			</Link>
 		);
 	},

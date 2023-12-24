@@ -2,6 +2,7 @@
 
 import * as React from 'react';
 import { IconArrowTopRight } from '~/components/icons/IconArrowTopRight';
+import { IconCalendar } from '~/components/icons/IconCalendar';
 import { ButtonLink, CircleButton } from '~/components/ui/button';
 import { IconLink } from '~/components/ui/link';
 import { heading } from '~/components/ui/text';
@@ -40,6 +41,7 @@ export function MemberListItem({ member, hasSchedule = true, children }: MemberL
 					<div className="hidden md:block">
 						<IconLink
 							className="p-1 text-xs font-medium uppercase leading-none text-white transition-colors hover:text-brand-copper"
+							icon={<IconCalendar className="h-[15px] w-[15px]" aria-hidden />}
 							href={{
 								pathname: url,
 								hash: 'schedule',

@@ -8,9 +8,10 @@ interface ButtonLinkProps
 		Omit<React.ComponentPropsWithoutRef<'a'>, keyof LinkProps>,
 		LinkProps {
 	children?: React.ReactNode;
+	icon?: React.ReactNode;
 }
 export const ButtonLink = React.forwardRef<HTMLAnchorElement, ButtonLinkProps>(
-	({ className, size, stripped, outline, children, ...rest }, ref) => {
+	({ className, icon, size, stripped, outline, children, ...rest }, ref) => {
 		return (
 			<Link
 				{...rest}
@@ -18,17 +19,14 @@ export const ButtonLink = React.forwardRef<HTMLAnchorElement, ButtonLinkProps>(
 				className={root({
 					size,
 					outline,
-					className,
 					stripped,
+					className,
 				})}
 			>
-				<span className="flex">{children}</span>
-				<IconArrowTopRight
-					aria-hidden
-					className={icon({
-						size,
-					})}
-				/>
+				{children}
+				<span aria-hidden className={iconStyles({ size, className: 'min-w-0' })}>
+					{icon ?? <IconArrowTopRight />}
+				</span>
 			</Link>
 		);
 	},
@@ -40,8 +38,9 @@ export const root = tv(
 		base: 'decoration-inherit font-sans stack-x-[4px]/inline items-center bg-white border border-solid rounded-full uppercase font-medium leading-none select-none',
 		variants: {
 			size: {
-				small: 'min-h-[30px] px-2 py-1 text-xs text-brand-black',
-				large: 'min-h-[50px] px-3 py-[20px] ring-offset-3 text-xl text-brand-black',
+				small: 'min-h-[30px] px-2 py-1 text-xs text-brand-black stack-x-[4px]/inline',
+				large:
+					'min-h-[50px] px-3 py-[20px] ring-offset-3 text-xl text-brand-black stack-x-[8px]/inline',
 			},
 			outline: {
 				copper:
@@ -63,8 +62,9 @@ export const root = tv(
 	},
 );
 
-const icon = tv(
+const iconStyles = tv(
 	{
+		base: 'grid place-items-center',
 		variants: {
 			size: {
 				small: 'w-[15px] h-[15px]',
