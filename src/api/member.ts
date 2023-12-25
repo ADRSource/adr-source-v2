@@ -1,6 +1,6 @@
 import { cmsRequest } from '~/graphql/cms';
 
-export const MEMBER_TAGS = {
+const MEMBER_TAGS = {
 	member: (slug: string) => `GetMemberPageBySlug:${slug}` as const,
 	neutralsList: 'GetNeutralList' as const,
 	caseManagersList: 'GetCaseManagerList' as const,

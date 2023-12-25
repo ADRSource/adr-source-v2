@@ -1,7 +1,8 @@
 import { Metadata } from 'next';
 import { getCaseManagersList, getNeutralsList } from '~/api/member';
 import { getTeamPage } from '~/api/team';
-import { MemberListItem } from '~/components/member-list-item';
+import { extractMemberFromNeutral } from '~/components/member-list-item/extract-member-neutral';
+import { MemberListItem } from '~/components/member-list-item/member-list-item';
 import { heading } from '~/components/ui/text';
 import { PATHS } from '~/constants/paths.constants';
 
@@ -61,18 +62,11 @@ export default async function Team() {
 							<h2 className={heading({ type: '6' })}>Neutrals</h2>
 							<ul>
 								{neutralList?.neutrals.map((neutral) => {
-									const { memberPage } = neutral;
-									const { slug } = memberPage ?? {};
+									const member = extractMemberFromNeutral(neutral);
 
-									if (!memberPage) return null;
+									if (!member) return null;
 
-									const m = {
-										url: slug ?? '',
-										name: neutral.info.name,
-										headshot: neutral.info.headshot.url,
-									};
-
-									return <MemberListItem key={neutral.id} member={m} />;
+									return <MemberListItem key={neutral.id} member={member} />;
 								})}
 							</ul>
 						</div>
