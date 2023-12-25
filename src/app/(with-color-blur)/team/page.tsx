@@ -5,6 +5,7 @@ import { extractMemberFromNeutral } from '~/components/member-list-item/extract-
 import { MemberListItem } from '~/components/member-list-item/member-list-item';
 import { heading } from '~/components/ui/text';
 import { PATHS } from '~/constants/paths.constants';
+import { getMetadataFromSeo } from '~/utils/seo';
 
 export const revalidate = 300; // 5 minutes
 
@@ -12,23 +13,7 @@ export async function generateMetadata(): Promise<Metadata> {
 	try {
 		const data = await getTeamPage();
 		const { seo } = data.teamPage ?? {};
-
-		const title = seo?.title ?? '';
-		const description = seo?.description ?? '';
-		const index = Boolean(seo?.index);
-
-		return {
-			title,
-			description,
-			robots: index ? 'index, follow' : 'noindex, nofollow',
-			openGraph: {
-				title,
-				description,
-				type: 'website',
-				locale: 'en_US',
-				url: `${PATHS.absolute}${PATHS.team}`,
-			},
-		};
+		return getMetadataFromSeo(`${PATHS.absolute}${PATHS.team}`, seo);
 	} catch (_error) {
 		console.error('Error generating metadata for about page');
 
