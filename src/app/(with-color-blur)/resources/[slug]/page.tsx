@@ -8,6 +8,7 @@ import { Container } from '~/components/container';
 import { RichText } from '~/components/rich-text/rich-text';
 import { PATHS } from '~/constants/paths.constants';
 import { createFluidValue } from '~/utils/create-fluid-value';
+import { getMetadataFromSeo } from '~/utils/seo';
 
 export const revalidate = 300; // 5 minutes
 
@@ -22,20 +23,12 @@ export async function generateMetadata({
 		if (!data.internalResource) return {};
 
 		const { seo } = data.internalResource;
-
-		const { title, description } = seo;
-		const index = Boolean(seo.index);
-
+		const metadata = getMetadataFromSeo(`${PATHS.absolute}${PATHS.resources}/${params.slug}`, seo);
 		return {
-			title,
-			description,
-			robots: index ? 'index, follow' : 'noindex, nofollow',
+			...metadata,
 			openGraph: {
-				title,
-				description,
+				...metadata.openGraph,
 				type: 'article',
-				locale: 'en_US',
-				url: `${PATHS.absolute}${PATHS.resources}/${params.slug}`,
 			},
 		};
 	} catch (_error) {
@@ -58,7 +51,7 @@ export default async function Resource({ params }: { params: { slug: string } })
 					month: 'long',
 					day: 'numeric',
 					year: 'numeric',
-			  })
+				})
 			: null;
 
 	return (

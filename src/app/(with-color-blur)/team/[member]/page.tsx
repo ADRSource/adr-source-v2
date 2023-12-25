@@ -16,6 +16,7 @@ import {
 	MemberInfoNeutralFragment,
 	MemberPageMember,
 } from '~/graphql/generated/cms.generated';
+import { getMetadataFromSeo } from '~/utils/seo';
 
 export const revalidate = 300; // 5 minutes
 
@@ -30,21 +31,7 @@ export async function generateMetadata({
 		if (!data.memberPage) return {};
 
 		const { seo } = data.memberPage;
-		const { title, description, index } = seo;
-		const shouldIndex = Boolean(index);
-
-		return {
-			title,
-			description,
-			robots: shouldIndex ? 'index, follow' : 'noindex, nofollow',
-			openGraph: {
-				title,
-				description,
-				type: 'website',
-				locale: 'en_US',
-				url: `${PATHS.absolute}${PATHS.team}/${params.member}`,
-			},
-		};
+		return getMetadataFromSeo(`${PATHS.absolute}${PATHS.team}/${params.member}`, seo);
 	} catch (_error) {
 		console.error(`Error generating metadata for member page: ${params.member}`);
 

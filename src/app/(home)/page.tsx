@@ -7,6 +7,7 @@ import { BlockHero } from '~/components/blocks/block-hero';
 import { BlockResources } from '~/components/blocks/block-resources';
 import { BlockTeam } from '~/components/blocks/block-team/block-team';
 import { PATHS } from '~/constants/paths.constants';
+import { getMetadataFromSeo } from '~/utils/seo';
 
 export const revalidate = 300; // 5 minutes
 
@@ -15,22 +16,7 @@ export async function generateMetadata(): Promise<Metadata> {
 		const data = await getHomePage();
 		const { seo } = data.homePage ?? {};
 
-		const title = seo?.title ?? '';
-		const description = seo?.description ?? '';
-		const index = Boolean(seo?.index);
-
-		return {
-			title,
-			description,
-			robots: index ? 'index, follow' : 'noindex, nofollow',
-			openGraph: {
-				title,
-				description,
-				type: 'website',
-				locale: 'en_US',
-				url: PATHS.absolute,
-			},
-		};
+		return getMetadataFromSeo(PATHS.absolute, seo);
 	} catch (_error) {
 		console.error('Error generating metadata for home page');
 

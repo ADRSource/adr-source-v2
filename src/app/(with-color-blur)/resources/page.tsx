@@ -7,6 +7,7 @@ import { AutoGrid } from '~/components/auto-grid/auto-grid';
 import { Container } from '~/components/container';
 import { heading } from '~/components/ui/text';
 import { PATHS } from '~/constants/paths.constants';
+import { getMetadataFromSeo } from '~/utils/seo';
 
 export const revalidate = 300; // 5 minutes
 
@@ -15,22 +16,7 @@ export async function generateMetadata(): Promise<Metadata> {
 		const data = await getResourcesPage();
 		const { seo } = data.resourcesPage ?? {};
 
-		const title = seo?.title ?? '';
-		const description = seo?.description ?? '';
-		const index = Boolean(seo?.index);
-
-		return {
-			title,
-			description,
-			robots: index ? 'index, follow' : 'noindex, nofollow',
-			openGraph: {
-				title,
-				description,
-				type: 'website',
-				locale: 'en_US',
-				url: `${PATHS.absolute}${PATHS.resources}`,
-			},
-		};
+		return getMetadataFromSeo(`${PATHS.absolute}${PATHS.resources}`, seo);
 	} catch (_error) {
 		console.error('Error generating metadata for resources page');
 
