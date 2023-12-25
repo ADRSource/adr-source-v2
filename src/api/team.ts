@@ -1,6 +1,6 @@
 import { cmsRequest } from '~/graphql/cms';
 
-export const TEAM_TAGS = {
+const TEAM_TAGS = {
 	team: 'GetTeamPage' as const,
 };
 

@@ -5,16 +5,20 @@ export const GetNeutralList = gql`
 	query GetNeutralList {
 		neutralList(where: { id: "clonox8ds7npt0bk1jsjz6wb9" }) {
 			neutrals {
-				id
-				memberPage {
-					slug
-				}
-				info {
-					name
-					headshot {
-						url(transformation: { document: { output: { format: webp } } })
-					}
-				}
+				...NeutralItem
+			}
+		}
+	}
+
+	fragment NeutralItem on Neutral {
+		id
+		memberPage {
+			slug
+		}
+		info {
+			name
+			headshot {
+				url(transformation: { document: { output: { format: webp } } })
 			}
 		}
 	}

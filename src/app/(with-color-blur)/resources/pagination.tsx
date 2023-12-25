@@ -147,6 +147,6 @@ function getRange({ siblingCount, page, totalPages }: PaginationContext) {
 	return fullRange;
 }
 
-export function getTransformedRange(ctx: PaginationContext) {
+function getTransformedRange(ctx: PaginationContext) {
 	return transform(getRange(ctx));
 }

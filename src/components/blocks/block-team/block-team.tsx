@@ -1,7 +1,8 @@
 import { getNeutralsList } from '~/api/member';
 import { Container } from '~/components/container';
+import { extractMemberFromNeutral } from '~/components/member-list-item/extract-member-neutral';
+import { MemberListItem } from '~/components/member-list-item/member-list-item';
 import { heading } from '~/components/ui/text';
-import { MemberListItem } from '../../member-list-item';
 
 export async function BlockTeam() {
 	const result = await getNeutralsList();
@@ -21,18 +22,11 @@ export async function BlockTeam() {
 				<div>
 					<ul className="relative mx-auto max-w-[1058px]">
 						{neutralList?.neutrals.map((neutral) => {
-							const { memberPage } = neutral;
-							const { slug } = memberPage ?? {};
+							const member = extractMemberFromNeutral(neutral);
 
-							if (!memberPage) return null;
+							if (!member) return null;
 
-							const m = {
-								url: slug ?? '',
-								name: neutral.info.name,
-								headshot: neutral.info.headshot.url,
-							};
-
-							return <MemberListItem key={neutral.id} member={m} />;
+							return <MemberListItem key={neutral.id} member={member} />;
 						})}
 					</ul>
 				</div>
