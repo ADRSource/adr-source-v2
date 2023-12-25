@@ -3,8 +3,8 @@ import type { Metadata } from 'next';
 import { DraftModeControls } from '~/components/draft-mode-controls';
 import { Footer } from '~/components/footer/footer';
 import { Navigation } from '~/components/navigation/navigation';
+import { RootHtml } from '~/components/root-html';
 import { PATHS } from '~/constants/paths.constants';
-import { gloock, inter } from '~/styles/fonts';
 import '~/styles/global.css';
 
 const TITLE = 'ADRsource';
@@ -29,21 +29,12 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
 	return (
-		<html lang="en" className={`${inter.variable} ${gloock.variable}`}>
-			<head>
-				<meta name="theme-color" content="#1B1B1B" />
-				<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-				<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
-				<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
-				<link rel="manifest" href="/site.webmanifest" />
-			</head>
-			<body className="relative isolate flex min-h-screen flex-col bg-brand-black text-brand-copper">
-				<Navigation />
-				{children}
-				<Footer />
-				<DraftModeControls />
-				<Analytics />
-			</body>
-		</html>
+		<RootHtml>
+			<Navigation />
+			{children}
+			<Footer />
+			<DraftModeControls />
+			<Analytics />
+		</RootHtml>
 	);
 }
