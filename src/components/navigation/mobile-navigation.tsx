@@ -85,6 +85,16 @@ function MobileNavigationDrawer() {
 		actions.close();
 	}, [pathname, actions]);
 
+	const handleLinkClick = React.useCallback(
+		(href: string) => {
+			// Close the drawer when a user clicks a link and the link is for the current page
+			if (href === pathname) {
+				actions.close();
+			}
+		},
+		[actions, pathname],
+	);
+
 	return (
 		<nav
 			className={twMerge(
@@ -120,17 +130,21 @@ function MobileNavigationDrawer() {
 					</header>
 					<ul>
 						<li className="border-b border-solid border-brand-copper/25 first:border-t">
-							<NavigationLink href="/about" className="block py-3">
+							<NavigationLink href="/about" onLinkClick={handleLinkClick} className="block py-3">
 								About
 							</NavigationLink>
 						</li>
 						<li className="border-b border-solid border-brand-copper/25 first:border-t">
-							<NavigationLink href="/team" className="block py-3">
+							<NavigationLink href="/team" onLinkClick={handleLinkClick} className="block py-3">
 								Team
 							</NavigationLink>
 						</li>
 						<li className="border-b border-solid border-brand-copper/25 first:border-t">
-							<NavigationLink href="/resources" className="block py-3">
+							<NavigationLink
+								href="/resources"
+								onLinkClick={handleLinkClick}
+								className="block py-3"
+							>
 								Resources
 							</NavigationLink>
 						</li>
@@ -140,6 +154,9 @@ function MobileNavigationDrawer() {
 							icon={<IconCalendar className="h-[15px] w-[15px]" />}
 							href={PATHS.schedule}
 							className="block"
+							onClick={() => {
+								handleLinkClick(PATHS.schedule);
+							}}
 						>
 							Scheduling
 						</ButtonLink>
@@ -148,7 +165,7 @@ function MobileNavigationDrawer() {
 
 				<div
 					className={twMerge(
-						'pointer-events-none absolute inset-0 isolate z-10 h-[100dvh] w-full overflow-clip debug',
+						'pointer-events-none absolute inset-0 isolate z-10 h-[100dvh] w-full overflow-clip',
 					)}
 				>
 					<div
