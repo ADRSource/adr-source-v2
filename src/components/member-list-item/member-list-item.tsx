@@ -37,27 +37,44 @@ export function MemberListItem({ member, hasSchedule = true, children }: MemberL
 				{children}
 			</div>
 			<div className="items-center opacity-100 transition-opacity stack-x-3 group-hover:opacity-100 md:opacity-25">
+				<div className="hidden md:block">
+					<IconLink
+						className="p-1 text-xs font-medium uppercase leading-none text-white transition-colors hover:text-brand-copper"
+						href={url}
+					>
+						View Bio
+					</IconLink>
+				</div>
 				{Boolean(hasSchedule) && (
 					<div className="hidden md:block">
-						<IconLink
-							className="p-1 text-xs font-medium uppercase leading-none text-white transition-colors hover:text-brand-copper"
+						<ButtonLink
 							icon={<IconCalendar className="h-[15px] w-[15px]" aria-hidden />}
 							href={{
 								pathname: url,
 								hash: 'schedule',
 							}}
+							className="leading-none"
 						>
 							Scheduling <span className="sr-only">for {member.name}</span>
-						</IconLink>
+						</ButtonLink>
 					</div>
 				)}
-				<div className="hidden md:block">
-					<ButtonLink href={url}>View Bio</ButtonLink>
-				</div>
 				<div className="md:hidden">
-					<CircleButton className="linkOverlay" href={url}>
-						<IconArrowTopRight />
-					</CircleButton>
+					{Boolean(hasSchedule) ? (
+						<CircleButton
+							className="linkOverlay"
+							href={{
+								pathname: url,
+								hash: 'schedule',
+							}}
+						>
+							<IconCalendar className="h-[15px] w-[15px]" />
+						</CircleButton>
+					) : (
+						<CircleButton className="linkOverlay" href={url}>
+							<IconArrowTopRight className="h-[15px] w-[15px]" />
+						</CircleButton>
+					)}
 				</div>
 			</div>
 		</li>
