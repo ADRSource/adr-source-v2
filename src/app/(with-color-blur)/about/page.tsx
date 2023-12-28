@@ -25,7 +25,7 @@ export default function About() {
 		<div className="isolate">
 			<main className="relative z-20 min-h-screen">
 				<div className="relative overflow-x-clip px-2 pb-7 pt-6 stack-y-6">
-					<div className="mx-auto max-w-[1058px] border-b border-brand-copper pb-6 stack-y-6">
+					<div className="mx-auto max-w-[1058px] border-b border-brand-copper pb-6 stack-y-5">
 						<h1
 							className={heading({
 								type: '3',
@@ -37,13 +37,14 @@ export default function About() {
 						<p
 							className={heading({
 								type: '5',
-								className: 'mx-auto text-center',
+								className: 'mx-auto text-center leading-tight',
 							})}
+							style={{ textTransform: 'none' }}
 						>
 							<Balancer>
-								ADRsource exclusively provides mediation and arbitration services for the resolution
-								of legal disputes. We are an independent stand-alone firm offering the services
-								provided by full-time professional neutrals{' '}
+								ADRsource is a fully independent organization designed and operated by professional
+								neutrals. We foster excellence in the field of alternative dispute resolution by
+								providing a level of service and effectiveness that sets us apart from other firms.
 							</Balancer>
 						</p>
 					</div>
