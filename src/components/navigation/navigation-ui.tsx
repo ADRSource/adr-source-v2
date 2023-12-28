@@ -1,3 +1,5 @@
+'use client';
+
 import Link from 'next/link';
 import { twMerge } from 'tailwind-merge';
 import { IconCalendar } from '~/components/icons/IconCalendar';
@@ -20,9 +22,9 @@ interface NavigationLinkProps {
 	href: string;
 	children: React.ReactNode;
 	className?: string;
-	onClick?: () => void;
+	onLinkClick?: (href: string) => void;
 }
-export function NavigationLink({ href, children, onClick, className }: NavigationLinkProps) {
+export function NavigationLink({ href, children, onLinkClick, className }: NavigationLinkProps) {
 	return (
 		<Link
 			href={href}
@@ -30,7 +32,9 @@ export function NavigationLink({ href, children, onClick, className }: Navigatio
 				'decoration-none text-center text-xs font-medium uppercase leading-none text-white',
 				className,
 			)}
-			onClick={onClick}
+			onClick={() => {
+				onLinkClick?.(href);
+			}}
 		>
 			{children}
 		</Link>
