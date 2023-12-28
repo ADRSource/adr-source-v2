@@ -136,7 +136,11 @@ function MobileNavigationDrawer() {
 						</li>
 					</ul>
 					<div className="flex justify-center">
-						<ButtonLink href={PATHS.schedule} className="block">
+						<ButtonLink
+							icon={<IconCalendar className="h-[15px] w-[15px]" />}
+							href={PATHS.schedule}
+							className="block"
+						>
 							Scheduling
 						</ButtonLink>
 					</div>
