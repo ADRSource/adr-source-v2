@@ -43,9 +43,9 @@ export default async function Team() {
 					</h1>
 
 					<div className="mx-auto w-full max-w-[1058px] stack-y-6">
-						<div className="stack-y-3">
+						<div className="stack-y-4">
 							<h2 className={heading({ type: '6' })}>Neutrals</h2>
-							<ul>
+							<ul className="relative px-3">
 								{neutralList?.neutrals.map((neutral) => {
 									const member = extractMemberFromNeutral(neutral);
 
@@ -55,9 +55,9 @@ export default async function Team() {
 								})}
 							</ul>
 						</div>
-						<div className="stack-y-3">
+						<div className="stack-y-4">
 							<h2 className={heading({ type: '6' })}>Case Managers</h2>
-							<ul className="relative">
+							<ul className="relative px-3">
 								{caseManagerList?.caseManagers.map((caseManager) => {
 									const { memberPage } = caseManager;
 									const { slug } = memberPage ?? {};
