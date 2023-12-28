@@ -8,6 +8,9 @@
 		@media (min-width: 768px) {
 			--nav-height: 78px;
 		}
+
+		/* theme.spacing-2 + var(--nav-height) */
+		--nav-spacing: calc(clamp(1rem, 1.23vw + 0.7rem, 1.5rem) + var(--nav-height));
 	}
 
 	html {
