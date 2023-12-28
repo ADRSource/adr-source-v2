@@ -50,4 +50,4 @@ export function BlockAbout() {
 	);
 }
 
-const VALUES = ['Experience Matters', 'Diligent & Dedication', 'True Neutrality'];
+const VALUES = ['Experience Matters', 'Diligent & Dedicated', 'True Neutrality'];
