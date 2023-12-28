@@ -169,9 +169,9 @@ function NeutralInfo({ member, name }: { member: MemberInfoNeutralFragment; name
 
 			{/* CASE MANAGER */}
 			{caseManager != null && (
-				<div className="stack-y-3">
+				<div className="stack-y-2">
 					<h2 className={heading({ type: '6' })}>Case Manager</h2>
-					<div className="linkBox relative flex justify-between rounded-lg border border-solid border-brand-copper/5 bg-brand-black p-2 text-base font-bold text-brand-copper">
+					<div className="linkBox relative flex justify-between rounded-lg border border-solid border-brand-copper/5 bg-brand-black p-2 text-lg font-bold text-brand-copper">
 						<p>{caseManager.info.name}</p>
 						<CircleButton
 							aria-label={`Visit ${caseManager.info.name}'s page`}
@@ -239,7 +239,7 @@ const ListItem = ({ children, className }: ListItemProps) => {
 	return (
 		<li
 			className={twMerge(
-				'rounded-lg border border-solid border-brand-copper/5 bg-brand-black p-2 text-base font-bold text-brand-copper',
+				'rounded-lg border border-solid border-brand-copper/5 bg-brand-black p-2 text-lg font-bold text-brand-copper',
 				className,
 			)}
 		>

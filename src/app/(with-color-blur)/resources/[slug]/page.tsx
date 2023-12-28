@@ -56,7 +56,7 @@ export default async function Resource({ params }: { params: { slug: string } })
 
 	return (
 		<Container>
-			<article className="pb-7 pt-6 stack-y-6">
+			<article className="pb-7 pt-6 stack-y-5">
 				<header className="stack-y-4">
 					<h1
 						className="text-center font-serif leading-none"
