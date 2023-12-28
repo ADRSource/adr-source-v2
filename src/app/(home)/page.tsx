@@ -3,7 +3,7 @@ import { getHomePage } from '~/api/home';
 import { prefetchNeutralsList } from '~/api/member';
 import { prefetchResources } from '~/api/resource';
 import { BlockAbout } from '~/components/blocks/block-about';
-import { BlockHero } from '~/components/blocks/block-hero';
+import { BlockHero } from '~/components/blocks/block-hero/block-hero';
 import { BlockResources } from '~/components/blocks/block-resources';
 import { BlockTeam } from '~/components/blocks/block-team/block-team';
 import { PATHS } from '~/constants/paths.constants';
