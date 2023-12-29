@@ -80,7 +80,7 @@ export default async function Member({ params }: { params: { member: string } })
 									priority
 									alt={`${info.name} Headshot`}
 									src={headshot.url}
-									className="bg-brand-black grayscale"
+									className="bg-brand-black contrast-125 grayscale"
 									fill
 									sizes="(max-width: 498px) 100vw, (max-width: 768px) 449px, (max-width: 1039px) 44vw, 449px"
 									style={{ objectFit: 'cover', objectPosition: 'center top' }}
