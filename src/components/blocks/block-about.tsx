@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { twMerge } from 'tailwind-merge';
 import { Container } from '~/components/container';
 import { ButtonLink } from '~/components/ui/button';
@@ -17,27 +18,31 @@ export function BlockAbout() {
 				</h2>
 				<h3 className="sr-only">Our Values</h3>
 				<ul>
-					{VALUES.map((value, index) => {
+					{VALUES.map(({ title, anchor }, index) => {
 						return (
 							<li
 								key={index}
-								className="border-b border-solid border-brand-copper py-1 first:border-t"
+								className="linkBox border-b border-solid border-brand-copper py-1 first:border-t"
 							>
-								<p
+								<Link
+									href={{
+										pathname: '/about',
+										hash: anchor,
+									}}
 									className={twMerge(
-										'mx-auto flex w-full max-w-[1324px] justify-center',
+										'linkOverlay mx-auto flex w-full max-w-[1324px] justify-center',
 										heading({ type: '5' }),
 									)}
 								>
 									<span className="block w-full px-1 md:px-2">
 										<span className="w-full items-center justify-between rounded-md bg-brand-black p-2 stack-x-1">
-											<span className="block">{value}</span>
+											<span className="block">{title}</span>
 											<span className="block font-sans text-xs tabular-nums leading-none">
 												[{index + 1}]
 											</span>
 										</span>
 									</span>
-								</p>
+								</Link>
 							</li>
 						);
 					})}
@@ -50,4 +55,8 @@ export function BlockAbout() {
 	);
 }
 
-const VALUES = ['Experience Matters', 'Diligent & Dedicated', 'True Neutrality'];
+const VALUES = [
+	{ title: 'Experience Matters', anchor: 'trial-experience-matters' },
+	{ title: 'Diligent & Dedicated', anchor: 'diligence-and-dedication' },
+	{ title: 'True Neutrality', anchor: 'true-neutrality' },
+] as const;
