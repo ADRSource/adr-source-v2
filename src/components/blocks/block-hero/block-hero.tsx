@@ -8,7 +8,7 @@ export function BlockHero() {
 		<section className="relative -mt-[var(--nav-spacing)] h-[100svh] w-full">
 			<h1 className="sr-only">ADR Source</h1>
 			<div
-				className="relative z-20 flex h-full flex-col justify-end overflow-x-clip pt-[var(--nav-spacing)]"
+				className="relative z-20 mx-auto flex h-full max-w-block flex-col justify-end overflow-x-clip pt-[var(--nav-spacing)]"
 				style={{
 					zIndex: 20,
 				}}
