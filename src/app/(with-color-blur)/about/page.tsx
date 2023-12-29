@@ -82,22 +82,22 @@ const PAGE_CONTENT = [
 	{
 		title: 'Trial experience matters',
 		body: [
-			`We believe that experienced trial lawyers are uniquely suited to be effective neutrals. This is because trial lawyers spend vast amounts of time and energy evaluating and reevaluating any given claim. It is this constancy of effort and attention to detail that allows a lawyer to refine their vision for how a judge or jury will process the presentation of a case. An effective mediator must arrive fully equipped with the capacity to appreciate the strengths and weaknesses of any given case just as a trial lawyer does. The mediator, however, must be prepared to interact with the case in a highly concentrated manner. A strong background in trial practice is a necessary foundation to allow the accelerated learning and orientation required to understand the potential inflection points in the hypothetical trial of the case in order conduct an effective mediation.`,
+			`We believe that experienced trial lawyers are uniquely suited to be effective neutrals. This is because trial lawyers spend vast amounts of time and energy evaluating and reevaluating any given claim. It is this constancy of effort and attention to detail that allows a lawyer to refine their vision for how a judge or jury will process the presentation of a case. An effective mediator must arrive fully equipped with the capacity to appreciate the strengths and weaknesses of any given case just as a trial lawyer does. The mediator, however, must be prepared to interact with the case in a highly concentrated manner. A strong background in trial practice is a necessary foundation to allow the accelerated learning and orientation required to understand the potential inflection points in the hypothetical trial of the case in order to conduct an effective mediation.`,
 			`Experience is similarly vital when serving as an arbitrator. The experience of arbitrating cases as a litigator provides unique insight for adjudicating disputes in a manner that is both fair and legally coherent.`,
-			`Our neutrals have vast trial experience. We have collectively tried hundreds of cases including jury and bench trials, arbitrations and appellate proceedings in both the federal and state court systems, even including successful argument before the United States Supreme Court. While we are all now full time neutrals, we carry our trial credentials into every assignment.`,
+			`Our neutrals have vast trial experience. We have collectively tried hundreds of cases including jury and bench trials, arbitrations and appellate proceedings in both the federal and state court systems, even including successful argument before the United States Supreme Court. While we are all now full-time neutrals, we carry our trial credentials into every assignment.`,
 		],
 	},
 	{
 		title: 'Diligence & dedication',
 		body: [
 			`There are many points within a mediation where the parties perceive that settlement will not be possible. In fact, there are many occasions wherein one or more of the parties suggests that the process is a waste of time. These expressions of futility are often accompanied by an assessment that the other side is unreasonable in their assessment of the case.`,
-			`This could certainly tempt the mediator to decide that perhaps an impasse is warranted. However, it is the role of the mediator to find a way to interject energy and creativity into the process in order to move through even the most challenging chapters of a negotiation. We understand that it is in these difficult moments where a mediator adds the most value to the process.`,
+			`This could certainly tempt the mediator to decide that perhaps an impasse is warranted. However, it is the role of the mediator to find a way to interject energy and creativity into the process in order to move through the most challenging chapters of a negotiation. It is in these difficult moments where a mediator adds the most value to the process.`,
 		],
 	},
 	{
 		title: 'True neutrality',
 		body: [
-			`ADRsource is a fully neutral organization. Founded by full time neutrals and operated for and by full time neutrals. In this era where alternative dispute resolution firms are sometimes owned and operated by larger corporate interests, ADRsource remains an independent stand-alone firm of neutrals.`,
+			`ADRsource is a fully neutral organization founded by full-time neutrals and operated for and by full-time neutrals. In this era where alternative dispute resolution firms are sometimes owned and operated by larger corporate interests, ADRsource remains an independent stand-alone firm of neutrals.`,
 		],
 	},
 ] as const;
