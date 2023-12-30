@@ -117,7 +117,13 @@ function MobileNavigationDrawer() {
 			<FocusScope restoreFocus contain={isOpen}>
 				<div className="relative z-20 flex h-full flex-col justify-between px-2 pb-5 pt-3">
 					<header className="relative flex justify-end p-1">
-						<Link href={PATHS.home} className="absolute left-1 inset-y-center">
+						<Link
+							href={PATHS.home}
+							onClick={() => {
+								handleLinkClick(PATHS.home);
+							}}
+							className="absolute left-1 inset-y-center"
+						>
 							<IconLogo className="h-[25px] w-auto" />
 							<span className="sr-only">Home</span>
 						</Link>
