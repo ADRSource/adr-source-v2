@@ -2,14 +2,12 @@
 
 import { motion } from 'framer-motion';
 import useMeasure from 'react-use-measure';
-import { useMediaQuery } from '~/hooks/use-media-query';
 
 const REPEAT_COUNT = 10;
 
 export function Marquee({ text }: { text: string }) {
 	const textRepeat = text.repeat(REPEAT_COUNT);
 	const [textMeasureRef, { width }] = useMeasure({ debounce: 100 });
-	const isMobile = useMediaQuery('(max-width: 640px)');
 
 	return (
 		<div className="relative z-10 col-span-full row-span-full h-full w-full select-none overflow-hidden">
@@ -26,7 +24,7 @@ export function Marquee({ text }: { text: string }) {
 					x: [0, -width],
 					transition: {
 						x: {
-							duration: isMobile ? 120 : 300,
+							duration: 300,
 							repeat: Infinity,
 							repeatType: 'loop',
 							ease: 'linear',
