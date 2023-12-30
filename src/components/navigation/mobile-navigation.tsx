@@ -1,6 +1,7 @@
 'use client';
 
 import { FocusScope } from '@react-aria/focus';
+import { usePreventScroll } from '@react-aria/overlays';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import * as React from 'react';
@@ -79,6 +80,10 @@ function MobileNavigationDrawer() {
 				break;
 		}
 	}
+
+	usePreventScroll({
+		isDisabled: !isOpen,
+	});
 
 	React.useEffect(() => {
 		// Close the drawer when the route changes
