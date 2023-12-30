@@ -81,6 +81,9 @@ function MobileNavigationDrawer() {
 		}
 	}
 
+	/**
+	 * We want to make sure that the user can't scroll the page when the drawer is open.
+	 */
 	usePreventScroll({
 		isDisabled: !isOpen,
 	});
