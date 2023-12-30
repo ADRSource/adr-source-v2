@@ -37,9 +37,6 @@ export function BlockAbout() {
 									<span className="block w-full px-1 md:px-2">
 										<span className="w-full items-center justify-between rounded-md bg-brand-black p-2 stack-x-1">
 											<span className="block">{title}</span>
-											<span className="block font-sans text-xs tabular-nums leading-none">
-												[{index + 1}]
-											</span>
 										</span>
 									</span>
 								</Link>
