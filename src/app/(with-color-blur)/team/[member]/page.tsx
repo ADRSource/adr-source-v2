@@ -189,6 +189,18 @@ function NeutralInfo({ member, name }: { member: MemberInfoNeutralFragment; name
 				<h2 className={heading({ type: '6' })}>Areas of focus</h2>
 				<ul className="grid grid-cols-2 gap-x-2 gap-y-1">
 					{focusAreas.map((area) => {
+						// We use a magic character (~) to denote a list item that should be styled differently. The character is removed before rendering.
+						// * This is to fill the request from the client to have a list item that is bolded and uppercase.
+						// * A better and more declarative solution would be to use an object or rich text to denote the styling.
+						const MAGIC_CHAR = '~';
+						if (area.startsWith(MAGIC_CHAR)) {
+							return (
+								<li key={area}>
+									<p className="text-sm font-bold uppercase">{area.slice(1)}</p>
+								</li>
+							);
+						}
+
 						return (
 							<li key={area}>
 								<p className="text-sm">{area}</p>
