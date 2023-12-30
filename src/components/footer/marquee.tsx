@@ -10,7 +10,7 @@ export function Marquee({ text }: { text: string }) {
 	const [textMeasureRef, { width }] = useMeasure({ debounce: 100 });
 
 	return (
-		<div className="relative z-10 col-span-full row-span-full h-full w-full select-none overflow-hidden">
+		<div className="relative z-10 col-span-full row-span-full h-full w-full select-none overflow-x-clip">
 			<p
 				aria-hidden
 				className="leading-0 invisible whitespace-nowrap text-center font-serif text-[max(128px,14.5vw)] leading-none"
