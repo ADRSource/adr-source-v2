@@ -3,7 +3,7 @@ import { PATHS } from '~/constants/paths.constants';
 import { ButtonLink } from '../ui/button';
 import { Marquee } from './marquee';
 
-const MARQUEE_TEXT = ['Experienced', 'Trusted', 'Neutral', 'Diligent', 'Persistent'].join(' · ');
+const MARQUEE_TEXT = ['Experienced', 'Trusted', 'Neutral', 'Diligent'].join(' · ');
 
 export function CallToAction() {
 	return (
