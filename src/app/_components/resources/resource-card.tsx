@@ -40,7 +40,8 @@ export function ResourceCard({
 						size="small"
 						className="linkOverlay opacity-25 transition-opacity group-hover:opacity-100"
 					>
-						<IconArrowTopRight />
+						<span className="sr-only">Navigate to: {title}</span>
+						<IconArrowTopRight aria-hidden />
 					</CircleButton>
 				</Card>
 			);
@@ -68,6 +69,7 @@ export function ResourceCard({
 						target="_blank"
 						rel="noopener noreferrer"
 					>
+						<span className="sr-only">Navigate to: {title}</span>
 						<IconExternalLink aria-hidden />
 					</CircleButton>
 				</Card>

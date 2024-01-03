@@ -45,7 +45,10 @@ export function BlockAbout() {
 					})}
 				</ul>
 				<div className="flex justify-center">
-					<ButtonLink href="/about">Learn More</ButtonLink>
+					<ButtonLink href="/about">
+						<span className="sr-only">Visit About Page</span>
+						<span aria-hidden>Learn More</span>
+					</ButtonLink>
 				</div>
 			</div>
 		</Container>
