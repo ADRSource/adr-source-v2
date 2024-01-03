@@ -12,7 +12,7 @@ const DESCRIPTION = `ADR Source is a company that provides mediation and alterna
 
 export const metadata: Metadata = {
 	metadataBase: new URL(PATHS.absolute),
-	robots: 'noindex, nofollow', // TODO: change this to 'index, follow' when the site is ready
+	robots: 'follow, index',
 	title: {
 		template: `%s - ${TITLE}`,
 		default: TITLE,
