@@ -8,9 +8,9 @@ import { CallToAction } from './call-to-action';
 export function Footer() {
 	return (
 		<footer className="z-10 w-full px-2 pb-2 selection:bg-brand-black/80 selection:text-brand-copper">
-			<div className="rounded-lg bg-brand-copper pb-4 pt-5 text-brand-black md:pt-6">
+			<div className="rounded-lg bg-brand-copper pt-5 text-brand-black md:pt-6">
 				<CallToAction />
-				<div className="justify-between px-2 pt-5 stack-y-3 md:px-4 md:pt-6 md:stack-x-3">
+				<div className="justify-between px-2 py-5 stack-y-3 md:px-4 md:py-6 md:stack-x-3">
 					<FooterListSection title="Navigate">
 						<FooterList>
 							<FooterListItem>
@@ -54,6 +54,11 @@ export function Footer() {
 						</FooterList>
 					</FooterListSection>
 				</div>
+
+				{/* TAGLINE */}
+				<p className="font-base border-t border-solid border-brand-black/25 px-2 py-2 text-center font-sans font-medium">
+					Solving the world&apos;s problems&hellip;one case at a time.
+				</p>
 			</div>
 		</footer>
 	);

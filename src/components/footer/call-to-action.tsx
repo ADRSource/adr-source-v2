@@ -7,7 +7,7 @@ const MARQUEE_TEXT = ['Experienced', 'Trusted', 'Neutral', 'Diligent'].join(' ·
 
 export function CallToAction() {
 	return (
-		<div className="grid grid-cols-1 grid-rows-1 place-items-center border-y border-brand-black py-2">
+		<div className="grid grid-cols-1 grid-rows-1 place-items-center border-y border-brand-black/25 py-2">
 			<Marquee text={MARQUEE_TEXT + ' · '} />
 			<div className="relative z-20 col-span-full row-span-full">
 				<ButtonLink href={PATHS.schedule} icon={<IconCalendar />} size="large" outline="black">
