@@ -57,7 +57,7 @@ export function Footer() {
 
 				{/* TAGLINE */}
 				<p className="font-base border-t border-solid border-brand-black/25 px-2 py-2 text-center font-sans font-medium">
-					Solving the world&apos;s problems&hellip;one case at a time.
+					Solving the world&apos;s problems&hellip;one case at a time
 				</p>
 			</div>
 		</footer>
