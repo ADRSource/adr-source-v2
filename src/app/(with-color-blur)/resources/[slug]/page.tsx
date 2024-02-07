@@ -84,12 +84,10 @@ export default async function Resource({ params }: { params: { slug: string } })
 					</div>
 				</header>
 				<section className="flex flex-col items-center">
-					<div>
-						<RichText
-							content={resourceContent.json as RichTextContent}
-							references={resourceContent.references}
-						/>
-					</div>
+					<RichText
+						content={resourceContent.json as RichTextContent}
+						references={resourceContent.references}
+					/>
 				</section>
 			</article>
 		</Container>
