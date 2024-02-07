@@ -2,6 +2,7 @@ import { RichText as HygraphRichText } from '@graphcms/rich-text-react-renderer'
 import { EmbedReferences, RichTextContent } from '@graphcms/rich-text-types';
 import Image from 'next/image';
 import Link from 'next/link';
+import { twMerge } from 'tailwind-merge';
 import { text } from '~/components/ui/text';
 import { PATHS } from '~/constants/paths.constants';
 import styles from './rich-text.module.css';
@@ -14,7 +15,7 @@ export function RichText({
 	references: EmbedReferences;
 }) {
 	return (
-		<div className={styles.root}>
+		<div className={twMerge(styles.root, 'flex w-full flex-col items-center')}>
 			<HygraphRichText
 				content={content}
 				renderers={{
