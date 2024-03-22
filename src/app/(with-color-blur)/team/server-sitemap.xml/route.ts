@@ -17,7 +17,7 @@ export async function GET() {
 		[...(neutrals ?? []), ...(caseManagers ?? [])].map((member) => {
 			const { memberPage } = member;
 			return {
-				loc: `${PATHS.absolute}${PATHS.team}/${memberPage?.slug}`,
+				loc: `${PATHS.absolute}${PATHS.team}/${memberPage?.slug ?? ''}`,
 				changefreq: 'daily',
 				priority: 0.7,
 				lastmod: new Date().toISOString(),

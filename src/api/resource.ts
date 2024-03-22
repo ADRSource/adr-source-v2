@@ -3,7 +3,8 @@ import { cmsRequest } from '~/graphql/cms';
 const RESOURCES_TAGS = {
 	resources: 'GetResourcesPage' as const,
 	resource: (slug: string) => `GetInternalResourceBySlug:${slug}` as const,
-	list: (first: number, skip: number) => `GetResources-first:${first}-skip:${skip}` as const,
+	list: (first: number, skip: number) =>
+		`GetResources-first:${first.toString()}-skip:${skip.toString()}` as const,
 };
 
 export function getResourcesPage() {

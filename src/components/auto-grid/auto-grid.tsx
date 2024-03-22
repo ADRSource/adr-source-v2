@@ -18,7 +18,7 @@ export const AutoGrid = React.forwardRef<HTMLDivElement, AutoGridProps>(
 	) => {
 		const noGapX = gapX == undefined;
 		const noGapXStyles = {
-			gridTemplateColumns: `repeat(auto-fill, minmax(max(var(--grid-item-min-width), calc(100% / ${count})), 1fr))`,
+			gridTemplateColumns: `repeat(auto-fill, minmax(max(var(--grid-item-min-width), calc(100% / ${count.toString()})), 1fr))`,
 		};
 		// Measuring if actual width of container is below the min width.
 		// if so, then we want to set gtc to 1fr
@@ -32,7 +32,7 @@ export const AutoGrid = React.forwardRef<HTMLDivElement, AutoGridProps>(
 						{
 							...style,
 							'--grid-column-count': count,
-							'--grid-item-min-width': `${itemMinWidth}px`,
+							'--grid-item-min-width': `${itemMinWidth.toString()}px`,
 							'--grid-layout-gap-x': gapX ?? '0',
 							'--grid-layout-gap-y': gapY,
 							...(noGapX ? noGapXStyles : {}),

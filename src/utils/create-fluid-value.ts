@@ -44,11 +44,11 @@ function getPreferredValue(
 		(minScreenSize * maxSize - maxScreenSize * minSize) / (minScreenSize - maxScreenSize),
 	);
 
-	return `${vwCalc}vw + ${pxToRem(remCalc)}`;
+	return `${vwCalc.toString()}vw + ${pxToRem(remCalc)}`;
 }
 
 function pxToRem(px: number | string) {
-	return `${cleanNumber(Number(px) / HTML_FONT_SIZE)}rem`;
+	return `${cleanNumber(Number(px) / HTML_FONT_SIZE).toString()}rem`;
 }
 
 /**

@@ -46,12 +46,12 @@ export function Slideshow({ urls }: SlideshowProps) {
 						key={url}
 						className="absolute inset-0 transition-opacity"
 						style={{
-							transitionDuration: `${TRANSITION_DURATION}ms`,
+							transitionDuration: `${TRANSITION_DURATION.toString()}ms`,
 							opacity: isCurrent && !isTransitioning ? 1 : 0,
 						}}
 					>
 						<NextImage
-							alt={`Slideshow Image ${index}`}
+							alt={`Slideshow Image ${index.toString()}`}
 							src={url}
 							fill
 							priority={isCurrent}
