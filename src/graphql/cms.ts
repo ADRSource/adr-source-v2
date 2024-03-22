@@ -7,7 +7,7 @@ import { getSdk } from '~/graphql/generated/cms.generated';
 function getAuthHeader() {
 	const { isEnabled } = draftMode();
 
-	return `Bearer ${isEnabled ? process.env.CMS_PREVIEW_TOKEN : process.env.CMS_PROD_TOKEN}`;
+	return `Bearer ${isEnabled ? process.env.CMS_PREVIEW_TOKEN! : process.env.CMS_PROD_TOKEN!}`;
 }
 
 function getClient({ next }: { next?: NextFetchRequestConfig }) {

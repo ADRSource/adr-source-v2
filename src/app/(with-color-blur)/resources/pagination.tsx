@@ -61,7 +61,7 @@ export function Pagination({ pageSize, paramKey, siblingCount, searchParams }: P
 										);
 									else
 										return (
-											<li key={`ellipsis-${i}`}>
+											<li key={`ellipsis-${i.toString()}`}>
 												<span>&#8230;</span>
 											</li>
 										);
