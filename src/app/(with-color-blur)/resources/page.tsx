@@ -9,8 +9,6 @@ import { heading } from '~/components/ui/text';
 import { PATHS } from '~/constants/paths.constants';
 import { getMetadataFromSeo } from '~/utils/seo';
 
-export const revalidate = 300; // 5 minutes
-
 export async function generateMetadata(): Promise<Metadata> {
 	try {
 		const data = await getResourcesPage();

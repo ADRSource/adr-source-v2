@@ -1,9 +1,10 @@
 import { cmsRequest } from '~/graphql/cms';
 
 const MEMBER_TAGS = {
-	member: (slug: string) => `GetMemberPageBySlug:${slug}` as const,
-	neutralsList: 'GetNeutralList' as const,
-	caseManagersList: 'GetCaseManagerList' as const,
+	all: ['member'],
+	member: (slug: string) => [...MEMBER_TAGS.all, `member:${slug}`],
+	neutralsList: () => [...MEMBER_TAGS.all, 'neutralsList'],
+	caseManagersList: () => [...MEMBER_TAGS.all, 'caseManagersList'],
 };
 
 export function prefetchNeutralsList() {
@@ -13,7 +14,7 @@ export function prefetchNeutralsList() {
 export function getNeutralsList() {
 	return cmsRequest({
 		next: {
-			tags: [MEMBER_TAGS.neutralsList],
+			tags: MEMBER_TAGS.neutralsList(),
 		},
 	}).GetNeutralList();
 }
@@ -21,7 +22,7 @@ export function getNeutralsList() {
 export function getCaseManagersList() {
 	return cmsRequest({
 		next: {
-			tags: [MEMBER_TAGS.caseManagersList],
+			tags: MEMBER_TAGS.caseManagersList(),
 		},
 	}).GetCaseManagerList();
 }
@@ -29,7 +30,7 @@ export function getCaseManagersList() {
 export function getMemberPageBySlug(slug: string) {
 	return cmsRequest({
 		next: {
-			tags: [MEMBER_TAGS.member(slug)],
+			tags: MEMBER_TAGS.member(slug),
 		},
 	}).GetMemberPageBySlug({
 		slug,
