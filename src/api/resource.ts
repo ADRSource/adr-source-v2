@@ -2,6 +2,7 @@ import { cmsRequest } from '~/graphql/cms';
 
 const RESOURCES_TAGS = {
 	all: ['resources'],
+	resource: (slug: string) => [...RESOURCES_TAGS.all, `resource:${slug}`],
 	list: (first: number, skip: number) => [
 		...RESOURCES_TAGS.all,
 		`resources-first:${first.toString()}-skip:${skip.toString()}`,
@@ -31,7 +32,7 @@ export function getResources(first = 12, skip = 0) {
 export function getInternalResourceBySlug(slug: string) {
 	return cmsRequest({
 		next: {
-			tags: [`resource:${slug}`],
+			tags: RESOURCES_TAGS.resource(slug),
 		},
 	}).GetInternalResourceBySlug({ slug });
 }
