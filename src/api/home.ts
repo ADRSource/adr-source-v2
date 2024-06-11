@@ -1,9 +1,12 @@
+import { unstable_cache } from 'next/cache';
 import { cmsRequest } from '~/graphql/cms';
 
-export function getHomePage() {
-	return cmsRequest({
-		next: {
-			tags: ['home'],
-		},
-	}).GetHomePage();
-}
+export const getHomePage = unstable_cache(
+	() => {
+		return cmsRequest().GetHomePage();
+	},
+	['home'],
+	{
+		tags: ['home'],
+	},
+);

@@ -1,9 +1,12 @@
+import { unstable_cache } from 'next/cache';
 import { cmsRequest } from '~/graphql/cms';
 
-export function getSchedulePage() {
-	return cmsRequest({
-		next: {
-			tags: ['schedule'],
-		},
-	}).GetSchedulePage();
-}
+export const getSchedulePage = unstable_cache(
+	() => {
+		return cmsRequest().GetSchedulePage();
+	},
+	['schedule'],
+	{
+		tags: ['schedule'],
+	},
+);

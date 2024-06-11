@@ -1,3 +1,4 @@
+import { unstable_cache } from 'next/cache';
 import { cmsRequest } from '~/graphql/cms';
 
 const RESOURCES_TAGS = {
@@ -9,30 +10,38 @@ const RESOURCES_TAGS = {
 	],
 };
 
-export function getResourcesPage() {
-	return cmsRequest({
-		next: {
-			tags: RESOURCES_TAGS.all,
-		},
-	}).GetResourcesPage();
-}
+export const getResourcesPage = unstable_cache(
+	() => {
+		return cmsRequest().GetResourcesPage();
+	},
+	RESOURCES_TAGS.all,
+	{
+		tags: RESOURCES_TAGS.all,
+	},
+);
 
 export function prefetchResources(first = 12, skip = 0) {
 	return getResources(first, skip);
 }
 
-export function getResources(first = 12, skip = 0) {
-	return cmsRequest({
-		next: {
+export const getResources = (first = 12, skip = 0) =>
+	unstable_cache(
+		(first: number, skip: number) => {
+			return cmsRequest().GetResources({ first, skip });
+		},
+		RESOURCES_TAGS.list(first, skip),
+		{
 			tags: RESOURCES_TAGS.list(first, skip),
 		},
-	}).GetResources({ first, skip });
-}
+	)(first, skip);
 
-export function getInternalResourceBySlug(slug: string) {
-	return cmsRequest({
-		next: {
+export const getInternalResourceBySlug = (slug: string) =>
+	unstable_cache(
+		(slug: string) => {
+			return cmsRequest().GetInternalResourceBySlug({ slug });
+		},
+		RESOURCES_TAGS.resource(slug),
+		{
 			tags: RESOURCES_TAGS.resource(slug),
 		},
-	}).GetInternalResourceBySlug({ slug });
-}
+	)(slug);
