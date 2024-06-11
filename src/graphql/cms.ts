@@ -10,7 +10,7 @@ function getAuthHeader() {
 	return `Bearer ${isEnabled ? process.env.CMS_PREVIEW_TOKEN! : process.env.CMS_PROD_TOKEN!}`;
 }
 
-const client = new GraphQLClient(CMS_URL);
+const client = new GraphQLClient(CMS_URL, { fetch });
 
 export function cmsRequest() {
 	return getSdk(client.setHeader('Authorization', getAuthHeader()));
