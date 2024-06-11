@@ -1,3 +1,4 @@
+import { unstable_cache } from 'next/cache';
 import { cmsRequest } from '~/graphql/cms';
 
 const MEMBER_TAGS = {
@@ -11,28 +12,35 @@ export function prefetchNeutralsList() {
 	return getNeutralsList();
 }
 
-export function getNeutralsList() {
-	return cmsRequest({
-		next: {
-			tags: MEMBER_TAGS.neutralsList(),
-		},
-	}).GetNeutralList();
-}
+export const getNeutralsList = unstable_cache(
+	() => {
+		return cmsRequest().GetNeutralList();
+	},
+	MEMBER_TAGS.neutralsList(),
+	{
+		tags: MEMBER_TAGS.neutralsList(),
+	},
+);
 
-export function getCaseManagersList() {
-	return cmsRequest({
-		next: {
-			tags: MEMBER_TAGS.caseManagersList(),
-		},
-	}).GetCaseManagerList();
-}
+export const getCaseManagersList = unstable_cache(
+	() => {
+		return cmsRequest().GetCaseManagerList();
+	},
+	MEMBER_TAGS.caseManagersList(),
+	{
+		tags: MEMBER_TAGS.caseManagersList(),
+	},
+);
 
-export function getMemberPageBySlug(slug: string) {
-	return cmsRequest({
-		next: {
+export const getMemberPageBySlug = (slug: string) =>
+	unstable_cache(
+		(slug: string) => {
+			return cmsRequest().GetMemberPageBySlug({
+				slug,
+			});
+		},
+		MEMBER_TAGS.member(slug),
+		{
 			tags: MEMBER_TAGS.member(slug),
 		},
-	}).GetMemberPageBySlug({
-		slug,
-	});
-}
+	)(slug);

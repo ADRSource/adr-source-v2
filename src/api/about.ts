@@ -1,9 +1,12 @@
+import { unstable_cache } from 'next/cache';
 import { cmsRequest } from '~/graphql/cms';
 
-export function getAboutPage() {
-	return cmsRequest({
-		next: {
-			tags: ['about'],
-		},
-	}).GetAboutPage();
-}
+export const getAboutPage = unstable_cache(
+	() => {
+		return cmsRequest().GetAboutPage();
+	},
+	['about'],
+	{
+		tags: ['about'],
+	},
+);
