@@ -2,8 +2,8 @@ import { unstable_cache } from 'next/cache';
 import { cmsRequest } from '~/graphql/cms';
 
 export const getSchedulePage = unstable_cache(
-	() => {
-		return cmsRequest().GetSchedulePage();
+	(preview: boolean) => {
+		return cmsRequest(preview).GetSchedulePage();
 	},
 	['schedule'],
 	{

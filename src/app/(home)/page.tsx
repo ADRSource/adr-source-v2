@@ -1,4 +1,5 @@
 import { Metadata } from 'next';
+import { draftMode } from 'next/headers';
 import { getHomePage } from '~/api/home';
 import { prefetchNeutralsList } from '~/api/member';
 import { prefetchResources } from '~/api/resource';
@@ -11,7 +12,8 @@ import { getMetadataFromSeo } from '~/utils/seo';
 
 export async function generateMetadata(): Promise<Metadata> {
 	try {
-		const data = await getHomePage();
+		const preview = draftMode().isEnabled;
+		const data = await getHomePage(preview);
 		const { seo } = data.homePage ?? {};
 
 		return getMetadataFromSeo(PATHS.absolute, seo);
@@ -23,8 +25,9 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function Home() {
-	const _neutralsPrefetch = await prefetchNeutralsList();
-	const _resourcesPrefetch = await prefetchResources(3);
+	const preview = draftMode().isEnabled;
+	const _neutralsPrefetch = await prefetchNeutralsList(preview);
+	const _resourcesPrefetch = await prefetchResources(3, undefined, preview);
 
 	return (
 		<main className="min-h-screen">

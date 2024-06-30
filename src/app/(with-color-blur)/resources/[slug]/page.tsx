@@ -1,5 +1,6 @@
 import { RichTextContent } from '@graphcms/rich-text-types';
 import { Metadata } from 'next';
+import { draftMode } from 'next/headers';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import Balancer from 'react-wrap-balancer';
@@ -15,8 +16,9 @@ export async function generateMetadata({
 }: {
 	params: { slug: string };
 }): Promise<Metadata> {
+	const preview = draftMode().isEnabled;
 	try {
-		const data = await getInternalResourceBySlug(params.slug);
+		const data = await getInternalResourceBySlug(params.slug, preview);
 
 		if (!data.internalResource) return {};
 
@@ -35,7 +37,8 @@ export async function generateMetadata({
 }
 
 export default async function Resource({ params }: { params: { slug: string } }) {
-	const data = await getInternalResourceBySlug(params.slug);
+	const preview = draftMode().isEnabled;
+	const data = await getInternalResourceBySlug(params.slug, preview);
 
 	if (!data.internalResource) {
 		return notFound();

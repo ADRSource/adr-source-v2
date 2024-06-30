@@ -1,4 +1,5 @@
 import { Metadata } from 'next';
+import { draftMode } from 'next/headers';
 import { twMerge } from 'tailwind-merge';
 import { getSchedulePage } from '~/api/schedule';
 import { Container } from '~/components/container';
@@ -9,8 +10,9 @@ import { getMetadataFromSeo } from '~/utils/seo';
 import styles from './page.module.css';
 
 export async function generateMetadata(): Promise<Metadata> {
+	const preview = draftMode().isEnabled;
 	try {
-		const data = await getSchedulePage();
+		const data = await getSchedulePage(preview);
 		const { seo } = data.schedulePage ?? {};
 		return getMetadataFromSeo(`${PATHS.absolute}${PATHS.schedule}`, seo);
 	} catch (_error) {

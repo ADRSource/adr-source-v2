@@ -1,4 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
+import { draftMode } from 'next/headers';
 import { getMemberPageBySlug } from '~/api/member';
 import { ogImageDefault } from '~/app/_utils/og-image-default';
 import { ogImageTemplate } from '~/app/_utils/og-image-template';
@@ -14,8 +15,9 @@ export const size = {
 export const contentType = 'image/png';
 
 export default async function Image({ params }: { params: { member: string } }) {
+	const preview = draftMode().isEnabled;
 	const { member } = params;
-	const data = await getMemberPageBySlug(member);
+	const data = await getMemberPageBySlug(member, preview);
 	const { memberPage } = data;
 
 	if (!memberPage?.member) {

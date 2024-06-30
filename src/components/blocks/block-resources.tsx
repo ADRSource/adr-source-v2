@@ -1,3 +1,4 @@
+import { draftMode } from 'next/headers';
 import { getResources } from '~/api/resource';
 import { ResourceCard } from '~/app/_components/resources/resource-card';
 import { AutoGrid } from '~/components/auto-grid/auto-grid';
@@ -6,7 +7,8 @@ import { ButtonLink } from '~/components/ui/button';
 import { heading } from '~/components/ui/text';
 
 export async function BlockResources() {
-	const data = await getResources(3);
+	const preview = draftMode().isEnabled;
+	const data = await getResources(3, undefined, preview);
 	const { resources } = data;
 
 	return (

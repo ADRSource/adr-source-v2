@@ -1,11 +1,13 @@
 import { getServerSideSitemap } from 'next-sitemap';
+import { draftMode } from 'next/headers';
 import { getResources } from '~/api/resource';
 import { PATHS } from '~/constants/paths.constants';
 
 // TODO: should be recursive in the future but tbh we don't have that many resources anyway
 export async function GET() {
+	const preview = draftMode().isEnabled;
 	// Method to source urls from cms
-	const data = await getResources(1000, 0);
+	const data = await getResources(1000, 0, preview);
 	const { resources } = data;
 
 	return getServerSideSitemap(
