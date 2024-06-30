@@ -1,5 +1,6 @@
 import { unstable_cache } from 'next/cache';
 import { cmsRequest } from '~/graphql/cms';
+import { throttle } from '~/utils/throttle';
 
 const RESOURCES_TAGS = {
 	all: ['resources'],
@@ -10,38 +11,26 @@ const RESOURCES_TAGS = {
 	],
 };
 
-export const getResourcesPage = unstable_cache(
-	(preview: boolean) => {
-		return cmsRequest(preview).GetResourcesPage();
-	},
-	RESOURCES_TAGS.all,
-	{
-		tags: RESOURCES_TAGS.all,
-	},
-);
+const throttledGetResourcesPage = throttle((preview: boolean) => {
+	return cmsRequest(preview).GetResourcesPage();
+});
+export const getResourcesPage = unstable_cache(throttledGetResourcesPage, RESOURCES_TAGS.all, {
+	tags: RESOURCES_TAGS.all,
+});
 
-export function prefetchResources(first = 12, skip = 0, preview: boolean) {
-	return getResources(first, skip, preview);
-}
+const throttledGetResources = throttle((first: number, skip: number, preview: boolean) => {
+	return cmsRequest(preview).GetResources({ first, skip });
+});
+export const getResources = (first = 12, skip = 0, preview: boolean) => {
+	return unstable_cache(throttledGetResources, RESOURCES_TAGS.list(first, skip), {
+		tags: RESOURCES_TAGS.list(first, skip),
+	})(first, skip, preview);
+};
 
-export const getResources = (first = 12, skip = 0, preview: boolean) =>
-	unstable_cache(
-		(first: number, skip: number, preview: boolean) => {
-			return cmsRequest(preview).GetResources({ first, skip });
-		},
-		RESOURCES_TAGS.list(first, skip),
-		{
-			tags: RESOURCES_TAGS.list(first, skip),
-		},
-	)(first, skip, preview);
-
+const throttledGetInternalResourceBySlug = throttle((slug: string, preview: boolean) => {
+	return cmsRequest(preview).GetInternalResourceBySlug({ slug });
+});
 export const getInternalResourceBySlug = (slug: string, preview: boolean) =>
-	unstable_cache(
-		(slug: string, preview: boolean) => {
-			return cmsRequest(preview).GetInternalResourceBySlug({ slug });
-		},
-		RESOURCES_TAGS.resource(slug),
-		{
-			tags: RESOURCES_TAGS.resource(slug),
-		},
-	)(slug, preview);
+	unstable_cache(throttledGetInternalResourceBySlug, RESOURCES_TAGS.resource(slug), {
+		tags: RESOURCES_TAGS.resource(slug),
+	})(slug, preview);

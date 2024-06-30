@@ -1,12 +1,10 @@
 import { unstable_cache } from 'next/cache';
 import { cmsRequest } from '~/graphql/cms';
+import { throttle } from '~/utils/throttle';
 
-export const getSchedulePage = unstable_cache(
-	(preview: boolean) => {
-		return cmsRequest(preview).GetSchedulePage();
-	},
-	['schedule'],
-	{
-		tags: ['schedule'],
-	},
-);
+const throttledGetSchedulePage = throttle((preview: boolean) => {
+	return cmsRequest(preview).GetSchedulePage();
+});
+export const getSchedulePage = unstable_cache(throttledGetSchedulePage, ['schedule'], {
+	tags: ['schedule'],
+});
