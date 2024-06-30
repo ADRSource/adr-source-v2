@@ -1,4 +1,5 @@
 import { Metadata } from 'next';
+import { draftMode } from 'next/headers';
 import { getCaseManagersList, getNeutralsList } from '~/api/member';
 import { getTeamPage } from '~/api/team';
 import { extractMemberFromNeutral } from '~/components/member-list-item/extract-member-neutral';
@@ -8,8 +9,9 @@ import { PATHS } from '~/constants/paths.constants';
 import { getMetadataFromSeo } from '~/utils/seo';
 
 export async function generateMetadata(): Promise<Metadata> {
+	const preview = draftMode().isEnabled;
 	try {
-		const data = await getTeamPage();
+		const data = await getTeamPage(preview);
 		const { seo } = data.teamPage ?? {};
 		return getMetadataFromSeo(`${PATHS.absolute}${PATHS.team}`, seo);
 	} catch (_error) {
@@ -20,9 +22,10 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function Team() {
+	const preview = draftMode().isEnabled;
 	const [neutralsResult, caseManagersResult] = await Promise.all([
-		getNeutralsList(),
-		getCaseManagersList(),
+		getNeutralsList(preview),
+		getCaseManagersList(preview),
 	]);
 	const { neutralList } = neutralsResult;
 	const { caseManagerList } = caseManagersResult;

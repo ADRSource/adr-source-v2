@@ -6,8 +6,8 @@ export const TEAM_TAGS = {
 };
 
 export const getTeamPage = unstable_cache(
-	() => {
-		return cmsRequest().GetTeamPage();
+	(preview: boolean) => {
+		return cmsRequest(preview).GetTeamPage();
 	},
 	TEAM_TAGS.all,
 	{

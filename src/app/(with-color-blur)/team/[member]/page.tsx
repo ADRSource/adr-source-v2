@@ -1,6 +1,7 @@
 import { RichText } from '@graphcms/rich-text-react-renderer';
 import type { RichTextContent } from '@graphcms/rich-text-types';
 import { Metadata } from 'next';
+import { draftMode } from 'next/headers';
 import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
@@ -23,8 +24,9 @@ export async function generateMetadata({
 }: {
 	params: { member: string };
 }): Promise<Metadata> {
+	const preview = draftMode().isEnabled;
 	try {
-		const data = await getMemberPageBySlug(params.member);
+		const data = await getMemberPageBySlug(params.member, preview);
 
 		if (!data.memberPage) return {};
 
@@ -40,7 +42,8 @@ export async function generateMetadata({
 type Role = NonNullable<MemberPageMember['__typename']>;
 
 export default async function Member({ params }: { params: { member: string } }) {
-	const data = await getMemberPageBySlug(params.member);
+	const preview = draftMode().isEnabled;
+	const data = await getMemberPageBySlug(params.member, preview);
 
 	if (!data.memberPage) {
 		return notFound();

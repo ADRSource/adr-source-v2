@@ -1,3 +1,4 @@
+import { draftMode } from 'next/headers';
 import { getNeutralsList } from '~/api/member';
 import { Container } from '~/components/container';
 import { extractMemberFromNeutral } from '~/components/member-list-item/extract-member-neutral';
@@ -5,7 +6,8 @@ import { MemberListItem } from '~/components/member-list-item/member-list-item';
 import { heading } from '~/components/ui/text';
 
 export async function BlockTeam() {
-	const result = await getNeutralsList();
+	const preview = draftMode().isEnabled;
+	const result = await getNeutralsList(preview);
 	const { neutralList } = result;
 
 	return (

@@ -11,8 +11,8 @@ const RESOURCES_TAGS = {
 };
 
 export const getResourcesPage = unstable_cache(
-	() => {
-		return cmsRequest().GetResourcesPage();
+	(preview: boolean) => {
+		return cmsRequest(preview).GetResourcesPage();
 	},
 	RESOURCES_TAGS.all,
 	{
@@ -20,28 +20,28 @@ export const getResourcesPage = unstable_cache(
 	},
 );
 
-export function prefetchResources(first = 12, skip = 0) {
-	return getResources(first, skip);
+export function prefetchResources(first = 12, skip = 0, preview: boolean) {
+	return getResources(first, skip, preview);
 }
 
-export const getResources = (first = 12, skip = 0) =>
+export const getResources = (first = 12, skip = 0, preview: boolean) =>
 	unstable_cache(
-		(first: number, skip: number) => {
-			return cmsRequest().GetResources({ first, skip });
+		(first: number, skip: number, preview: boolean) => {
+			return cmsRequest(preview).GetResources({ first, skip });
 		},
 		RESOURCES_TAGS.list(first, skip),
 		{
 			tags: RESOURCES_TAGS.list(first, skip),
 		},
-	)(first, skip);
+	)(first, skip, preview);
 
-export const getInternalResourceBySlug = (slug: string) =>
+export const getInternalResourceBySlug = (slug: string, preview: boolean) =>
 	unstable_cache(
-		(slug: string) => {
-			return cmsRequest().GetInternalResourceBySlug({ slug });
+		(slug: string, preview: boolean) => {
+			return cmsRequest(preview).GetInternalResourceBySlug({ slug });
 		},
 		RESOURCES_TAGS.resource(slug),
 		{
 			tags: RESOURCES_TAGS.resource(slug),
 		},
-	)(slug);
+	)(slug, preview);

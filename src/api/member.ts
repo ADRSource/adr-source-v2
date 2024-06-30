@@ -8,13 +8,13 @@ const MEMBER_TAGS = {
 	caseManagersList: () => [...MEMBER_TAGS.all, 'caseManagersList'],
 };
 
-export function prefetchNeutralsList() {
-	return getNeutralsList();
+export function prefetchNeutralsList(preview: boolean) {
+	return getNeutralsList(preview);
 }
 
 export const getNeutralsList = unstable_cache(
-	() => {
-		return cmsRequest().GetNeutralList();
+	(preview: boolean) => {
+		return cmsRequest(preview).GetNeutralList();
 	},
 	MEMBER_TAGS.neutralsList(),
 	{
@@ -23,8 +23,8 @@ export const getNeutralsList = unstable_cache(
 );
 
 export const getCaseManagersList = unstable_cache(
-	() => {
-		return cmsRequest().GetCaseManagerList();
+	(preview: boolean) => {
+		return cmsRequest(preview).GetCaseManagerList();
 	},
 	MEMBER_TAGS.caseManagersList(),
 	{
@@ -32,10 +32,10 @@ export const getCaseManagersList = unstable_cache(
 	},
 );
 
-export const getMemberPageBySlug = (slug: string) =>
+export const getMemberPageBySlug = (slug: string, preview: boolean) =>
 	unstable_cache(
-		(slug: string) => {
-			return cmsRequest().GetMemberPageBySlug({
+		(slug: string, preview: boolean) => {
+			return cmsRequest(preview).GetMemberPageBySlug({
 				slug,
 			});
 		},
@@ -43,4 +43,4 @@ export const getMemberPageBySlug = (slug: string) =>
 		{
 			tags: MEMBER_TAGS.member(slug),
 		},
-	)(slug);
+	)(slug, preview);

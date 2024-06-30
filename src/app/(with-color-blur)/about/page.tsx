@@ -1,4 +1,5 @@
 import { Metadata } from 'next';
+import { draftMode } from 'next/headers';
 import { Balancer } from 'react-wrap-balancer';
 import { getAboutPage } from '~/api/about';
 import { heading, text } from '~/components/ui/text';
@@ -7,7 +8,8 @@ import { getMetadataFromSeo } from '~/utils/seo';
 
 export async function generateMetadata(): Promise<Metadata> {
 	try {
-		const data = await getAboutPage();
+		const preview = draftMode().isEnabled;
+		const data = await getAboutPage(preview);
 		const { seo } = data.aboutPage ?? {};
 
 		return getMetadataFromSeo(`${PATHS.absolute}${PATHS.about}`, seo);
