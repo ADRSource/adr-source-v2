@@ -1,5 +1,6 @@
 import { unstable_cache } from 'next/cache';
 import { cmsRequest } from '~/graphql/cms';
+import { throttle } from '~/utils/throttle';
 
 const MEMBER_TAGS = {
 	all: ['member'],
@@ -8,39 +9,34 @@ const MEMBER_TAGS = {
 	caseManagersList: () => [...MEMBER_TAGS.all, 'caseManagersList'],
 };
 
-export function prefetchNeutralsList(preview: boolean) {
-	return getNeutralsList(preview);
-}
-
+const throttledGetNeutralsList = throttle((preview: boolean) => {
+	return cmsRequest(preview).GetNeutralList();
+});
 export const getNeutralsList = unstable_cache(
-	(preview: boolean) => {
-		return cmsRequest(preview).GetNeutralList();
-	},
+	throttledGetNeutralsList,
 	MEMBER_TAGS.neutralsList(),
 	{
 		tags: MEMBER_TAGS.neutralsList(),
 	},
 );
 
+const throttledGetCaseManagersList = throttle((preview: boolean) => {
+	return cmsRequest(preview).GetCaseManagerList();
+});
 export const getCaseManagersList = unstable_cache(
-	(preview: boolean) => {
-		return cmsRequest(preview).GetCaseManagerList();
-	},
+	throttledGetCaseManagersList,
 	MEMBER_TAGS.caseManagersList(),
 	{
 		tags: MEMBER_TAGS.caseManagersList(),
 	},
 );
 
+const throttledGetMemberPageBySlug = throttle((slug: string, preview: boolean) => {
+	return cmsRequest(preview).GetMemberPageBySlug({
+		slug,
+	});
+});
 export const getMemberPageBySlug = (slug: string, preview: boolean) =>
-	unstable_cache(
-		(slug: string, preview: boolean) => {
-			return cmsRequest(preview).GetMemberPageBySlug({
-				slug,
-			});
-		},
-		MEMBER_TAGS.member(slug),
-		{
-			tags: MEMBER_TAGS.member(slug),
-		},
-	)(slug, preview);
+	unstable_cache(throttledGetMemberPageBySlug, MEMBER_TAGS.member(slug), {
+		tags: MEMBER_TAGS.member(slug),
+	})(slug, preview);
