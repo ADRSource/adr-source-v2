@@ -55,7 +55,7 @@ export default async function Member({ params }: { params: { member: string } })
 
 	if (!info) return null;
 
-	const { name, headshot, bio } = info;
+	const { name, postNominalTitles, headshot, bio } = info;
 
 	return (
 		<div className="isolate">
@@ -68,7 +68,8 @@ export default async function Member({ params }: { params: { member: string } })
 								className: 'mb-6 text-center md:mb-0',
 							})}
 						>
-							{name}
+							<span>{name}</span>
+							{postNominalTitles != null && <span>, {postNominalTitles}</span>}
 						</h1>
 						<div className="hidden md:block">
 							<CallToActionBar role={member?.__typename} info={info} />
