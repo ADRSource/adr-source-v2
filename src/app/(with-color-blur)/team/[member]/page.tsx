@@ -65,11 +65,14 @@ export default async function Member({ params }: { params: { member: string } })
 						<h1
 							className={heading({
 								type: '3',
-								className: 'mb-6 text-center md:mb-0',
+								className:
+									'mb-6 flex-wrap items-baseline justify-center text-center stack-x-2/inline md:mb-0',
 							})}
 						>
 							<span>{name}</span>
-							{postNominalTitles != null && <span>, {postNominalTitles}</span>}
+							{postNominalTitles != null && (
+								<span className="text-heading-5 text-brand-toffee">{postNominalTitles}</span>
+							)}
 						</h1>
 						<div className="hidden md:block">
 							<CallToActionBar role={member?.__typename} info={info} />
