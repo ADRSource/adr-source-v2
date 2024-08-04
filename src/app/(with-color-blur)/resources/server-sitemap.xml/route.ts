@@ -25,6 +25,6 @@ export async function GET() {
 					lastmod: new Date().toISOString(),
 				};
 			})
-			.filter(Boolean),
+			.filter((r) => r != null),
 	);
 }
