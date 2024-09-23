@@ -66,7 +66,7 @@ export default async function Member({ params }: { params: { member: string } })
 							className={heading({
 								type: '3',
 								className:
-									'mb-6 flex-wrap items-baseline justify-center text-center stack-x-2/inline md:mb-0',
+									'mb-6 flex-wrap items-baseline justify-center text-balance text-center stack-x-2/inline md:mb-0',
 							})}
 						>
 							<span>{name}</span>
@@ -149,7 +149,7 @@ function NeutralInfo({ member, name }: { member: MemberInfoNeutralFragment; name
 					id="schedule"
 					className={heading({
 						type: '6',
-						className: 'scroll-mt-[calc(var(--nav-height)_+_(theme(spacing.2)_*_2))]',
+						className: 'scroll-mt-[calc(var(--nav-height)_+_(theme(spacing.2)_*_2))] text-balance',
 					})}
 				>
 					Schedule with {name}
