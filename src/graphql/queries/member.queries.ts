@@ -78,6 +78,7 @@ export const GetMemberPageBySlug = gql`
 				}
 			}
 		}
+		roleDescription
 	}
 
 	fragment MemberInfoCaseManager on CaseManager {
