@@ -99,10 +99,16 @@ export default async function Member({ params }: { params: { member: string } })
 							<div
 								className={text({
 									type: 'body',
-									className: 'w-full max-w-[449px] px-2 stack-y-[1em] md:px-0',
+									className: 'w-full max-w-[449px] px-2 stack-y-3 md:px-0',
 								})}
 							>
-								<h2 className="block font-medium uppercase md:hidden">{name}&apos;s Bio</h2>
+								{member?.__typename === 'Neutral' && (
+									<div className="border-b border-brand-copper">
+										<h2 className="pb-1 text-lg font-semibold uppercase md:text-xl">
+											{member.roleDescription}
+										</h2>
+									</div>
+								)}
 								<RichText content={bio.raw as RichTextContent} />
 							</div>
 						</div>
