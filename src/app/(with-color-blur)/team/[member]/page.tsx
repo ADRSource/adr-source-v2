@@ -161,10 +161,28 @@ function NeutralInfo({ member, name }: { member: MemberInfoNeutralFragment; name
 					Schedule with {name}
 				</h2>
 				<div className="stack-y-3">
-					<p className={text({ type: 'body', className: 'px-2 text-left md:px-0' })}>
-						To schedule an appointment online, click on your preferred available date. Our staff
-						will contact you once they receive your appointment request form.
-					</p>
+					<div className="stack-y-1">
+						<div className="inline-flex px-2 md:px-0">
+							<div className="items-center stack-x-1">
+								<div className="relative flex h-1 w-1">
+									<div className="absolute inline-flex h-full w-full animate-ping rounded-full bg-brand-copper opacity-90" />
+									<div className="relative inline-flex h-1 w-1 rounded-full bg-brand-copper" />
+								</div>
+								<p
+									className={text({
+										type: 'tag',
+										className: 'text-base font-medium',
+									})}
+								>
+									Available January 2025
+								</p>
+							</div>
+						</div>
+						<p className={text({ type: 'body', className: 'px-2 text-left md:px-0' })}>
+							To schedule an appointment online, click on your preferred available date. Our staff
+							will contact you once they receive your appointment request form.
+						</p>
+					</div>
 					<div className="mx-auto w-full max-w-[449px] self-center overflow-y-auto rounded-lg border border-solid border-brand-copper bg-white/70 backdrop-blur-sm backdrop-saturate-150 md:p-2">
 						<div className="mx-auto w-full rounded-lg bg-white p-1">
 							<iframe
