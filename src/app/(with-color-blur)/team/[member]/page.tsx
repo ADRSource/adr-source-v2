@@ -1,5 +1,7 @@
+import { TZDateMini } from '@date-fns/tz';
 import { RichText } from '@graphcms/rich-text-react-renderer';
 import type { RichTextContent } from '@graphcms/rich-text-types';
+import { isAfter, parse } from 'date-fns';
 import { Metadata } from 'next';
 import { draftMode } from 'next/headers';
 import Image from 'next/image';
@@ -145,7 +147,8 @@ function MemberInfo({
 }
 
 function NeutralInfo({ member, name }: { member: MemberInfoNeutralFragment; name: string }) {
-	const { nadnId, focusAreas, caseManager } = member;
+	// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+	const { nadnId, focusAreas, caseManager, availabilityStartDate } = member;
 
 	return (
 		<>
@@ -162,22 +165,9 @@ function NeutralInfo({ member, name }: { member: MemberInfoNeutralFragment; name
 				</h2>
 				<div className="stack-y-3">
 					<div className="stack-y-1">
-						<div className="inline-flex px-2 md:px-0">
-							<div className="items-center stack-x-1">
-								<div className="relative flex h-1 w-1">
-									<div className="absolute inline-flex h-full w-full animate-ping rounded-full bg-brand-copper opacity-90" />
-									<div className="relative inline-flex h-1 w-1 rounded-full bg-brand-copper" />
-								</div>
-								<p
-									className={text({
-										type: 'tag',
-										className: 'text-base font-medium',
-									})}
-								>
-									Available January 2025
-								</p>
-							</div>
-						</div>
+						{availabilityStartDate != null && typeof availabilityStartDate === 'string' && (
+							<Availability dateStr={availabilityStartDate} />
+						)}
 						<p className={text({ type: 'body', className: 'px-2 text-left md:px-0' })}>
 							To schedule an appointment online, click on your preferred available date. Our staff
 							will contact you once they receive your appointment request form.
@@ -239,6 +229,38 @@ function NeutralInfo({ member, name }: { member: MemberInfoNeutralFragment; name
 				</ul>
 			</div>
 		</>
+	);
+}
+
+function Availability({ dateStr }: { dateStr: string }) {
+	const currentDate = new TZDateMini(new Date(), 'America/New_York');
+	const date = new TZDateMini(parse(dateStr, 'yyyy-MM-dd', new Date(dateStr)), 'America/New_York');
+	const hasPast = isAfter(currentDate, date);
+
+	if (hasPast) return null;
+
+	const prettyDate = new Intl.DateTimeFormat('en-US', {
+		year: 'numeric',
+		month: 'long',
+	}).format(date);
+
+	return (
+		<div className="inline-flex px-2 md:px-0">
+			<div className="items-center stack-x-1">
+				<div className="relative flex h-1 w-1">
+					<div className="absolute inline-flex h-full w-full animate-ping rounded-full bg-brand-copper opacity-90" />
+					<div className="relative inline-flex h-1 w-1 rounded-full bg-brand-copper" />
+				</div>
+				<p
+					className={text({
+						type: 'tag',
+						className: 'text-base font-medium',
+					})}
+				>
+					Available {prettyDate}
+				</p>
+			</div>
+		</div>
 	);
 }
 

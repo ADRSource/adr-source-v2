@@ -79,6 +79,7 @@ export const GetMemberPageBySlug = gql`
 			}
 		}
 		roleDescription
+		availabilityStartDate
 	}
 
 	fragment MemberInfoCaseManager on CaseManager {
