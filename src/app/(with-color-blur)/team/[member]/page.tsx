@@ -169,8 +169,8 @@ function NeutralInfo({ member, name }: { member: MemberInfoNeutralFragment; name
 							<Availability dateStr={availabilityStartDate} />
 						)}
 						<p className={text({ type: 'body', className: 'px-2 text-left md:px-0' })}>
-							To schedule an appointment online, click on your preferred available date. Our staff
-							will contact you once they receive your appointment request form.
+							Please select an available date on the calendar and provide the requested information.
+							We will then contact you.
 						</p>
 					</div>
 					<div className="mx-auto w-full max-w-[449px] self-center overflow-y-auto rounded-lg border border-solid border-brand-copper bg-white/70 backdrop-blur-sm backdrop-saturate-150 md:p-2">
