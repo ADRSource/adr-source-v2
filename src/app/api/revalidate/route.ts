@@ -1,12 +1,11 @@
 import { verifyWebhookSignature } from '@hygraph/utils';
 import { revalidatePath, revalidateTag } from 'next/cache';
-import { headers } from 'next/headers';
 import { NextResponse } from 'next/server';
 
 export async function POST(request: Request) {
 	// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 	const body = await request.json();
-	const signature = headers().get('gcms-signature');
+	const signature = request.headers.get('gcms-signature');
 	const url = new URL(request.url);
 	const tag = url.searchParams.get('tag');
 	const path = url.searchParams.get('path');
