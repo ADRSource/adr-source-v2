@@ -270,25 +270,33 @@ function CaseManagerInfo({ member }: { member: MemberInfoCaseManagerFragment }) 
 		<div className="stack-y-3">
 			<h3 className={heading({ type: '6' })}>Managed Neutrals</h3>
 			<ul className="stack-y-1">
-				{neutrals.map((neutral) => {
-					const { memberPage } = neutral;
-					const { slug } = memberPage ?? {};
-					const { name } = neutral.info;
+				{neutrals.length > 0 ? (
+					<>
+						{neutrals.map((neutral) => {
+							const { memberPage } = neutral;
+							const { slug } = memberPage ?? {};
+							const { name } = neutral.info;
 
-					return (
-						<ListItem key={neutral.id} className="linkBox relative flex justify-between">
-							<p>{name}</p>
+							return (
+								<ListItem key={neutral.id} className="linkBox relative flex justify-between">
+									<p>{name}</p>
 
-							<CircleButton
-								aria-label={`Visit ${name}'s page`}
-								className="linkOverlay"
-								href={`${PATHS.team}/${slug ?? ''}`}
-							>
-								<IconArrowTopRight aria-hidden />
-							</CircleButton>
-						</ListItem>
-					);
-				})}
+									<CircleButton
+										aria-label={`Visit ${name}'s page`}
+										className="linkOverlay"
+										href={`${PATHS.team}/${slug ?? ''}`}
+									>
+										<IconArrowTopRight aria-hidden />
+									</CircleButton>
+								</ListItem>
+							);
+						})}
+					</>
+				) : (
+					<ListItem className="relative flex justify-between">
+						<p className="text-base font-normal">No managed neutrals at this time.</p>
+					</ListItem>
+				)}
 			</ul>
 		</div>
 	);
