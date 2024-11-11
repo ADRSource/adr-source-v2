@@ -97,6 +97,7 @@ export const GetMemberPageBySlug = gql`
 				name
 			}
 		}
+		roleDescription
 	}
 
 	fragment BaseMemberInfo on BaseMemberInfo {

@@ -104,13 +104,14 @@ export default async function Member({ params }: { params: { member: string } })
 									className: 'w-full max-w-[449px] px-2 stack-y-3 md:px-0',
 								})}
 							>
-								{member?.__typename === 'Neutral' && (
+								{member?.roleDescription != null && (
 									<div className="border-b border-brand-copper">
 										<h2 className="pb-1 text-lg font-semibold uppercase md:text-xl">
 											{member.roleDescription}
 										</h2>
 									</div>
 								)}
+
 								<RichText content={bio.raw as RichTextContent} />
 							</div>
 						</div>
