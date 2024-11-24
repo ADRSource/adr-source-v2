@@ -42,7 +42,7 @@ export function RichText({
 						if (src == null) return <></>;
 						return (
 							<Image
-								className="mb-4 w-full max-w-4xl overflow-clip rounded-lg bg-brand-black"
+								className="mb-4 mt-[calc(theme(spacing.4)_-_1em)] w-full max-w-4xl overflow-clip rounded-lg bg-brand-black first-of-type:mt-0"
 								src={src}
 								alt={altText ?? ''}
 								width={width}
