@@ -50,6 +50,15 @@ export function RichText({
 							/>
 						);
 					},
+					a: ({ children, href, ...rest }) => {
+						if (href == null) return <></>;
+
+						return (
+							<Link href={href} className="text-brand-toffee underline" {...rest}>
+								{children}
+							</Link>
+						);
+					},
 					link: {
 						MemberPage: (props: { slug: string; children: React.ReactNode }) => {
 							return (
