@@ -1,11 +1,11 @@
 import * as React from 'react';
 
 export function useIsClient() {
-	const [isClient, setClient] = React.useState(false);
+  const [isClient, setClient] = React.useState(false);
 
-	React.useEffect(() => {
-		setClient(true);
-	}, []);
+  React.useEffect(() => {
+    setClient(true);
+  }, []);
 
-	return isClient;
+  return isClient;
 }

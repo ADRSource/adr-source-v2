@@ -6,17 +6,17 @@ import { RootError } from '~/components/root-error';
 import { RootHtml } from '~/components/root-html';
 
 export default function GlobalError({
-	error,
-	reset,
+  error,
+  reset,
 }: {
-	error: Error & { digest?: string };
-	reset: () => void;
+  error: Error & { digest?: string };
+  reset: () => void;
 }) {
-	return (
-		<RootHtml>
-			<Navigation />
-			<RootError error={error} reset={reset} />
-			<Footer />
-		</RootHtml>
-	);
+  return (
+    <RootHtml>
+      <Navigation />
+      <RootError error={error} reset={reset} />
+      <Footer />
+    </RootHtml>
+  );
 }

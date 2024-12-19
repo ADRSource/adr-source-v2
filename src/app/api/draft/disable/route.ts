@@ -1,7 +1,7 @@
 import { draftMode } from 'next/headers';
 
 export function GET() {
-	draftMode().disable();
+  draftMode().disable();
 
-	return new Response('Draft mode is disabled');
+  return new Response('Draft mode is disabled');
 }
