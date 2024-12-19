@@ -12,85 +12,85 @@ import { createFluidValue } from '~/utils/create-fluid-value';
 import { getMetadataFromSeo } from '~/utils/seo';
 
 export async function generateMetadata({
-	params,
+  params,
 }: {
-	params: { slug: string };
+  params: { slug: string };
 }): Promise<Metadata> {
-	const preview = draftMode().isEnabled;
-	try {
-		const data = await getInternalResourceBySlug(params.slug, preview);
+  const preview = draftMode().isEnabled;
+  try {
+    const data = await getInternalResourceBySlug(params.slug, preview);
 
-		if (!data.internalResource) return {};
+    if (!data.internalResource) return {};
 
-		const { seo } = data.internalResource;
-		const metadata = getMetadataFromSeo(`${PATHS.absolute}${PATHS.resources}/${params.slug}`, seo);
-		return {
-			...metadata,
-			openGraph: {
-				...metadata.openGraph,
-				type: 'article',
-			},
-		};
-	} catch (_error) {
-		return {};
-	}
+    const { seo } = data.internalResource;
+    const metadata = getMetadataFromSeo(`${PATHS.absolute}${PATHS.resources}/${params.slug}`, seo);
+    return {
+      ...metadata,
+      openGraph: {
+        ...metadata.openGraph,
+        type: 'article',
+      },
+    };
+  } catch (_error) {
+    return {};
+  }
 }
 
 export default async function Resource({ params }: { params: { slug: string } }) {
-	const preview = draftMode().isEnabled;
-	const data = await getInternalResourceBySlug(params.slug, preview);
+  const preview = draftMode().isEnabled;
+  const data = await getInternalResourceBySlug(params.slug, preview);
 
-	if (!data.internalResource) {
-		return notFound();
-	}
+  if (!data.internalResource) {
+    return notFound();
+  }
 
-	const { internalResource } = data;
-	const { title, author, resourceContent, resource } = internalResource;
-	const prettyDate =
-		resource != null && typeof resource.publishDate === 'string'
-			? new Date(resource.publishDate).toLocaleDateString('en-US', {
-					month: 'long',
-					day: 'numeric',
-					year: 'numeric',
-				})
-			: null;
+  const { internalResource } = data;
+  const { title, author, resourceContent, resource } = internalResource;
+  const prettyDate =
+    resource != null && typeof resource.publishDate === 'string'
+      ? new Date(resource.publishDate).toLocaleDateString('en-US', {
+          month: 'long',
+          day: 'numeric',
+          year: 'numeric',
+        })
+      : null;
 
-	return (
-		<Container>
-			<article className="pb-7 pt-6 stack-y-5">
-				<header className="stack-y-4">
-					<h1
-						className="text-center font-serif leading-none"
-						style={{
-							fontSize: createFluidValue(32, 96),
-						}}
-					>
-						<Balancer>{title}</Balancer>
-					</h1>
-					<div className="text-center text-base">
-						{author?.memberPage?.slug != null && (
-							<p>
-								Posted by{' '}
-								<span className="block">
-									<Link
-										href={`${PATHS.team}/${author.memberPage.slug}`}
-										className="font-medium uppercase text-brand-toffee"
-									>
-										{author.info.name}
-									</Link>
-								</span>
-							</p>
-						)}
-						{prettyDate != null && <p>{prettyDate}</p>}
-					</div>
-				</header>
-				<section className="flex flex-col items-center">
-					<RichText
-						content={resourceContent.json as RichTextContent}
-						references={resourceContent.references}
-					/>
-				</section>
-			</article>
-		</Container>
-	);
+  return (
+    <Container>
+      <article className="pb-7 pt-6 stack-y-5">
+        <header className="stack-y-4">
+          <h1
+            className="text-center font-serif leading-none"
+            style={{
+              fontSize: createFluidValue(32, 96),
+            }}
+          >
+            <Balancer>{title}</Balancer>
+          </h1>
+          <div className="text-center text-base">
+            {author?.memberPage?.slug != null && (
+              <p>
+                Posted by{' '}
+                <span className="block">
+                  <Link
+                    href={`${PATHS.team}/${author.memberPage.slug}`}
+                    className="font-medium uppercase text-brand-toffee"
+                  >
+                    {author.info.name}
+                  </Link>
+                </span>
+              </p>
+            )}
+            {prettyDate != null && <p>{prettyDate}</p>}
+          </div>
+        </header>
+        <section className="flex flex-col items-center">
+          <RichText
+            content={resourceContent.json as RichTextContent}
+            references={resourceContent.references}
+          />
+        </section>
+      </article>
+    </Container>
+  );
 }

@@ -3,35 +3,35 @@
 @tailwind utilities;
 
 @layer base {
-	:root {
-		--nav-height: 60px;
-		@media (min-width: 768px) {
-			--nav-height: 78px;
-		}
+  :root {
+    --nav-height: 60px;
+    @media (min-width: 768px) {
+      --nav-height: 78px;
+    }
 
-		/* theme.spacing-2 + var(--nav-height) */
-		--nav-spacing: calc(clamp(1rem, 1.23vw + 0.7rem, 1.5rem) + var(--nav-height));
-	}
+    /* theme.spacing-2 + var(--nav-height) */
+    --nav-spacing: calc(clamp(1rem, 1.23vw + 0.7rem, 1.5rem) + var(--nav-height));
+  }
 
-	html {
-		text-rendering: optimizeLegibility;
-		-webkit-font-smoothing: antialiased;
-		font-family: var(--font-sans);
-		height: 100%;
-		scroll-behavior: smooth;
+  html {
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    font-family: var(--font-sans);
+    height: 100%;
+    scroll-behavior: smooth;
 
-		@apply font-sans text-base text-brand-copper;
-	}
+    @apply font-sans text-base text-brand-copper;
+  }
 
-	*:focus:not(:focus-visible) {
-		@apply !outline-none;
-	}
+  *:focus:not(:focus-visible) {
+    @apply !outline-none;
+  }
 
-	:focus-visible {
-		@apply outline-none ring-2 ring-brand-copper ring-offset-2 ring-offset-brand-black;
-	}
+  :focus-visible {
+    @apply outline-none ring-2 ring-brand-copper ring-offset-2 ring-offset-brand-black;
+  }
 
-	::selection {
-		@apply bg-brand-copper/40;
-	}
+  ::selection {
+    @apply bg-brand-copper/40;
+  }
 }

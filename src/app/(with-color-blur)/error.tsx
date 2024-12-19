@@ -3,11 +3,11 @@
 import { RootError } from '~/components/root-error';
 
 export default function Error({
-	reset,
-	error,
+  reset,
+  error,
 }: {
-	error: Error & { digest?: string };
-	reset: () => void;
+  error: Error & { digest?: string };
+  reset: () => void;
 }) {
-	return <RootError reset={reset} error={error} />;
+  return <RootError reset={reset} error={error} />;
 }
