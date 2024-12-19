@@ -68,6 +68,13 @@ export function RichText({
               );
             },
           },
+          blockquote: ({ children }) => {
+            return (
+              <blockquote className="mb-[1em] mt-[1em] w-full max-w-prose border-l-4 border-brand-toffee bg-brand-toffee/10 px-2 py-[1em] text-base italic text-brand-toffee">
+                {children}
+              </blockquote>
+            );
+          },
         }}
         references={references}
       />
