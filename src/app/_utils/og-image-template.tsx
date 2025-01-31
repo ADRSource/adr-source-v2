@@ -1,5 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import { ImageResponse } from 'next/og';
+import { makeCmsAssetUrl } from '~/app/_utils/make-cms-asset-url';
 
 async function getInterFont() {
   const res = await fetch(new URL('../_assets/fonts/Inter-Regular.ttf', import.meta.url));
@@ -23,7 +24,7 @@ export async function ogImageTemplate({
         <img
           tw="flex absolute top-0 left-0"
           style={{ objectFit: 'cover', width: '100%', height: '100%' }}
-          src="https://media.graphassets.com/Y0Typvo2RwWXxSZcDvTQ"
+          src={makeCmsAssetUrl('Y0Typvo2RwWXxSZcDvTQ')}
           alt=""
         />
         {markup}

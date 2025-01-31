@@ -1,4 +1,5 @@
 import Balancer from 'react-wrap-balancer';
+import { makeCmsAssetUrl } from '~/app/_utils/make-cms-asset-url';
 import { Slideshow } from '~/components/blocks/block-hero/slideshow';
 import { createFluidValue } from '~/utils/create-fluid-value';
 import styles from './block-hero.module.css';
@@ -78,12 +79,12 @@ export function BlockHero() {
       >
         <Slideshow
           urls={[
-            'https://media.graphassets.com/C44kks1SnyJPFq8vLpBp', // Orlando
-            'https://media.graphassets.com/aoR4FJDMRQaKpSVJ3cq5', // Miami
-            'https://media.graphassets.com/p3SmRHAxTcalQ0QoYJ94', // Tampa
-            'https://media.graphassets.com/Xw6Gfm7RFiYcJsvwXJNl', // West Palm Beach
-            'https://media.graphassets.com/wztHCHYzRsOQ1rEfy6ii', // Jacksonville
-          ]}
+            'C44kks1SnyJPFq8vLpBp',
+            'aoR4FJDMRQaKpSVJ3cq5',
+            'p3SmRHAxTcalQ0QoYJ94',
+            'Xw6Gfm7RFiYcJsvwXJNl',
+            'wztHCHYzRsOQ1rEfy6ii',
+          ].map((id) => makeCmsAssetUrl(id))}
         />
       </div>
     </section>
