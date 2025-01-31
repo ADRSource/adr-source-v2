@@ -1,4 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
+import { makeCmsAssetUrl } from '~/app/_utils/make-cms-asset-url';
 import { ogImageTemplate } from '~/app/_utils/og-image-template';
 
 export async function ogImageDefault({
@@ -14,7 +15,7 @@ export async function ogImageDefault({
         style={{
           width: 500,
         }}
-        src="https://media.graphassets.com/DkECP7wSEm2h7vviDdHw"
+        src={makeCmsAssetUrl('DkECP7wSEm2h7vviDdHw')}
         alt=""
       />
     ),

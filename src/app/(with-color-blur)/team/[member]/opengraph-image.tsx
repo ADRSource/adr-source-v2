@@ -1,6 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import { draftMode } from 'next/headers';
 import { getMemberPageBySlug } from '~/api/member';
+import { makeCmsAssetUrl } from '~/app/_utils/make-cms-asset-url';
 import { ogImageDefault } from '~/app/_utils/og-image-default';
 import { ogImageTemplate } from '~/app/_utils/og-image-template';
 
@@ -36,7 +37,7 @@ export default async function Image({ params }: { params: { member: string } }) 
           style={{
             width: 132,
           }}
-          src="https://media.graphassets.com/DkECP7wSEm2h7vviDdHw"
+          src={makeCmsAssetUrl('DkECP7wSEm2h7vviDdHw')}
           alt=""
         />
         <div tw="flex h-full w-full p-20 items-end">
