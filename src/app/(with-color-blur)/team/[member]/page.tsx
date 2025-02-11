@@ -169,10 +169,16 @@ function NeutralInfo({ member, name }: { member: MemberInfoNeutralFragment; name
             {availabilityStartDate != null && typeof availabilityStartDate === 'string' && (
               <Availability dateStr={availabilityStartDate} />
             )}
-            <p className={text({ type: 'body', className: 'px-2 text-left md:px-0' })}>
-              Please select an available date on the calendar and provide the requested information.
-              We will then contact you.
-            </p>
+            <div className="stack-y-[1rem]">
+              <p className={text({ type: 'body', className: 'px-2 text-left md:px-0' })}>
+                Please select an available date on the calendar and provide the requested
+                information.
+              </p>
+              <p className={text({ type: 'body', className: 'px-2 text-left md:px-0' })}>
+                <span className="text-brand-toffee">IMPORTANT:</span> Your mediation is NOT
+                confirmed until you receive a confirmation letter from our office.
+              </p>
+            </div>
           </div>
           <div className="mx-auto w-full max-w-[449px] self-center overflow-y-auto rounded-lg border border-solid border-brand-copper bg-white/70 backdrop-blur-sm backdrop-saturate-150 md:p-2">
             <div className="mx-auto w-full rounded-lg bg-white p-1">
