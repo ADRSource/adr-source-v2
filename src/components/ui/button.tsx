@@ -1,6 +1,6 @@
+import { cva, VariantProps } from 'cva';
 import Link, { LinkProps } from 'next/link';
 import * as React from 'react';
-import { VariantProps, tv } from 'tailwind-variants';
 import { IconArrowTopRight } from '../icons/IconArrowTopRight';
 
 interface ButtonLinkProps
@@ -33,7 +33,7 @@ export const ButtonLink = React.forwardRef<HTMLAnchorElement, ButtonLinkProps>(
 );
 ButtonLink.displayName = 'ButtonLink';
 
-export const root = tv({
+export const root = cva({
   base: 'decoration-inherit font-sans stack-x-[4px]/inline items-center bg-white border border-solid rounded-full uppercase font-medium leading-none select-none',
   variants: {
     size: {
@@ -57,7 +57,7 @@ export const root = tv({
   },
 });
 
-const iconStyles = tv({
+const iconStyles = cva({
   base: 'grid place-items-center',
   variants: {
     size: {
@@ -95,7 +95,7 @@ export const CircleButton = React.forwardRef<HTMLAnchorElement, IconButtonLinkPr
 );
 CircleButton.displayName = 'IconButtonLink';
 
-const circleButtonRoot = tv({
+const circleButtonRoot = cva({
   base: 'group text-black bg-white rounded-full grid place-items-center border border-solid border-brand-copper',
   variants: {
     size: {

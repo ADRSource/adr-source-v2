@@ -1,15 +1,14 @@
+import { cva, VariantProps } from 'cva';
 import * as React from 'react';
-import { VariantProps, tv } from 'tailwind-variants';
 import { IconProps } from '~/types/icon-props';
 
-type IconLogoProps = Omit<IconProps, 'color'> & VariantProps<typeof logo>;
+type IconLogoProps = Omit<IconProps, 'color'> & VariantProps<typeof root>;
 
 export const IconLogo = React.forwardRef<SVGSVGElement, IconLogoProps>(
   ({ className, theme = 'colorLight', ...props }, forwardedRef) => {
-    const { text, shapeLeft, shapeRight } = logo({ theme });
     return (
       <svg
-        className={className}
+        className={root({ theme, className })}
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 223 72"
@@ -42,37 +41,44 @@ export const IconLogo = React.forwardRef<SVGSVGElement, IconLogoProps>(
 );
 IconLogo.displayName = 'IconLogo';
 
-const logo = tv({
-  slots: {
-    text: '',
-    shapeLeft: '',
-    shapeRight: '',
-  },
+const root = cva({
   variants: {
     theme: {
-      colorLight: {
-        text: 'fill-white',
-        shapeLeft: 'fill-brand-blue',
-        shapeRight: 'fill-brand-green',
-      },
-      colorDark: {
-        text: 'fill-brand-black',
-        shapeLeft: 'fill-brand-blue',
-        shapeRight: 'fill-brand-green',
-      },
-      monoLight: {
-        text: 'fill-white',
-        shapeLeft: 'fill-white',
-        shapeRight: 'fill-white',
-      },
-      monoDark: {
-        text: 'fill-brand-black',
-        shapeLeft: 'fill-brand-black',
-        shapeRight: 'fill-brand-black',
-      },
+      colorLight: [
+        '[--fill-text:#ffffff]',
+        '[--fill-shape-left:#0090FF]',
+        '[--fill-shape-right:#46A758]',
+      ],
+      colorDark: [
+        '[--fill-text:#1B1B1B]',
+        '[--fill-shape-left:#0090FF]',
+        '[--fill-shape-right:#46A758]',
+      ],
+      monoLight: [
+        '[--fill-text:#ffffff]',
+        '[--fill-shape-left:#ffffff]',
+        '[--fill-shape-right:#ffffff]',
+      ],
+      monoDark: [
+        '[--fill-text:#1B1B1B]',
+        '[--fill-shape-left:#1B1B1B]',
+        '[--fill-shape-right:#1B1B1B]',
+      ],
     },
   },
   defaultVariants: {
     theme: 'colorLight',
   },
+});
+
+const text = cva({
+  base: 'fill-[--fill-text]',
+});
+
+const shapeLeft = cva({
+  base: 'fill-[--fill-shape-left]',
+});
+
+const shapeRight = cva({
+  base: 'fill-[--fill-shape-right]',
 });
