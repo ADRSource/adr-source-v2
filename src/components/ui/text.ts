@@ -1,4 +1,4 @@
-import { cva } from 'cva';
+import { cva } from '~/cva.config';
 
 export const heading = cva({
   base: 'text-left font-normal leading-none',
