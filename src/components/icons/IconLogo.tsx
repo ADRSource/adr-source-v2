@@ -1,5 +1,6 @@
-import { cva, VariantProps } from 'cva';
+import { VariantProps } from 'cva';
 import * as React from 'react';
+import { cva } from '~/cva.config';
 import { IconProps } from '~/types/icon-props';
 
 type IconLogoProps = Omit<IconProps, 'color'> & VariantProps<typeof root>;

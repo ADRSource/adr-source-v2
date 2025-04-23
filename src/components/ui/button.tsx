@@ -1,6 +1,7 @@
-import { cva, VariantProps } from 'cva';
+import { VariantProps } from 'cva';
 import Link, { LinkProps } from 'next/link';
 import * as React from 'react';
+import { cva } from '~/cva.config';
 import { IconArrowTopRight } from '../icons/IconArrowTopRight';
 
 interface ButtonLinkProps
