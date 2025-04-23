@@ -39,7 +39,7 @@ export function MemberListItem({ member, hasSchedule = true, children }: MemberL
       <div className="items-center opacity-100 transition-opacity stack-x-3 group-hover:opacity-100 md:opacity-25">
         <div className="hidden md:block">
           <IconLink
-            className="p-1 text-xs font-medium uppercase leading-none text-white transition-colors hover:text-brand-copper"
+            className="linkOverlay p-1 text-xs font-medium uppercase leading-none text-white transition-colors hover:text-brand-copper"
             href={url}
           >
             View Bio
