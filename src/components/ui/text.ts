@@ -1,6 +1,6 @@
-import { tv } from 'tailwind-variants';
+import { cva } from 'cva';
 
-export const heading = tv({
+export const heading = cva({
   base: 'text-left font-normal leading-none',
   variants: {
     type: {
@@ -17,7 +17,7 @@ export const heading = tv({
   },
 });
 
-export const text = tv({
+export const text = cva({
   base: 'text-left leading-tight font-normal font-sans',
   variants: {
     type: {
