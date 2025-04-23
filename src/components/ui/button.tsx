@@ -33,52 +33,42 @@ export const ButtonLink = React.forwardRef<HTMLAnchorElement, ButtonLinkProps>(
 );
 ButtonLink.displayName = 'ButtonLink';
 
-export const root = tv(
-  {
-    base: 'decoration-inherit font-sans stack-x-[4px]/inline items-center bg-white border border-solid rounded-full uppercase font-medium leading-none select-none',
-    variants: {
-      size: {
-        small: 'min-h-[30px] px-2 py-1 text-xs text-brand-black stack-x-[4px]/inline',
-        large:
-          'min-h-[50px] px-3 py-[20px] ring-offset-3 text-xl text-brand-black stack-x-[8px]/inline',
-      },
-      outline: {
-        copper:
-          'focus-visible:ring-brand-copper border-brand-copper focus-visible:ring-offset-brand-black',
-        black:
-          'focus-visible:ring-brand-black border-brand-black focus-visible:ring-offset-brand-copper',
-      },
-      stripped: {
-        true: 'bg-transparent border-0 text-white',
-      },
+export const root = tv({
+  base: 'decoration-inherit font-sans stack-x-[4px]/inline items-center bg-white border border-solid rounded-full uppercase font-medium leading-none select-none',
+  variants: {
+    size: {
+      small: 'min-h-[30px] px-2 py-1 text-xs text-brand-black stack-x-[4px]/inline',
+      large:
+        'min-h-[50px] px-3 py-[20px] ring-offset-3 text-xl text-brand-black stack-x-[8px]/inline',
     },
-    defaultVariants: {
-      size: 'small',
-      outline: 'copper',
+    outline: {
+      copper:
+        'focus-visible:ring-brand-copper border-brand-copper focus-visible:ring-offset-brand-black',
+      black:
+        'focus-visible:ring-brand-black border-brand-black focus-visible:ring-offset-brand-copper',
+    },
+    stripped: {
+      true: 'bg-transparent border-0 text-white',
     },
   },
-  {
-    responsiveVariants: ['md'],
+  defaultVariants: {
+    size: 'small',
+    outline: 'copper',
   },
-);
+});
 
-const iconStyles = tv(
-  {
-    base: 'grid place-items-center',
-    variants: {
-      size: {
-        small: 'w-[15px] h-[15px]',
-        large: 'w-[28px] h-[28px]',
-      },
-    },
-    defaultVariants: {
-      size: 'small',
+const iconStyles = tv({
+  base: 'grid place-items-center',
+  variants: {
+    size: {
+      small: 'w-[15px] h-[15px]',
+      large: 'w-[28px] h-[28px]',
     },
   },
-  {
-    responsiveVariants: ['md'],
+  defaultVariants: {
+    size: 'small',
   },
-);
+});
 
 interface IconButtonLinkProps
   extends VariantProps<typeof circleButtonRoot>,
