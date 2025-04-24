@@ -12,7 +12,7 @@ import { getMetadataFromSeo } from '~/utils/seo';
 
 export async function generateMetadata(): Promise<Metadata> {
   try {
-    const preview = draftMode().isEnabled;
+    const preview = (await draftMode()).isEnabled;
     const data = await getHomePage(preview);
     const { seo } = data.homePage ?? {};
 
@@ -25,7 +25,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function Home() {
-  const preview = draftMode().isEnabled;
+  const preview = (await draftMode()).isEnabled;
   const _neutralsPrefetch = await getNeutralsList(preview);
   const _resourcesPrefetch = await getResources(3, undefined, preview);
 

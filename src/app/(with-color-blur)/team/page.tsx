@@ -9,7 +9,7 @@ import { PATHS } from '~/constants/paths.constants';
 import { getMetadataFromSeo } from '~/utils/seo';
 
 export async function generateMetadata(): Promise<Metadata> {
-  const preview = draftMode().isEnabled;
+  const preview = (await draftMode()).isEnabled;
   try {
     const data = await getTeamPage(preview);
     const { seo } = data.teamPage ?? {};
@@ -22,7 +22,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function Team() {
-  const preview = draftMode().isEnabled;
+  const preview = (await draftMode()).isEnabled;
   const [neutralsResult, caseManagersResult] = await Promise.all([
     getNeutralsList(preview),
     getCaseManagersList(preview),

@@ -1,7 +1,7 @@
 import { draftMode } from 'next/headers';
 import { redirect } from 'next/navigation';
 
-export function GET(request: Request) {
+export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const secret = searchParams.get('secret');
   const slug = searchParams.get('slug');
@@ -14,7 +14,7 @@ export function GET(request: Request) {
     return new Response('Missing slug', { status: 400 });
   }
 
-  draftMode().enable();
+  (await draftMode()).enable();
 
   redirect(slug);
 }
