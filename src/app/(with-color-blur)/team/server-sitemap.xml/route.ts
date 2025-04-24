@@ -4,7 +4,7 @@ import { getCaseManagersList, getNeutralsList } from '~/api/member';
 import { PATHS } from '~/constants/paths.constants';
 
 export async function GET() {
-  const preview = draftMode().isEnabled;
+  const preview = (await draftMode()).isEnabled;
   // Method to source urls from cms
   const [neutralsListData, caseManagersListData] = await Promise.all([
     getNeutralsList(preview),

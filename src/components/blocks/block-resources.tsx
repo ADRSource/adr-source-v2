@@ -7,7 +7,7 @@ import { ButtonLink } from '~/components/ui/button';
 import { heading } from '~/components/ui/text';
 
 export async function BlockResources() {
-  const preview = draftMode().isEnabled;
+  const preview = (await draftMode()).isEnabled;
   const data = await getResources(3, undefined, preview);
   const { resources } = data;
 

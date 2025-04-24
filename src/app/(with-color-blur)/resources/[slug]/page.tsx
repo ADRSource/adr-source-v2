@@ -11,12 +11,13 @@ import { PATHS } from '~/constants/paths.constants';
 import { createFluidValue } from '~/utils/create-fluid-value';
 import { getMetadataFromSeo } from '~/utils/seo';
 
-export async function generateMetadata({
-  params,
-}: {
-  params: { slug: string };
-}): Promise<Metadata> {
-  const preview = draftMode().isEnabled;
+export async function generateMetadata(
+  props: {
+    params: Promise<{ slug: string }>;
+  }
+): Promise<Metadata> {
+  const params = await props.params;
+  const preview = (await draftMode()).isEnabled;
   try {
     const data = await getInternalResourceBySlug(params.slug, preview);
 
@@ -36,8 +37,9 @@ export async function generateMetadata({
   }
 }
 
-export default async function Resource({ params }: { params: { slug: string } }) {
-  const preview = draftMode().isEnabled;
+export default async function Resource(props: { params: Promise<{ slug: string }> }) {
+  const params = await props.params;
+  const preview = (await draftMode()).isEnabled;
   const data = await getInternalResourceBySlug(params.slug, preview);
 
   if (!data.internalResource) {

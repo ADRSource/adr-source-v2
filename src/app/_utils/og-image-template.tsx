@@ -1,5 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import { ImageResponse } from 'next/og';
+import * as React from 'react';
 import { makeCmsAssetUrl } from '~/app/_utils/make-cms-asset-url';
 
 async function getInterFont() {
@@ -15,7 +16,7 @@ export async function ogImageTemplate({
   markup,
   size = { width: 1200, height: 630 },
 }: {
-  markup: JSX.Element;
+  markup: React.ReactNode;
   size: { width: number; height: number };
 }) {
   return new ImageResponse(

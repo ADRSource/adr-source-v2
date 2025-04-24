@@ -1,8 +1,8 @@
 import { draftMode } from 'next/headers';
 import { ButtonLink } from '~/components/ui/button';
 
-export function DraftModeControls() {
-  const { isEnabled } = draftMode();
+export async function DraftModeControls() {
+  const isEnabled = (await draftMode()).isEnabled;
 
   return isEnabled ? (
     <div className="fixed bottom-2 left-2 z-[9999]">
