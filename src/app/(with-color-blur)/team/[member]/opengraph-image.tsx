@@ -16,7 +16,7 @@ export const size = {
 export const contentType = 'image/png';
 
 export default async function Image({ params }: { params: { member: string } }) {
-  const preview = draftMode().isEnabled;
+  const preview = (await draftMode()).isEnabled;
   const { member } = params;
   const data = await getMemberPageBySlug(member, preview);
   const { memberPage } = data;

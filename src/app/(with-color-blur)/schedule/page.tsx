@@ -10,7 +10,7 @@ import { getMetadataFromSeo } from '~/utils/seo';
 import styles from './page.module.css';
 
 export async function generateMetadata(): Promise<Metadata> {
-  const preview = draftMode().isEnabled;
+  const preview = (await draftMode()).isEnabled;
   try {
     const data = await getSchedulePage(preview);
     const { seo } = data.schedulePage ?? {};

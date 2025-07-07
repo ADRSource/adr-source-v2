@@ -11,7 +11,7 @@ import { PATHS } from '~/constants/paths.constants';
 import { getMetadataFromSeo } from '~/utils/seo';
 
 export async function generateMetadata(): Promise<Metadata> {
-  const preview = draftMode().isEnabled;
+  const preview = (await draftMode()).isEnabled;
   try {
     const data = await getResourcesPage(preview);
     const { seo } = data.resourcesPage ?? {};
@@ -32,7 +32,7 @@ export default async function Resources({
 }: {
   searchParams: Record<string, string | string[] | undefined>;
 }) {
-  const preview = draftMode().isEnabled;
+  const preview = (await draftMode()).isEnabled;
   const skip = (getPageParam(PARAM_KEY, searchParams) - 1) * LIMIT;
   const data = await getResources(LIMIT, skip, preview);
   const { resources, resourcesConnection } = data;

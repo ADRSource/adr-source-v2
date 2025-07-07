@@ -8,7 +8,7 @@ import { getMetadataFromSeo } from '~/utils/seo';
 
 export async function generateMetadata(): Promise<Metadata> {
   try {
-    const preview = draftMode().isEnabled;
+    const preview = (await draftMode()).isEnabled;
     const data = await getAboutPage(preview);
     const { seo } = data.aboutPage ?? {};
 

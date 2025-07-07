@@ -16,7 +16,7 @@ export async function generateMetadata({
 }: {
   params: { slug: string };
 }): Promise<Metadata> {
-  const preview = draftMode().isEnabled;
+  const preview = (await draftMode()).isEnabled;
   try {
     const data = await getInternalResourceBySlug(params.slug, preview);
 
@@ -37,7 +37,7 @@ export async function generateMetadata({
 }
 
 export default async function Resource({ params }: { params: { slug: string } }) {
-  const preview = draftMode().isEnabled;
+  const preview = (await draftMode()).isEnabled;
   const data = await getInternalResourceBySlug(params.slug, preview);
 
   if (!data.internalResource) {
