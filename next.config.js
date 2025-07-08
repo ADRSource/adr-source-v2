@@ -1,7 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  swcMinify: true,
   env: {
     NEXT_CMS_ASSET_ENV_ID: process.env.NEXT_CMS_ASSET_ENV_ID,
   },

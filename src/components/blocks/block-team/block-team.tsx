@@ -6,7 +6,7 @@ import { MemberListItem } from '~/components/member-list-item/member-list-item';
 import { heading } from '~/components/ui/text';
 
 export async function BlockTeam() {
-  const preview = draftMode().isEnabled;
+  const preview = (await draftMode()).isEnabled;
   const result = await getNeutralsList(preview);
   const { neutralList } = result;
 

@@ -50,11 +50,18 @@ export function RichText({
               />
             );
           },
-          a: ({ children, href, ...rest }) => {
+          a: ({ children, href, openInNewTab, ...rest }) => {
             if (href == null) return <></>;
 
             return (
-              <Link href={href} className="text-brand-toffee underline" {...rest}>
+              <Link
+                href={href}
+                {...((openInNewTab ?? false)
+                  ? { target: '_blank', rel: 'noopener noreferrer' }
+                  : {})}
+                {...rest}
+                className="text-brand-toffee underline"
+              >
                 {children}
               </Link>
             );
