@@ -147,9 +147,33 @@ function MemberInfo({
   }
 }
 
+const CUSTOM_SCHEDULING_COPY: Record<string, { copy: React.ReactNode }> = {
+  // Scott Baughan scheduling copy overrides
+  clom4jjph4dfz0bk1yr4m9d9u: {
+    copy: (
+      <>
+        <p className={text({ type: 'body', className: 'px-2 text-left md:px-0' })}>
+          Please select an available <strong>ZOOM mediation</strong> date on the calendar and
+          provide the requested information. If you wish to book a <strong>LIVE mediation</strong>,
+          please include that request. Please note that dates for live mediations are more limited.
+        </p>
+      </>
+    ),
+  },
+};
+
+const DEFAULT_SCHEDULING_COPY = (
+  <>
+    <p className={text({ type: 'body', className: 'px-2 text-left md:px-0' })}>
+      Please select an available date on the calendar and provide the requested information.
+    </p>
+  </>
+);
+
 function NeutralInfo({ member, name }: { member: MemberInfoNeutralFragment; name: string }) {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  const { nadnId, focusAreas, caseManager, availabilityStartDate } = member;
+  const { id, nadnId, focusAreas, caseManager, availabilityStartDate } = member;
+  const customCopy = CUSTOM_SCHEDULING_COPY[id]?.copy ?? DEFAULT_SCHEDULING_COPY;
 
   return (
     <>
@@ -170,10 +194,7 @@ function NeutralInfo({ member, name }: { member: MemberInfoNeutralFragment; name
               <Availability dateStr={availabilityStartDate} />
             )}
             <div className="stack-y-[1rem]">
-              <p className={text({ type: 'body', className: 'px-2 text-left md:px-0' })}>
-                Please select an available date on the calendar and provide the requested
-                information.
-              </p>
+              {customCopy}
               <p className={text({ type: 'body', className: 'px-2 text-left md:px-0' })}>
                 <span className="text-brand-toffee">IMPORTANT:</span> Your mediation is NOT
                 confirmed until you receive a confirmation letter from our office.
