@@ -21,11 +21,12 @@ import {
 } from '~/graphql/generated/cms.generated';
 import { getMetadataFromSeo } from '~/utils/seo';
 
-export async function generateMetadata({
-  params,
-}: {
-  params: { member: string };
-}): Promise<Metadata> {
+export async function generateMetadata(
+  props: {
+    params: Promise<{ member: string }>;
+  }
+): Promise<Metadata> {
+  const params = await props.params;
   const preview = (await draftMode()).isEnabled;
   try {
     const data = await getMemberPageBySlug(params.member, preview);
@@ -43,7 +44,8 @@ export async function generateMetadata({
 
 type Role = NonNullable<MemberPageMember['__typename']>;
 
-export default async function Member({ params }: { params: { member: string } }) {
+export default async function Member(props: { params: Promise<{ member: string }> }) {
+  const params = await props.params;
   const preview = (await draftMode()).isEnabled;
   const data = await getMemberPageBySlug(params.member, preview);
 

@@ -27,11 +27,12 @@ export async function generateMetadata(): Promise<Metadata> {
 const LIMIT = 9;
 const PARAM_KEY = 'page';
 
-export default async function Resources({
-  searchParams,
-}: {
-  searchParams: Record<string, string | string[] | undefined>;
-}) {
+export default async function Resources(
+  props: {
+    searchParams: Promise<Record<string, string | string[] | undefined>>;
+  }
+) {
+  const searchParams = await props.searchParams;
   const preview = (await draftMode()).isEnabled;
   const skip = (getPageParam(PARAM_KEY, searchParams) - 1) * LIMIT;
   const data = await getResources(LIMIT, skip, preview);
