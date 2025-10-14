@@ -4,7 +4,7 @@ import { SeoFragment } from '~/graphql/fragments/seo.fragments';
 export const GetNeutralList = gql`
   query GetNeutralList {
     neutralList(where: { id: "clonox8ds7npt0bk1jsjz6wb9" }) {
-      neutrals {
+      neutrals(first: 20) {
         ...NeutralItem
       }
     }
@@ -27,7 +27,7 @@ export const GetNeutralList = gql`
 export const GetCaseManagerList = gql`
   query GetCaseManagerList {
     caseManagerList(where: { id: "clonp2m207nw30bk1grlirghc" }) {
-      caseManagers {
+      caseManagers(first: 20) {
         id
         memberPage {
           slug
@@ -88,7 +88,7 @@ export const GetMemberPageBySlug = gql`
     info {
       ...BaseMemberInfo
     }
-    neutrals {
+    neutrals(first: 20) {
       id
       memberPage {
         slug
