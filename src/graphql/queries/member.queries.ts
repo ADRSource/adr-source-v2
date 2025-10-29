@@ -102,6 +102,7 @@ export const GetMemberPageBySlug = gql`
 
   fragment BaseMemberInfo on BaseMemberInfo {
     name
+    informalName
     postNominalTitles
     headshot {
       url(transformation: { document: { output: { format: webp } } })

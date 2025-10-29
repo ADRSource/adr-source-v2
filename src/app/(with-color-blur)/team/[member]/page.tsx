@@ -21,11 +21,9 @@ import {
 } from '~/graphql/generated/cms.generated';
 import { getMetadataFromSeo } from '~/utils/seo';
 
-export async function generateMetadata(
-  props: {
-    params: Promise<{ member: string }>;
-  }
-): Promise<Metadata> {
+export async function generateMetadata(props: {
+  params: Promise<{ member: string }>;
+}): Promise<Metadata> {
   const params = await props.params;
   const preview = (await draftMode()).isEnabled;
   try {
@@ -174,7 +172,7 @@ const DEFAULT_SCHEDULING_COPY = (
 
 function NeutralInfo({ member, name }: { member: MemberInfoNeutralFragment; name: string }) {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  const { id, nadnId, focusAreas, caseManager, availabilityStartDate } = member;
+  const { id, nadnId, focusAreas, caseManager, availabilityStartDate, info } = member;
   const customCopy = CUSTOM_SCHEDULING_COPY[id]?.copy ?? DEFAULT_SCHEDULING_COPY;
 
   return (
@@ -188,7 +186,7 @@ function NeutralInfo({ member, name }: { member: MemberInfoNeutralFragment; name
             className: 'scroll-mt-[calc(var(--nav-height)_+_(theme(spacing.2)_*_2))] text-balance',
           })}
         >
-          Schedule with {name}
+          Schedule with {info.informalName ?? name}
         </h2>
         <div className="stack-y-3">
           <div className="stack-y-1">
