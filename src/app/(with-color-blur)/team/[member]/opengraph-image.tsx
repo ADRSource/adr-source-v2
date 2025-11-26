@@ -1,11 +1,12 @@
 /* eslint-disable @next/next/no-img-element */
 import { draftMode } from 'next/headers';
-import { getMemberPageBySlug } from '~/api/member';
+import { getMemberPageBySlugUnthrottled } from '~/api/member';
 import { makeCmsAssetUrl } from '~/app/_utils/make-cms-asset-url';
 import { ogImageDefault } from '~/app/_utils/og-image-default';
 import { ogImageTemplate } from '~/app/_utils/og-image-template';
 
 // Route segment config
+export const runtime = 'edge';
 export const alt = 'Resource';
 
 export const size = {
@@ -17,7 +18,7 @@ export const contentType = 'image/png';
 export default async function Image({ params }: { params: { member: string } }) {
   const preview = (await draftMode()).isEnabled;
   const { member } = params;
-  const data = await getMemberPageBySlug(member, preview);
+  const data = await getMemberPageBySlugUnthrottled(member, preview);
   const { memberPage } = data;
 
   if (!memberPage?.member) {

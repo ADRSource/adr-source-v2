@@ -40,3 +40,16 @@ export const getMemberPageBySlug = (slug: string, preview: boolean) =>
   unstable_cache(throttledGetMemberPageBySlug, MEMBER_TAGS.member(slug), {
     tags: MEMBER_TAGS.member(slug),
   })(slug, preview);
+
+/**
+ * Unthrottled version for use in Edge Runtime (e.g., OG images)
+ * where throttling doesn't work across isolated invocations.
+ */
+export const getMemberPageBySlugUnthrottled = (slug: string, preview: boolean) =>
+  unstable_cache(
+    (slug: string, preview: boolean) => cmsRequest(preview).GetMemberPageBySlug({ slug }),
+    MEMBER_TAGS.member(slug),
+    {
+      tags: MEMBER_TAGS.member(slug),
+    },
+  )(slug, preview);

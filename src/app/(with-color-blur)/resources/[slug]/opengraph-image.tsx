@@ -1,11 +1,12 @@
 /* eslint-disable @next/next/no-img-element */
 import { draftMode } from 'next/headers';
-import { getInternalResourceBySlug } from '~/api/resource';
+import { getInternalResourceBySlugUnthrottled } from '~/api/resource';
 import { makeCmsAssetUrl } from '~/app/_utils/make-cms-asset-url';
 import { ogImageDefault } from '~/app/_utils/og-image-default';
 import { ogImageTemplate } from '~/app/_utils/og-image-template';
 
 // Route segment config
+export const runtime = 'edge';
 export const alt = 'Resource';
 
 export const size = {
@@ -17,7 +18,7 @@ export const contentType = 'image/png';
 export default async function Image({ params }: { params: { slug: string } }) {
   const preview = (await draftMode()).isEnabled;
   const { slug } = params;
-  const data = await getInternalResourceBySlug(slug, preview);
+  const data = await getInternalResourceBySlugUnthrottled(slug, preview);
   const { internalResource } = data;
 
   if (!internalResource) {
