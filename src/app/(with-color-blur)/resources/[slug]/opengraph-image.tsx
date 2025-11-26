@@ -6,7 +6,6 @@ import { ogImageDefault } from '~/app/_utils/og-image-default';
 import { ogImageTemplate } from '~/app/_utils/og-image-template';
 
 // Route segment config
-export const runtime = 'edge';
 export const alt = 'Resource';
 
 export const size = {
