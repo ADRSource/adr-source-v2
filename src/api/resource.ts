@@ -34,3 +34,16 @@ export const getInternalResourceBySlug = (slug: string, preview: boolean) =>
   unstable_cache(throttledGetInternalResourceBySlug, RESOURCES_TAGS.resource(slug), {
     tags: RESOURCES_TAGS.resource(slug),
   })(slug, preview);
+
+/**
+ * Unthrottled version for use in Edge Runtime (e.g., OG images)
+ * where throttling doesn't work across isolated invocations.
+ */
+export const getInternalResourceBySlugUnthrottled = (slug: string, preview: boolean) =>
+  unstable_cache(
+    (slug: string, preview: boolean) => cmsRequest(preview).GetInternalResourceBySlug({ slug }),
+    RESOURCES_TAGS.resource(slug),
+    {
+      tags: RESOURCES_TAGS.resource(slug),
+    },
+  )(slug, preview);

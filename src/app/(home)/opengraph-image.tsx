@@ -1,6 +1,7 @@
 import { ogImageDefault } from '~/app/_utils/og-image-default';
 
 // Route segment config
+export const runtime = 'edge';
 export const alt = 'ADRsource';
 
 export const size = {
