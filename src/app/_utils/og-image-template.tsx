@@ -1,14 +1,16 @@
 /* eslint-disable @next/next/no-img-element */
 import { ImageResponse } from 'next/og';
+import { readFile } from 'node:fs/promises';
+import path from 'node:path';
 import { makeCmsAssetUrl } from '~/app/_utils/make-cms-asset-url';
 
 async function getInterFont() {
-  const res = await fetch(new URL('../_assets/fonts/Inter-Regular.ttf', import.meta.url));
-  return await res.arrayBuffer();
+  const fontPath = path.join(process.cwd(), 'src/app/_assets/fonts/Inter-Regular.ttf');
+  return await readFile(fontPath);
 }
 async function getGloockFont() {
-  const res = await fetch(new URL('../_assets/fonts/Gloock-Regular.ttf', import.meta.url));
-  return await res.arrayBuffer();
+  const fontPath = path.join(process.cwd(), 'src/app/_assets/fonts/Gloock-Regular.ttf');
+  return await readFile(fontPath);
 }
 
 export async function ogImageTemplate({
