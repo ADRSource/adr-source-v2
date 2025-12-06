@@ -62,7 +62,7 @@ export async function POST(request: Request) {
     case tag !== null: {
       try {
         console.log('Revalidating tag:', tag);
-        revalidateTag(tag);
+        revalidateTag(tag, 'max');
 
         return NextResponse.json({
           status: 200,

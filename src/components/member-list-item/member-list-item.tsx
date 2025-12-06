@@ -45,7 +45,7 @@ export function MemberListItem({ member, hasSchedule = true, children }: MemberL
             View Bio
           </IconLink>
         </div>
-        {Boolean(hasSchedule) && (
+        {hasSchedule && (
           <div className="hidden md:block">
             <ButtonLink
               icon={<IconCalendar className="h-[15px] w-[15px]" aria-hidden />}
@@ -60,7 +60,7 @@ export function MemberListItem({ member, hasSchedule = true, children }: MemberL
           </div>
         )}
         <div className="md:hidden">
-          {Boolean(hasSchedule) ? (
+          {hasSchedule ? (
             <CircleButton
               className="linkOverlay"
               href={{

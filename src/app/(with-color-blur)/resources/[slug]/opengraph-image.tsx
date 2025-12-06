@@ -1,4 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
 import { draftMode } from 'next/headers';
 import { getInternalResourceBySlug } from '~/api/resource';
 import { makeCmsAssetUrl } from '~/app/_utils/make-cms-asset-url';
