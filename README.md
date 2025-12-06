@@ -2,13 +2,42 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+
+- Node.js ~22.17.1 (see `engines` in package.json)
+- pnpm 8+
+
+### Environment Setup
+
+1. Copy the example environment file:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
+cp .env.example .env.local
+```
+
+2. Fill in the required environment variables in `.env.local`:
+
+- **CMS_SPACE**: Your Hygraph space ID
+- **CMS_ENV**: Your Hygraph environment (e.g., `master`)
+- **CMS_PROD_TOKEN**: Hygraph production API token
+- **CMS_PREVIEW_TOKEN**: Hygraph preview API token
+- **CMS_WEBHOOK_SECRET**: Secret for validating webhook requests
+- **DRAFT_SECRET**: Secret for enabling draft mode
+- **NEXT_CMS_ASSET_ENV_ID**: Hygraph asset environment ID
+
+### Installation
+
+Install dependencies:
+
+```bash
+pnpm install
+```
+
+### Development
+
+Run the development server:
+
+```bash
 pnpm dev
 ```
 
