@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "gen": "graphql-codegen --require dotenv/config --config codegen.ts dotenv_config_path=.env.local",
-    "dev": "pnpm run gen && next dev --turbopack",
+    "dev": "pnpm run gen && next dev",
     "dev:inspect": "NODE_OPTIONS='--inspect' pnpm run gen && next dev",
     "build": "pnpm run gen && next build && next-sitemap",
     "start": "next start",
@@ -32,10 +32,10 @@
     "graphql": "^16.11.0",
     "graphql-request": "^7.2.0",
     "graphql-tag": "^2.12.6",
-    "next": "15.3.5",
+    "next": "16.0.7",
     "next-sitemap": "^4.2.3",
-    "react": "19.1.0",
-    "react-dom": "19.1.0",
+    "react": "19.2.1",
+    "react-dom": "19.2.1",
     "react-error-boundary": "^6.0.0",
     "react-merge-refs": "^3.0.2",
     "react-use-measure": "^2.1.7",
@@ -57,16 +57,18 @@
     "@tailwindcss/typography": "^0.5.13",
     "@total-typescript/ts-reset": "^0.6.1",
     "@types/node": "22.1.0",
-    "@types/react": "19.1.8",
-    "@types/react-dom": "19.1.6",
-    "@typescript-eslint/eslint-plugin": "^7.12.0",
-    "@typescript-eslint/parser": "^7.12.0",
+    "@types/react": "19.2.7",
+    "@types/react-dom": "19.2.3",
+    "@typescript-eslint/eslint-plugin": "^8.48.1",
+    "@typescript-eslint/parser": "^8.48.1",
     "autoprefixer": "^10.4.21",
     "cross-env": "^7.0.3",
     "dotenv": "^17.1.0",
-    "eslint": "8.57.0",
-    "eslint-config-next": "15.3.5",
+    "eslint": "9.39.1",
+    "eslint-config-next": "16.0.7",
     "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^7.0.1",
     "husky": "^9.1.7",
     "lint-staged": "^16.1.2",
     "postcss": "^8.5.6",
@@ -84,8 +86,8 @@
   },
   "pnpm": {
     "overrides": {
-      "@types/react": "19.1.8",
-      "@types/react-dom": "19.1.6"
+      "@types/react": "19.2.7",
+      "@types/react-dom": "19.2.3"
     }
   }
 }
