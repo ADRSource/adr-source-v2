@@ -1,13 +1,11 @@
 import { draftMode } from 'next/headers';
-import Image from 'next/image';
-import Link from 'next/link';
 import { getRecentNeutralsList } from '~/api/member';
+import { MemberCardItem } from '~/app/(with-color-blur)/team/member-card-item';
 import { AutoGrid } from '~/components/auto-grid/auto-grid';
 import { AnimatedSection } from '~/components/blocks/animated-section';
 import { Container } from '~/components/container';
 import { extractMemberFromNeutral } from '~/components/member-list-item/extract-member-neutral';
 import { ButtonLink } from '~/components/ui/button';
-import { PATHS } from '~/constants/paths.constants';
 import { createFluidValue } from '~/utils/create-fluid-value';
 
 export async function BlockTeam() {
@@ -41,33 +39,7 @@ export async function BlockTeam() {
 
                 if (!member) return null;
 
-                return (
-                  <div
-                    key={neutral.id}
-                    className="group/card linkBox flex flex-col gap-y-[calc(theme(spacing.1)*2)]"
-                  >
-                    <div className="relative aspect-[4/5] w-full overflow-clip rounded-lg">
-                      <Image
-                        src={member.headshot}
-                        fill
-                        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 353px"
-                        alt={`${member.name} headshot`}
-                        className="scale-100 bg-brand-black object-cover object-top contrast-125 grayscale transition-all group-hover/card:scale-105 group-hover/card:filter-none"
-                      />
-                    </div>
-                    <div className="flex flex-col">
-                      <div>
-                        <Link
-                          href={`${PATHS.team}/${member.url}`}
-                          className="linkOverlay inline-block scroll-auto font-sans text-base/tight underline decoration-transparent transition-all hover:decoration-current"
-                        >
-                          {member.name}
-                        </Link>
-                      </div>
-                      <p className="text-base/tight text-brand-toffee">{member.role}</p>
-                    </div>
-                  </div>
-                );
+                return <MemberCardItem key={neutral.id} {...member} />;
               })}
             </AutoGrid>
           </div>
