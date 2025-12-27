@@ -3,12 +3,12 @@ import { draftMode } from 'next/headers';
 import { getCaseManagersList, getNeutralsList } from '~/api/member';
 import { getTeamPage } from '~/api/team';
 import { AutoGrid } from '~/components/auto-grid/auto-grid';
+import { MemberCardItem } from '~/components/member-card-item';
 import { extractMemberFromNeutral } from '~/components/member-list-item/extract-member-neutral';
 import { PageHeader } from '~/components/ui/page-header';
 import { heading } from '~/components/ui/text';
 import { PATHS } from '~/constants/paths.constants';
 import { getMetadataFromSeo } from '~/utils/seo';
-import { MemberCardItem } from './member-card-item';
 
 export async function generateMetadata(): Promise<Metadata> {
   const preview = (await draftMode()).isEnabled;
