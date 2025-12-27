@@ -72,7 +72,7 @@ export function BlockHero() {
         }}
       />
       <div
-        className="pointer-events-none absolute top-0 h-full w-full"
+        className="pointer-events-none absolute top-0 h-full w-full overflow-clip"
         style={{
           zIndex: 0,
         }}

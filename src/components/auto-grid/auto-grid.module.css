@@ -15,3 +15,8 @@
   column-gap: var(--grid-layout-gap-x);
   row-gap: var(--grid-layout-gap-y);
 }
+
+.gridItem {
+  @apply flex flex-col;
+  height: 100%;
+}

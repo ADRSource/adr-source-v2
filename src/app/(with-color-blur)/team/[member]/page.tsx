@@ -8,6 +8,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { getMemberPageBySlug } from '~/api/member';
+import { AutoGrid } from '~/components/auto-grid/auto-grid';
 import { IconArrowTopRight } from '~/components/icons/IconArrowTopRight';
 import { CircleButton } from '~/components/ui/button';
 import { heading, text } from '~/components/ui/text';
@@ -296,41 +297,42 @@ function CaseManagerInfo({ member }: { member: MemberInfoCaseManagerFragment }) 
   return neutrals.length > 0 ? (
     <div className="stack-y-3">
       <h3 className={heading({ type: '6' })}>Managed Neutrals</h3>
-      <ul className="grid grid-cols-2 gap-[calc(theme(spacing.1)*2)]">
+      <AutoGrid count={2} itemMinWidth={160} gapX="16px" gapY="16px" stagger>
         {neutrals.map((neutral) => {
           const { memberPage } = neutral;
           const { slug } = memberPage ?? {};
           const { name, headshot } = neutral.info;
 
           return (
-            <li key={neutral.id}>
-              <div className="group/card linkBox relative grid grid-cols-1 grid-rows-1 overflow-clip rounded-md">
-                <div className="relative col-span-full row-span-full aspect-[4/5] w-full overflow-clip md:aspect-square">
-                  <Image
-                    src={headshot.url}
-                    fill
-                    sizes="(max-width: 768px) 50vw, 224px"
-                    alt={`${name} headshot`}
-                    className="z-0 scale-100 bg-brand-black object-cover object-top contrast-125 grayscale transition-all group-hover/card:scale-105 group-hover/card:filter-none"
-                  />
-                </div>
-                <div className="pointer-events-none col-span-full row-span-full self-end">
-                  <div className="bg-gradient-to-b from-brand-black/0 to-brand-black/90 px-1 py-1 backdrop-blur-sm backdrop-saturate-150">
-                    <span className="font-sans text-sm/tight font-medium text-brand-copper underline decoration-transparent transition-all group-hover/card:decoration-current">
-                      {name}
-                    </span>
-                  </div>
-                </div>
-                <Link
-                  href={`${PATHS.team}/${slug ?? ''}`}
-                  className="linkOverlay"
-                  aria-label={`View ${name}'s profile`}
+            <div
+              key={neutral.id}
+              className="group/card linkBox relative grid grid-cols-1 grid-rows-1 overflow-clip rounded-md"
+            >
+              <div className="relative col-span-full row-span-full aspect-[4/5] w-full overflow-clip md:aspect-square">
+                <Image
+                  src={headshot.url}
+                  fill
+                  sizes="(max-width: 768px) 50vw, 224px"
+                  alt={`${name} headshot`}
+                  className="z-0 scale-100 bg-brand-black object-cover object-top contrast-125 grayscale transition-all group-hover/card:scale-105 group-hover/card:filter-none"
                 />
               </div>
-            </li>
+              <div className="pointer-events-none col-span-full row-span-full self-end">
+                <div className="bg-gradient-to-b from-brand-black/0 to-brand-black/90 px-1 py-1 backdrop-blur-sm backdrop-saturate-150">
+                  <span className="font-sans text-sm/tight font-medium text-brand-copper underline decoration-transparent transition-all group-hover/card:decoration-current">
+                    {name}
+                  </span>
+                </div>
+              </div>
+              <Link
+                href={`${PATHS.team}/${slug ?? ''}`}
+                className="linkOverlay"
+                aria-label={`View ${name}'s profile`}
+              />
+            </div>
           );
         })}
-      </ul>
+      </AutoGrid>
     </div>
   ) : null;
 }

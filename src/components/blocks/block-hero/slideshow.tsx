@@ -1,4 +1,5 @@
 'use client';
+import { motion } from 'framer-motion';
 import NextImage from 'next/image';
 import * as React from 'react';
 
@@ -42,13 +43,15 @@ export function Slideshow({ urls }: SlideshowProps) {
         const isCurrent = index === currentImageIndex;
         const isNext = (currentImageIndex + 1) % urls.length === index;
         return (
-          <div
+          <motion.div
             key={url}
-            className="absolute inset-0 transition-opacity"
-            style={{
-              transitionDuration: `${TRANSITION_DURATION.toString()}ms`,
+            className="absolute inset-0"
+            initial={{ opacity: 0, scale: 1.05 }}
+            animate={{
               opacity: isCurrent && !isTransitioning ? 1 : 0,
+              scale: isCurrent && !isTransitioning ? 1 : 1.05,
             }}
+            transition={{ duration: TRANSITION_DURATION / 1000, ease: 'easeOut' }}
           >
             <NextImage
               alt={`Slideshow Image ${index.toString()}`}
@@ -60,7 +63,7 @@ export function Slideshow({ urls }: SlideshowProps) {
                 visibility: isCurrent || isNext ? 'visible' : 'hidden', // Only render the current and the next image
               }}
             />
-          </div>
+          </motion.div>
         );
       })}
     </div>

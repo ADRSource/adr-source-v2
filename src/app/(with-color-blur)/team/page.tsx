@@ -1,13 +1,13 @@
 import { Metadata } from 'next';
 import { draftMode } from 'next/headers';
-import Image from 'next/image';
-import Link from 'next/link';
 import { getCaseManagersList, getNeutralsList } from '~/api/member';
 import { getTeamPage } from '~/api/team';
+import { AutoGrid } from '~/components/auto-grid/auto-grid';
 import { extractMemberFromNeutral } from '~/components/member-list-item/extract-member-neutral';
 import { heading } from '~/components/ui/text';
 import { PATHS } from '~/constants/paths.constants';
 import { getMetadataFromSeo } from '~/utils/seo';
+import { MemberCardItem } from './member-card-item';
 
 export async function generateMetadata(): Promise<Metadata> {
   const preview = (await draftMode()).isEnabled;
@@ -47,7 +47,14 @@ export default async function Team() {
           <div className="mx-auto w-full max-w-block stack-y-6">
             <div className="stack-y-3">
               <h2 className={heading({ type: '6' })}>Neutrals</h2>
-              <ul className="relative grid grid-cols-1 gap-x-2 gap-y-4 px-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+              <AutoGrid
+                count={4}
+                itemMinWidth={280}
+                gapX="24px"
+                gapY="64px"
+                className="relative px-3"
+                stagger
+              >
                 {neutralList?.neutrals.map((neutral) => {
                   const member = extractMemberFromNeutral(neutral);
 
@@ -55,11 +62,18 @@ export default async function Team() {
 
                   return <MemberCardItem key={neutral.id} {...member} />;
                 })}
-              </ul>
+              </AutoGrid>
             </div>
             <div className="stack-y-3">
               <h2 className={heading({ type: '6' })}>Case Managers</h2>
-              <ul className="relative grid grid-cols-1 gap-x-2 gap-y-4 px-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+              <AutoGrid
+                count={4}
+                itemMinWidth={250}
+                gapX="24px"
+                gapY="64px"
+                className="relative px-3"
+                stagger
+              >
                 {caseManagerList?.caseManagers.map((caseManager) => {
                   const { memberPage } = caseManager;
                   const { slug } = memberPage ?? {};
@@ -75,48 +89,11 @@ export default async function Team() {
 
                   return <MemberCardItem key={caseManager.id} {...member} />;
                 })}
-              </ul>
+              </AutoGrid>
             </div>
           </div>
         </div>
       </main>
-    </div>
-  );
-}
-
-function MemberCardItem({
-  name,
-  url,
-  headshot,
-  role,
-}: {
-  name: string;
-  url: string;
-  headshot: string;
-  role: string;
-}) {
-  return (
-    <div className="group/card linkBox flex flex-col gap-y-[calc(theme(spacing.1)*2)]">
-      <div className="relative aspect-[4/5] w-full overflow-clip rounded-lg">
-        <Image
-          src={headshot}
-          fill
-          sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
-          alt={`${name} headshot`}
-          className="scale-100 bg-brand-black object-cover object-top contrast-125 grayscale transition-all group-hover/card:scale-105 group-hover/card:filter-none"
-        />
-      </div>
-      <div className="flex flex-col">
-        <div>
-          <Link
-            href={`${PATHS.team}/${url}`}
-            className="linkOverlay inline-block scroll-auto font-sans text-base/tight underline decoration-transparent transition-all hover:decoration-current"
-          >
-            {name}
-          </Link>
-        </div>
-        <p className="text-base/tight text-brand-toffee">{role}</p>
-      </div>
     </div>
   );
 }
