@@ -7,7 +7,6 @@ import { draftMode } from 'next/headers';
 import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { twMerge } from 'tailwind-merge';
 import { getMemberPageBySlug } from '~/api/member';
 import { IconArrowTopRight } from '~/components/icons/IconArrowTopRight';
 import { CircleButton } from '~/components/ui/button';
@@ -82,7 +81,7 @@ export default async function Member(props: { params: Promise<{ member: string }
           </header>
           <section className="grid grid-cols-1 justify-items-center gap-y-4 divide-brand-copper/40 border-b border-brand-copper/40 md:grid-cols-2 md:divide-x">
             <div className="px-2 stack-y-5 md:py-6 md:stack-y-4">
-              <div className="relative aspect-[9/10] w-full max-w-[449px] overflow-clip rounded-lg">
+              <div className="relative aspect-[4/5] w-full max-w-[449px] overflow-clip rounded-lg">
                 <Image
                   priority
                   alt={`${info.name} Headshot`}
@@ -297,47 +296,44 @@ function CaseManagerInfo({ member }: { member: MemberInfoCaseManagerFragment }) 
   return neutrals.length > 0 ? (
     <div className="stack-y-3">
       <h3 className={heading({ type: '6' })}>Managed Neutrals</h3>
-      <ul className="stack-y-1">
+      <ul className="grid grid-cols-2 gap-[calc(theme(spacing.1)*2)]">
         {neutrals.map((neutral) => {
           const { memberPage } = neutral;
           const { slug } = memberPage ?? {};
-          const { name } = neutral.info;
+          const { name, headshot } = neutral.info;
 
           return (
-            <ListItem key={neutral.id} className="linkBox relative flex justify-between">
-              <p>{name}</p>
-
-              <CircleButton
-                aria-label={`Visit ${name}'s page`}
-                className="linkOverlay"
-                href={`${PATHS.team}/${slug ?? ''}`}
-              >
-                <IconArrowTopRight aria-hidden />
-              </CircleButton>
-            </ListItem>
+            <li key={neutral.id}>
+              <div className="group/card linkBox relative grid grid-cols-1 grid-rows-1 overflow-clip rounded-md">
+                <div className="relative col-span-full row-span-full aspect-[4/5] w-full overflow-clip md:aspect-square">
+                  <Image
+                    src={headshot.url}
+                    fill
+                    sizes="(max-width: 768px) 50vw, 224px"
+                    alt={`${name} headshot`}
+                    className="z-0 scale-100 bg-brand-black object-cover object-top contrast-125 grayscale transition-all group-hover/card:scale-105 group-hover/card:filter-none"
+                  />
+                </div>
+                <div className="pointer-events-none col-span-full row-span-full self-end">
+                  <div className="bg-gradient-to-b from-brand-black/0 to-brand-black/90 px-1 py-1 backdrop-blur-sm backdrop-saturate-150">
+                    <span className="font-sans text-sm/tight font-medium text-brand-copper underline decoration-transparent transition-all group-hover/card:decoration-current">
+                      {name}
+                    </span>
+                  </div>
+                </div>
+                <Link
+                  href={`${PATHS.team}/${slug ?? ''}`}
+                  className="linkOverlay"
+                  aria-label={`View ${name}'s profile`}
+                />
+              </div>
+            </li>
           );
         })}
       </ul>
     </div>
   ) : null;
 }
-
-interface ListItemProps {
-  children: React.ReactNode;
-  className?: string;
-}
-const ListItem = ({ children, className }: ListItemProps) => {
-  return (
-    <li
-      className={twMerge(
-        'rounded-lg border border-solid border-brand-copper/5 bg-brand-black p-2 text-lg font-bold text-brand-copper',
-        className,
-      )}
-    >
-      {children}
-    </li>
-  );
-};
 
 function CallToActionBar({ role, info }: { role?: Role; info: BaseMemberInfoFragment }) {
   const { email, phone, linkedIn } = info;

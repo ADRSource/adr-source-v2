@@ -9,12 +9,23 @@ export const GetNeutralList = gql`
       }
     }
   }
+`;
+
+export const GetRecentNeutralList = gql`
+  query GetRecentNeutralList {
+    neutralList(where: { id: "clonox8ds7npt0bk1jsjz6wb9" }) {
+      neutrals(first: 3, orderBy: createdAt_DESC) {
+        ...NeutralItem
+      }
+    }
+  }
 
   fragment NeutralItem on Neutral {
     id
     memberPage {
       slug
     }
+    roleDescription
     info {
       name
       headshot {
@@ -32,6 +43,7 @@ export const GetCaseManagerList = gql`
         memberPage {
           slug
         }
+        roleDescription
         info {
           name
           headshot {
@@ -95,7 +107,11 @@ export const GetMemberPageBySlug = gql`
       }
       info {
         name
+        headshot {
+          url(transformation: { document: { output: { format: webp } } })
+        }
       }
+      roleDescription
     }
     roleDescription
   }

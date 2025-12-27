@@ -1,9 +1,10 @@
 import { Metadata } from 'next';
 import { draftMode } from 'next/headers';
+import Image from 'next/image';
+import Link from 'next/link';
 import { getCaseManagersList, getNeutralsList } from '~/api/member';
 import { getTeamPage } from '~/api/team';
 import { extractMemberFromNeutral } from '~/components/member-list-item/extract-member-neutral';
-import { MemberListItem } from '~/components/member-list-item/member-list-item';
 import { heading } from '~/components/ui/text';
 import { PATHS } from '~/constants/paths.constants';
 import { getMetadataFromSeo } from '~/utils/seo';
@@ -43,41 +44,79 @@ export default async function Team() {
             Team
           </h1>
 
-          <div className="mx-auto w-full max-w-[1058px] stack-y-6">
-            <div className="stack-y-4">
+          <div className="mx-auto w-full max-w-block stack-y-6">
+            <div className="stack-y-3">
               <h2 className={heading({ type: '6' })}>Neutrals</h2>
-              <ul className="relative px-3">
+              <ul className="relative grid grid-cols-1 gap-x-2 gap-y-4 px-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
                 {neutralList?.neutrals.map((neutral) => {
                   const member = extractMemberFromNeutral(neutral);
 
                   if (!member) return null;
 
-                  return <MemberListItem key={neutral.id} member={member} />;
+                  return <MemberCardItem key={neutral.id} {...member} />;
                 })}
               </ul>
             </div>
-            <div className="stack-y-4">
+            <div className="stack-y-3">
               <h2 className={heading({ type: '6' })}>Case Managers</h2>
-              <ul className="relative px-3">
+              <ul className="relative grid grid-cols-1 gap-x-2 gap-y-4 px-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
                 {caseManagerList?.caseManagers.map((caseManager) => {
                   const { memberPage } = caseManager;
                   const { slug } = memberPage ?? {};
 
                   if (!memberPage) return null;
 
-                  const m = {
+                  const member = {
                     url: slug ?? '',
                     name: caseManager.info.name,
                     headshot: caseManager.info.headshot.url,
+                    role: caseManager.roleDescription,
                   };
 
-                  return <MemberListItem hasSchedule={false} key={caseManager.id} member={m} />;
+                  return <MemberCardItem key={caseManager.id} {...member} />;
                 })}
               </ul>
             </div>
           </div>
         </div>
       </main>
+    </div>
+  );
+}
+
+function MemberCardItem({
+  name,
+  url,
+  headshot,
+  role,
+}: {
+  name: string;
+  url: string;
+  headshot: string;
+  role: string;
+}) {
+  return (
+    <div className="group/card linkBox flex flex-col gap-y-[calc(theme(spacing.1)*2)]">
+      <div className="relative aspect-[4/5] w-full overflow-clip rounded-lg">
+        <Image
+          src={headshot}
+          fill
+          sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
+          alt={`${name} headshot`}
+          className="scale-100 bg-brand-black object-cover object-top contrast-125 grayscale transition-all group-hover/card:scale-105 group-hover/card:filter-none"
+        />
+      </div>
+      <div className="flex flex-col">
+        <div>
+          <Link
+            href={`${PATHS.team}/${url}`}
+            className="linkOverlay inline-block scroll-auto font-sans text-base/tight underline decoration-transparent transition-all hover:decoration-current"
+          >
+            {name}
+          </Link>
+        </div>
+        <p className="text-base/tight text-brand-toffee">{role}</p>
+      </div>
     </div>
   );
 }
