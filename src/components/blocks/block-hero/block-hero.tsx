@@ -1,3 +1,6 @@
+'use client';
+
+import { motion } from 'framer-motion';
 import Balancer from 'react-wrap-balancer';
 import { makeCmsAssetUrl } from '~/app/_utils/make-cms-asset-url';
 import { Slideshow } from '~/components/blocks/block-hero/slideshow';
@@ -14,17 +17,24 @@ export function BlockHero() {
           zIndex: 20,
         }}
       >
-        <p
+        <motion.p
           className="px-2 py-6 text-left font-serif text-8xl leading-none"
           style={{
             fontSize: createFluidValue(40, 96, 390, 1920),
+          }}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{
+            type: 'spring',
+            stiffness: 120,
+            damping: 14,
           }}
         >
           <Balancer>
             Your source for a trusted neutral <br />
             when it counts
           </Balancer>
-        </p>
+        </motion.p>
       </div>
       <div
         className="absolute inset-0 flex h-full flex-col justify-end overflow-x-clip pt-[var(--nav-spacing)]"

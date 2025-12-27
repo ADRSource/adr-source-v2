@@ -4,7 +4,8 @@ import { twMerge } from 'tailwind-merge';
 import { getSchedulePage } from '~/api/schedule';
 import { Container } from '~/components/container';
 import { IconLink } from '~/components/ui/link';
-import { heading, text } from '~/components/ui/text';
+import { PageHeader } from '~/components/ui/page-header';
+import { text } from '~/components/ui/text';
 import { PATHS } from '~/constants/paths.constants';
 import { getMetadataFromSeo } from '~/utils/seo';
 import styles from './page.module.css';
@@ -27,14 +28,7 @@ export default function Schedule() {
     <Container>
       <main className={styles.root}>
         <div className="items-center pb-7 pt-6 stack-y-4">
-          <h1
-            className={heading({
-              type: '3',
-              className: 'text-center',
-            })}
-          >
-            All Schedules
-          </h1>
+          <PageHeader className="text-center">All Schedules</PageHeader>
           <p className={text({ type: 'body', className: 'text-center text-xl' })}>
             For individual neutral schedules, vist the{' '}
             <IconLink

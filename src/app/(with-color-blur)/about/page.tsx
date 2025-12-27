@@ -2,6 +2,7 @@ import { Metadata } from 'next';
 import { draftMode } from 'next/headers';
 import { Balancer } from 'react-wrap-balancer';
 import { getAboutPage } from '~/api/about';
+import { PageHeader } from '~/components/ui/page-header';
 import { heading, text } from '~/components/ui/text';
 import { PATHS } from '~/constants/paths.constants';
 import { getMetadataFromSeo } from '~/utils/seo';
@@ -26,14 +27,7 @@ export default function About() {
       <main className="relative z-20 min-h-screen">
         <div className="relative overflow-x-clip px-2 pb-7 pt-6 stack-y-6">
           <div className="mx-auto max-w-[1058px] border-b border-brand-copper pb-6 stack-y-5">
-            <h1
-              className={heading({
-                type: '3',
-                className: 'text-center',
-              })}
-            >
-              About
-            </h1>
+            <PageHeader className="text-center">About</PageHeader>
             <p
               className={heading({
                 type: '5',

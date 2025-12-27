@@ -6,7 +6,7 @@ import { getPageParam } from '~/app/(with-color-blur)/resources/utils/getPagePar
 import { ResourceCard } from '~/app/_components/resources/resource-card';
 import { AutoGrid } from '~/components/auto-grid/auto-grid';
 import { Container } from '~/components/container';
-import { heading } from '~/components/ui/text';
+import { PageHeader } from '~/components/ui/page-header';
 import { PATHS } from '~/constants/paths.constants';
 import { getMetadataFromSeo } from '~/utils/seo';
 
@@ -42,14 +42,7 @@ export default async function Resources(
   return (
     <Container>
       <div className="pb-7 pt-6 stack-y-6">
-        <h1
-          className={heading({
-            type: '3',
-            className: 'text-center',
-          })}
-        >
-          Resources
-        </h1>
+        <PageHeader className="text-center">Resources</PageHeader>
         <AutoGrid count={3} itemMinWidth={350} gapX="24px" gapY="24px" className="relative z-20" stagger>
           {resources.map((r, i) => {
             const { resource, resourceType } = r;
