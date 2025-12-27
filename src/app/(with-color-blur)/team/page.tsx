@@ -4,6 +4,7 @@ import { getCaseManagersList, getNeutralsList } from '~/api/member';
 import { getTeamPage } from '~/api/team';
 import { AutoGrid } from '~/components/auto-grid/auto-grid';
 import { extractMemberFromNeutral } from '~/components/member-list-item/extract-member-neutral';
+import { PageHeader } from '~/components/ui/page-header';
 import { heading } from '~/components/ui/text';
 import { PATHS } from '~/constants/paths.constants';
 import { getMetadataFromSeo } from '~/utils/seo';
@@ -35,14 +36,7 @@ export default async function Team() {
     <div className="isolate">
       <main className="relative z-20 min-h-screen">
         <div className="relative overflow-x-clip px-2 pb-7 pt-6 stack-y-4">
-          <h1
-            className={heading({
-              type: '3',
-              className: 'text-center',
-            })}
-          >
-            Team
-          </h1>
+          <PageHeader className="text-center">Team</PageHeader>
 
           <div className="mx-auto w-full max-w-block stack-y-6">
             <div className="stack-y-3">
