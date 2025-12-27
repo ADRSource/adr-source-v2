@@ -2,7 +2,7 @@ import { text } from '~/components/ui/text';
 
 export function Card({ children }: { children?: React.ReactNode }) {
   return (
-    <div className="group linkBox rounded-md border border-solid border-brand-copper/25 bg-brand-black px-4 py-5 transition-colors stack-y-3 hover:border-brand-copper">
+    <div className="group linkBox h-full rounded-md border border-solid border-brand-copper/25 bg-brand-black px-4 py-5 transition-colors stack-y-3 hover:border-brand-copper">
       {children}
     </div>
   );
