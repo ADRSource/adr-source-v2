@@ -1,9 +1,9 @@
 import { draftMode } from 'next/headers';
 import { getRecentNeutralsList } from '~/api/member';
-import { MemberCardItem } from '~/app/(with-color-blur)/team/member-card-item';
 import { AutoGrid } from '~/components/auto-grid/auto-grid';
 import { AnimatedSection } from '~/components/blocks/animated-section';
 import { Container } from '~/components/container';
+import { MemberCardItem } from '~/components/member-card-item';
 import { extractMemberFromNeutral } from '~/components/member-list-item/extract-member-neutral';
 import { ButtonLink } from '~/components/ui/button';
 import { createFluidValue } from '~/utils/create-fluid-value';
