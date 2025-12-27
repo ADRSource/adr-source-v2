@@ -16,6 +16,14 @@ export const getNeutralsList = unstable_cache(
   },
 );
 
+export const getRecentNeutralsList = unstable_cache(
+  (preview: boolean) => cmsRequest(preview).GetRecentNeutralList(),
+  [...MEMBER_TAGS.neutralsList(), 'recent'],
+  {
+    tags: [...MEMBER_TAGS.neutralsList(), 'recent'],
+  },
+);
+
 export const getCaseManagersList = unstable_cache(
   (preview: boolean) => cmsRequest(preview).GetCaseManagerList(),
   MEMBER_TAGS.caseManagersList(),

@@ -9,6 +9,7 @@ export function extractMemberFromNeutral(neutral: NeutralItemFragment) {
   return {
     url: slug ?? '',
     name: neutral.info.name,
+    role: neutral.roleDescription,
     headshot: neutral.info.headshot.url,
   };
 }
