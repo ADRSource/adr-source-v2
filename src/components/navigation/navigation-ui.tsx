@@ -13,7 +13,7 @@ export function ScheduleButtonLink() {
     <ButtonLink
       icon={<IconCalendar />}
       href={PATHS.schedule}
-      className="right-2 block leading-none md:absolute md:inset-y-center"
+      className="right-2 block leading-none md:absolute md:top-1/2 md:-translate-y-1/2 md:transform"
     >
       Scheduling
     </ButtonLink>

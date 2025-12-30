@@ -20,6 +20,7 @@ export function MemberCardItem({
     <motion.div
       className="group/card linkBox flex h-full flex-col gap-y-[calc(theme(spacing.1)*2)]"
       whileHover={{ scale: 1.02, y: -4 }}
+      whileTap={{ scale: 1, y: 0 }}
       transition={{ type: 'spring', stiffness: 300, damping: 20 }}
     >
       <div className="relative aspect-[4/5] w-full overflow-clip rounded-lg">
