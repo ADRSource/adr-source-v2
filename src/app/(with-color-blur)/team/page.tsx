@@ -39,14 +39,16 @@ export default async function Team() {
           <PageHeader className="text-center">Team</PageHeader>
 
           <div className="mx-auto w-full max-w-block stack-y-6">
-            <div className="stack-y-3">
-              <h2 className={heading({ type: '6' })}>Neutrals</h2>
+            <div className="px-3 stack-y-4">
+              <h2 className={heading({ type: '5', className: 'normal-case tracking-tight' })}>
+                Neutrals
+              </h2>
               <AutoGrid
                 count={4}
                 itemMinWidth={280}
                 gapX="24px"
                 gapY="64px"
-                className="relative px-3"
+                className="relative"
                 stagger
               >
                 {neutralList?.neutrals.map((neutral) => {
@@ -58,14 +60,16 @@ export default async function Team() {
                 })}
               </AutoGrid>
             </div>
-            <div className="stack-y-3">
-              <h2 className={heading({ type: '6' })}>Case Managers</h2>
+            <div className="px-3 stack-y-4">
+              <h2 className={heading({ type: '5', className: 'normal-case tracking-tight' })}>
+                Case Managers
+              </h2>
               <AutoGrid
                 count={4}
                 itemMinWidth={250}
                 gapX="24px"
                 gapY="64px"
-                className="relative px-3"
+                className="relative"
                 stagger
               >
                 {caseManagerList?.caseManagers.map((caseManager) => {
