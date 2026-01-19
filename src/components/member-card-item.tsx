@@ -14,7 +14,7 @@ export function MemberCardItem({
   name: string;
   url: string;
   headshot: string;
-  role: string;
+  role?: string;
 }) {
   return (
     <motion.div
@@ -41,7 +41,7 @@ export function MemberCardItem({
             {name}
           </Link>
         </div>
-        <p className="text-base/tight text-brand-toffee">{role}</p>
+        {role && <p className="text-base/tight text-brand-toffee">{role}</p>}
       </div>
     </motion.div>
   );
