@@ -20,15 +20,22 @@ export async function BlockTeam() {
       })
       .filter((m): m is NonNullable<typeof m> => m !== null) ?? [];
 
+  const services = ['Mediators', 'Arbitrators', 'Special Magistrates'];
+
   return (
     <AnimatedSection>
       <div className="relative py-6 stack-y-4">
         <div className="stack-y-2">
-          <span className="text-balance px-2 text-center text-sm/snug font-medium uppercase tracking-wider text-brand-toffee lg:text-base/snug">
-            Mediators
-            <span className="break-words">&nbsp;&middot;&nbsp;Arbitrators</span>
-            <span className="whitespace-nowrap">&nbsp;&middot;&nbsp;Special Magistrates</span>
-          </span>
+          <ul className="gap-y-0.5 flex flex-wrap items-center justify-center px-2 text-center text-sm/snug font-medium uppercase tracking-wider text-brand-toffee lg:text-base/snug">
+            {services.map((service) => (
+              <li
+                key={service}
+                className="flex items-center whitespace-nowrap before:w-[2ch] before:content-['·'] last-of-type:after:w-[2ch] last-of-type:after:content-['·']"
+              >
+                {service}
+              </li>
+            ))}
+          </ul>
           <h2
             className={heading({
               type: '3',
