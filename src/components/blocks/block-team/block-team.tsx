@@ -25,7 +25,9 @@ export async function BlockTeam() {
       <div className="relative py-6 stack-y-4">
         <div className="stack-y-2">
           <span className="text-balance px-2 text-center text-sm/snug font-medium uppercase tracking-wider text-brand-toffee lg:text-base/snug">
-            Mediators&nbsp;&middot;&nbsp;Arbitrators&nbsp;&middot;&nbsp;Special Magistrates
+            Mediators
+            <span className="break-words">&nbsp;&middot;&nbsp;Arbitrators</span>
+            <span className="whitespace-nowrap">&nbsp;&middot;&nbsp;Special Magistrates</span>
           </span>
           <h2
             className={heading({

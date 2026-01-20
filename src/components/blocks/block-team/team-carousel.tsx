@@ -25,15 +25,13 @@ export function TeamCarousel({ members }: { members: Member[] }) {
 
   return (
     <div className="relative flex justify-center">
-      <div className="relative w-full">
-        <div className="overflow-x-hidden py-2" ref={emblaRef}>
-          <div className="grid w-full auto-cols-[304px] grid-flow-col">
-            {members.map((member) => (
-              <div key={member.id} className="min-w-0 pl-2">
-                <MemberCardItem name={member.name} url={member.url} headshot={member.headshot} />
-              </div>
-            ))}
-          </div>
+      <div className="overflow-x-hidden py-2" ref={emblaRef}>
+        <div className="grid w-full auto-cols-[304px] grid-flow-col">
+          {members.map((member) => (
+            <div key={member.id} className="min-w-0 pl-2">
+              <MemberCardItem name={member.name} url={member.url} headshot={member.headshot} />
+            </div>
+          ))}
         </div>
       </div>
     </div>
