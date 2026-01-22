@@ -4,13 +4,13 @@ import AutoScroll from 'embla-carousel-auto-scroll';
 import useEmblaCarousel from 'embla-carousel-react';
 import { MemberCardItem } from '~/components/member-card-item';
 
-type Member = {
+interface Member {
   id: string;
   name: string;
   url: string;
   headshot: string;
   role: string;
-};
+}
 
 export function TeamCarousel({ members }: { members: Member[] }) {
   const [emblaRef] = useEmblaCarousel({ loop: true, align: 'start', dragFree: true }, [
