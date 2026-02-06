@@ -94,6 +94,7 @@ export function BlockHero() {
             'p3SmRHAxTcalQ0QoYJ94',
             'Xw6Gfm7RFiYcJsvwXJNl',
             'wztHCHYzRsOQ1rEfy6ii',
+            'cmlbgfyjpdr8f08lbbnaeewwi',
           ].map((id) => makeCmsAssetUrl(id))}
         />
       </div>
