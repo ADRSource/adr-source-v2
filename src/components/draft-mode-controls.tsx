@@ -1,14 +1,23 @@
 import { draftMode } from 'next/headers';
-import { ButtonLink } from '~/components/ui/button';
+import { redirect } from 'next/navigation';
+import { root } from '~/components/ui/button';
+
+async function disableDraft() {
+  'use server';
+  (await draftMode()).disable();
+  redirect('/');
+}
 
 export async function DraftModeControls() {
   const { isEnabled } = await draftMode();
 
   return isEnabled ? (
     <div className="fixed bottom-2 left-2 z-[9999]">
-      <ButtonLink href="/api/draft/disable" prefetch={false}>
-        Disable Draft Mode
-      </ButtonLink>
+      <form action={disableDraft}>
+        <button type="submit" className={root()}>
+          Disable Draft Mode
+        </button>
+      </form>
     </div>
   ) : null;
 }
