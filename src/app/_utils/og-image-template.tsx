@@ -13,7 +13,7 @@ async function getGloockFont() {
 
 export async function ogImageTemplate({
   markup,
-  size = { width: 1200, height: 630 },
+  size,
 }: {
   markup: React.ReactNode;
   size: { width: number; height: number };

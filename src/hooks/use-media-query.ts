@@ -11,7 +11,7 @@ export function useMediaQuery(query: string): boolean {
     return false;
   };
 
-  const [matches, setMatches] = React.useState<boolean>(getMatches(query));
+  const [matches, setMatches] = React.useState(getMatches(query));
 
   function handleChange() {
     setMatches(getMatches(query));
