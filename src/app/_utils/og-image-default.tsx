@@ -2,11 +2,7 @@
 import { makeCmsAssetUrl } from '~/app/_utils/make-cms-asset-url';
 import { ogImageTemplate } from '~/app/_utils/og-image-template';
 
-export async function ogImageDefault({
-  size = { width: 1200, height: 630 },
-}: {
-  size: { width: number; height: number };
-}) {
+export async function ogImageDefault({ size }: { size: { width: number; height: number } }) {
   return ogImageTemplate({
     size,
     markup: (
