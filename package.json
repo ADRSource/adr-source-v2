@@ -9,13 +9,13 @@
     "build": "pnpm run gen && next build && next-sitemap",
     "start": "next start",
     "format": "prettier --write ./src",
-    "lint": "pnpm run gen && eslint ./src",
+    "lint": "next typegen && pnpm run gen && eslint ./src",
     "test:e2e": "pnpm run test:e2e:dev --silent",
     "test:e2e:dev": "playwright test --ui",
     "pretest:e2e:run": "pnpm run build",
     "test:e2e:run": "cross-env CI=true playwright test",
     "test:e2e:install": "pnpm exec playwright install --with-deps chromium",
-    "typecheck": "pnpm run gen && tsc --noEmit"
+    "typecheck": "next typegen && pnpm run gen && tsc --noEmit"
   },
   "dependencies": {
     "@date-fns/tz": "^1.2.0",
@@ -24,6 +24,7 @@
     "@radix-ui/react-visually-hidden": "^1.2.3",
     "@react-aria/focus": "^3.20.5",
     "@react-aria/overlays": "^3.27.3",
+    "@tanstack/react-pacer": "^0.21.1",
     "@uidotdev/usehooks": "^2.4.1",
     "@vercel/analytics": "^1.5.0",
     "cva": "1.0.0-beta.3",

@@ -1,0 +1,13 @@
+.animation path {
+  animation: wait 1200ms linear infinite;
+  animation-direction: reverse;
+}
+
+@keyframes wait {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.15;
+  }
+}
