@@ -201,7 +201,7 @@ function NeutralInfo({ member, name }: { member: MemberInfoNeutralFragment; name
               </p>
             </div>
           </div>
-          <div className="mx-auto w-full max-w-[449px] self-center overflow-y-auto rounded-lg border border-solid border-brand-copper bg-white/70 backdrop-blur-sm backdrop-saturate-150 md:p-2">
+          <div className="mx-auto w-full max-w-[449px] self-center overflow-y-auto rounded-lg border border-solid border-brand-copper bg-white/70 backdrop-blur-[2px] backdrop-saturate-150 md:p-2">
             <div className="mx-auto w-full rounded-lg bg-white p-1">
               <iframe
                 width="310"
@@ -320,7 +320,7 @@ function CaseManagerInfo({ member }: { member: MemberInfoCaseManagerFragment }) 
                 />
               </div>
               <div className="pointer-events-none col-span-full row-span-full self-end">
-                <div className="bg-gradient-to-b from-brand-black/0 to-brand-black/90 px-1 py-1 backdrop-blur-sm backdrop-saturate-150">
+                <div className="bg-gradient-to-b from-brand-black/0 to-brand-black/90 px-1 py-1 backdrop-blur-[2px] backdrop-saturate-150">
                   <span className="font-sans text-sm/tight font-medium text-brand-copper underline decoration-transparent transition-all group-hover/card:decoration-current">
                     {name}
                   </span>
