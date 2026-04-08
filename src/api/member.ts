@@ -9,7 +9,7 @@ const MEMBER_TAGS = {
 };
 
 export const getNeutralsList = unstable_cache(
-  (preview: boolean) => cmsRequest(preview).GetNeutralList(),
+  (preview: boolean, name?: string) => cmsRequest(preview).GetNeutralList({ name: name ?? '' }),
   MEMBER_TAGS.neutralsList(),
   {
     tags: MEMBER_TAGS.neutralsList(),
@@ -25,7 +25,7 @@ export const getRecentNeutralsList = unstable_cache(
 );
 
 export const getCaseManagersList = unstable_cache(
-  (preview: boolean) => cmsRequest(preview).GetCaseManagerList(),
+  (preview: boolean, name?: string) => cmsRequest(preview).GetCaseManagerList({ name: name ?? '' }),
   MEMBER_TAGS.caseManagersList(),
   {
     tags: MEMBER_TAGS.caseManagersList(),
