@@ -30,7 +30,7 @@ export function SearchInput() {
       }
 
       startTransition(() => {
-        router.replace(`${pathname}?${params.toString()}`, { scroll: true });
+        router.replace(`${pathname}?${params.toString()}`, { scroll: false });
       });
     },
     [pathname, router],
@@ -41,6 +41,17 @@ export function SearchInput() {
 
   const containerRef = React.useRef<HTMLDivElement>(null);
   const [isSticky, setIsSticky] = React.useState(false);
+
+  // Scroll to the search section after navigation completes.
+  // Fires when searchParams update (not on initial mount).
+  const isInitialRender = React.useRef(true);
+  React.useEffect(() => {
+    if (isInitialRender.current) {
+      isInitialRender.current = false;
+      return;
+    }
+    containerRef.current?.parentElement?.scrollIntoView({ block: 'start', behavior: 'smooth' });
+  }, [currentTerm]);
 
   React.useEffect(() => {
     const el = containerRef.current;

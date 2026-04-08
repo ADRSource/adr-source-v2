@@ -48,7 +48,7 @@ export default async function Team(props: PageProps<'/team'>) {
         <div className="relative overflow-x-clip px-2 pb-7 pt-6 stack-y-4">
           <PageHeader className="text-center">Team</PageHeader>
 
-          <div className="mx-auto w-full max-w-block stack-y-6">
+          <div className="mx-auto w-full max-w-block scroll-mt-[var(--nav-spacing)] stack-y-6">
             <SearchInput />
             {noResults && term != null ? (
               <div className="w-full">
