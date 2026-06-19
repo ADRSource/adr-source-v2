@@ -19,17 +19,15 @@ export async function ogImageTemplate({
   size: { width: number; height: number };
 }) {
   return new ImageResponse(
-    (
-      <div tw="flex h-full w-full items-center justify-center relative bg-[#1B1B1B] text-[#F8C596]">
-        <img
-          tw="flex absolute top-0 left-0"
-          style={{ objectFit: 'cover', width: '100%', height: '100%' }}
-          src={makeCmsAssetUrl('Y0Typvo2RwWXxSZcDvTQ')}
-          alt=""
-        />
-        {markup}
-      </div>
-    ),
+    <div tw="flex h-full w-full items-center justify-center relative bg-[#1B1B1B] text-[#F8C596]">
+      <img
+        tw="flex absolute top-0 left-0"
+        style={{ objectFit: 'cover', width: '100%', height: '100%' }}
+        src={makeCmsAssetUrl('Y0Typvo2RwWXxSZcDvTQ')}
+        alt=""
+      />
+      {markup}
+    </div>,
     {
       ...size,
       // debug: true,

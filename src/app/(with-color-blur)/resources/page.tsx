@@ -27,11 +27,9 @@ export async function generateMetadata(): Promise<Metadata> {
 const LIMIT = 9;
 const PARAM_KEY = 'page';
 
-export default async function Resources(
-  props: {
-    searchParams: Promise<Record<string, string | string[] | undefined>>;
-  }
-) {
+export default async function Resources(props: {
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
+}) {
   const searchParams = await props.searchParams;
   const preview = (await draftMode()).isEnabled;
   const skip = (getPageParam(PARAM_KEY, searchParams) - 1) * LIMIT;
@@ -43,7 +41,14 @@ export default async function Resources(
     <Container>
       <div className="pb-7 pt-6 stack-y-6">
         <PageHeader className="text-center">Resources</PageHeader>
-        <AutoGrid count={3} itemMinWidth={350} gapX="24px" gapY="24px" className="relative z-20" stagger>
+        <AutoGrid
+          count={3}
+          itemMinWidth={350}
+          gapX="24px"
+          gapY="24px"
+          className="relative z-20"
+          stagger
+        >
           {resources.map((r, i) => {
             const { resource, resourceType } = r;
             if (resource == null) return null;

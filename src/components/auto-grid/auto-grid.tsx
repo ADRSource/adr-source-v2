@@ -45,7 +45,17 @@ const itemVariants: Variants = {
 
 export const AutoGrid = React.forwardRef<HTMLDivElement, AutoGridProps>(
   (
-    { count, itemMinWidth, gapX, gapY = '8px', className, style, children, stagger = false, ...rest },
+    {
+      count,
+      itemMinWidth,
+      gapX,
+      gapY = '8px',
+      className,
+      style,
+      children,
+      stagger = false,
+      ...rest
+    },
     forwardedRef,
   ) => {
     const noGapX = gapX === undefined;

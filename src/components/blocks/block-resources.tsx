@@ -25,7 +25,13 @@ export async function BlockResources() {
             >
               Resources
             </h2>
-            <AutoGrid count={3} itemMinWidth={350} gapX="24px" gapY="24px" className="relative z-20">
+            <AutoGrid
+              count={3}
+              itemMinWidth={350}
+              gapX="24px"
+              gapY="24px"
+              className="relative z-20"
+            >
               {resources.map((r, i) => {
                 const { resource, resourceType } = r;
                 if (resource == null) return null;
