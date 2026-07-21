@@ -9,7 +9,7 @@ import { AnimatedSection } from './animated-section';
 
 export async function BlockResources() {
   const preview = (await draftMode()).isEnabled;
-  const data = await getResources(3, undefined, preview);
+  const data = await getResources(3, 0, preview);
   const { resources } = data;
 
   return (

@@ -27,7 +27,7 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function Home() {
   const preview = (await draftMode()).isEnabled;
   const _neutralsPrefetch = await getRecentNeutralsList(preview);
-  const _resourcesPrefetch = await getResources(3, undefined, preview);
+  const _resourcesPrefetch = await getResources(3, 0, preview);
 
   return (
     <main className="min-h-screen">

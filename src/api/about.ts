@@ -4,7 +4,4 @@ import { cmsRequest } from '~/graphql/cms';
 export const getAboutPage = unstable_cache(
   (preview: boolean) => cmsRequest(preview).GetAboutPage(),
   ['about'],
-  {
-    tags: ['about'],
-  },
 );
