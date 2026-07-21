@@ -29,19 +29,9 @@ function isSearch(name?: string): name is string {
   return name != null && name.trim().length > 0;
 }
 
-const MEMBER_TAGS = {
-  all: ['member'],
-  member: (slug: string) => [...MEMBER_TAGS.all, `member:${slug}`],
-  neutralsList: () => [...MEMBER_TAGS.all, 'neutralsList'],
-  caseManagersList: () => [...MEMBER_TAGS.all, 'caseManagersList'],
-};
-
 const getCachedNeutralsList = unstable_cache(
   (preview: boolean) => cmsRequest(preview).GetNeutralList({ where: buildNameFilter() }),
-  MEMBER_TAGS.neutralsList(),
-  {
-    tags: MEMBER_TAGS.neutralsList(),
-  },
+  ['neutralsList'],
 );
 
 export const getNeutralsList = (preview: boolean, name?: string) =>
@@ -51,18 +41,12 @@ export const getNeutralsList = (preview: boolean, name?: string) =>
 
 export const getRecentNeutralsList = unstable_cache(
   (preview: boolean) => cmsRequest(preview).GetRecentNeutralList(),
-  [...MEMBER_TAGS.neutralsList(), 'recent'],
-  {
-    tags: [...MEMBER_TAGS.neutralsList(), 'recent'],
-  },
+  ['recentNeutralsList'],
 );
 
 const getCachedCaseManagersList = unstable_cache(
   (preview: boolean) => cmsRequest(preview).GetCaseManagerList({ where: buildNameFilter() }),
-  MEMBER_TAGS.caseManagersList(),
-  {
-    tags: MEMBER_TAGS.caseManagersList(),
-  },
+  ['caseManagersList'],
 );
 
 export const getCaseManagersList = (preview: boolean, name?: string) =>
@@ -70,11 +54,7 @@ export const getCaseManagersList = (preview: boolean, name?: string) =>
     ? cmsRequest(preview).GetCaseManagerList({ where: buildNameFilter(name) })
     : getCachedCaseManagersList(preview);
 
-export const getMemberPageBySlug = (slug: string, preview: boolean) =>
-  unstable_cache(
-    (slug: string, preview: boolean) => cmsRequest(preview).GetMemberPageBySlug({ slug }),
-    MEMBER_TAGS.member(slug),
-    {
-      tags: MEMBER_TAGS.member(slug),
-    },
-  )(slug, preview);
+export const getMemberPageBySlug = unstable_cache(
+  (slug: string, preview: boolean) => cmsRequest(preview).GetMemberPageBySlug({ slug }),
+  ['memberPage'],
+);
