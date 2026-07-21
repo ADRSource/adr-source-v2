@@ -47,6 +47,12 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
 
+### CMS Revalidation
+
+`src/app/api/revalidate/route.ts` receives webhooks from Hygraph and revalidates the entire site's cached route tree on every call, rather than trying to target only the affected page(s). Content is cross-referenced across pages (e.g. a resource's author bio, a case manager's neutral roster) in ways that make precise, per-entity cache invalidation brittle to maintain; revalidating everything on every publish trades a bit of extra regeneration work for changes always showing up immediately.
+
+Configure a single webhook in Hygraph (Project Settings → Webhooks) covering all content models and all publish/unpublish/delete events, targeting `POST /api/revalidate`. No query parameters are required.
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:
