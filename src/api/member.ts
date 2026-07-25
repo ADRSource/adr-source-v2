@@ -1,5 +1,23 @@
 import { unstable_cache } from 'next/cache';
 import { cmsRequest } from '~/graphql/cms';
+import { CaseManagerWhereInput, NeutralWhereInput } from '~/graphql/generated/cms.generated';
+
+/**
+ * Names are stored as "First M. Last", so a single `name_contains` against the
+ * raw term misses the most natural search there is: "Jeffrey Fleming" never
+ * matches "Jeffrey M. Fleming". AND-ing each whitespace-separated token matches
+ * regardless of what sits between them.
+ *
+ * Codegen runs with `avoidOptionals`, which makes every field on the generated
+ * where-inputs required, so a partial filter has to be cast to the target input.
+ */
+function buildNameFilter(name?: string): CaseManagerWhereInput & NeutralWhereInput {
+  const tokens = name?.trim().split(/\s+/).filter(Boolean) ?? [];
+  const filter =
+    tokens.length === 0 ? {} : { AND: tokens.map((t) => ({ info: { name_contains: t } })) };
+
+  return filter as unknown as CaseManagerWhereInput & NeutralWhereInput;
+}
 
 const MEMBER_TAGS = {
   all: ['member'],
@@ -9,7 +27,8 @@ const MEMBER_TAGS = {
 };
 
 export const getNeutralsList = unstable_cache(
-  (preview: boolean, name?: string) => cmsRequest(preview).GetNeutralList({ name: name ?? '' }),
+  (preview: boolean, name?: string) =>
+    cmsRequest(preview).GetNeutralList({ where: buildNameFilter(name) }),
   MEMBER_TAGS.neutralsList(),
   {
     tags: MEMBER_TAGS.neutralsList(),
@@ -25,7 +44,8 @@ export const getRecentNeutralsList = unstable_cache(
 );
 
 export const getCaseManagersList = unstable_cache(
-  (preview: boolean, name?: string) => cmsRequest(preview).GetCaseManagerList({ name: name ?? '' }),
+  (preview: boolean, name?: string) =>
+    cmsRequest(preview).GetCaseManagerList({ where: buildNameFilter(name) }),
   MEMBER_TAGS.caseManagersList(),
   {
     tags: MEMBER_TAGS.caseManagersList(),
