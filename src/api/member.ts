@@ -19,6 +19,16 @@ function buildNameFilter(name?: string): CaseManagerWhereInput & NeutralWhereInp
   return filter as unknown as CaseManagerWhereInput & NeutralWhereInput;
 }
 
+/**
+ * `unstable_cache` folds its arguments into the cache key, so caching the
+ * search path would mint a permanent data-cache entry per distinct term and let
+ * arbitrary `?term=` values grow the cache without bound. The unfiltered list —
+ * the one virtually every visitor loads — stays cached; searches go direct.
+ */
+function isSearch(name?: string): name is string {
+  return name != null && name.trim().length > 0;
+}
+
 const MEMBER_TAGS = {
   all: ['member'],
   member: (slug: string) => [...MEMBER_TAGS.all, `member:${slug}`],
@@ -26,14 +36,18 @@ const MEMBER_TAGS = {
   caseManagersList: () => [...MEMBER_TAGS.all, 'caseManagersList'],
 };
 
-export const getNeutralsList = unstable_cache(
-  (preview: boolean, name?: string) =>
-    cmsRequest(preview).GetNeutralList({ where: buildNameFilter(name) }),
+const getCachedNeutralsList = unstable_cache(
+  (preview: boolean) => cmsRequest(preview).GetNeutralList({ where: buildNameFilter() }),
   MEMBER_TAGS.neutralsList(),
   {
     tags: MEMBER_TAGS.neutralsList(),
   },
 );
+
+export const getNeutralsList = (preview: boolean, name?: string) =>
+  isSearch(name)
+    ? cmsRequest(preview).GetNeutralList({ where: buildNameFilter(name) })
+    : getCachedNeutralsList(preview);
 
 export const getRecentNeutralsList = unstable_cache(
   (preview: boolean) => cmsRequest(preview).GetRecentNeutralList(),
@@ -43,14 +57,18 @@ export const getRecentNeutralsList = unstable_cache(
   },
 );
 
-export const getCaseManagersList = unstable_cache(
-  (preview: boolean, name?: string) =>
-    cmsRequest(preview).GetCaseManagerList({ where: buildNameFilter(name) }),
+const getCachedCaseManagersList = unstable_cache(
+  (preview: boolean) => cmsRequest(preview).GetCaseManagerList({ where: buildNameFilter() }),
   MEMBER_TAGS.caseManagersList(),
   {
     tags: MEMBER_TAGS.caseManagersList(),
   },
 );
+
+export const getCaseManagersList = (preview: boolean, name?: string) =>
+  isSearch(name)
+    ? cmsRequest(preview).GetCaseManagerList({ where: buildNameFilter(name) })
+    : getCachedCaseManagersList(preview);
 
 export const getMemberPageBySlug = (slug: string, preview: boolean) =>
   unstable_cache(

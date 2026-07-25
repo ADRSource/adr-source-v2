@@ -25,8 +25,12 @@ export async function generateMetadata(): Promise<Metadata> {
   }
 }
 
+// Cap the term so an overlong `?term=` can't be forwarded to the CMS verbatim.
+// Anything that fails to parse — too long, or repeated `?term=a&term=b`, which
+// arrives as an array — falls back to no search rather than an empty-string
+// term, which would otherwise render 'No Results for ""'.
 const TeamSearchParamSchema = z.object({
-  term: z.string().optional().catch(''),
+  term: z.string().max(100).optional().catch(undefined),
 });
 
 export default async function Team(props: PageProps<'/team'>) {
