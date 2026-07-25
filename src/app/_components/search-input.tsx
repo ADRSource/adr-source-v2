@@ -22,7 +22,9 @@ export function SearchInput() {
 
   const handleSearch = React.useCallback(
     (term: string) => {
-      const params = new URLSearchParams();
+      // Seed from the current params so unrelated ones (campaign tags on a
+      // shared link, say) survive a search.
+      const params = new URLSearchParams(searchParams);
       if (term.length > 0) {
         params.set('term', term);
       } else {
@@ -33,7 +35,7 @@ export function SearchInput() {
         router.replace(`${pathname}?${params.toString()}`, { scroll: false });
       });
     },
-    [pathname, router],
+    [pathname, router, searchParams],
   );
 
   // `useDebouncer` rather than `useDebouncedCallback` so the clear button can
@@ -129,7 +131,7 @@ export function SearchInput() {
         >
           <div className="relative grid size-[15px] place-items-center">
             {isPending ? (
-              <IconLoader className="size-[15px]" animate />
+              <IconLoader className="size-[15px]" animate aria-hidden="true" />
             ) : (
               <IconSearch aria-hidden="true" />
             )}
@@ -140,8 +142,10 @@ export function SearchInput() {
           <input
             id="search"
             spellCheck={false}
-            className="h-full w-full border-none bg-transparent px-1 text-current placeholder:text-current focus:shadow-none focus:outline-none focus-visible:shadow-none focus-visible:outline-none focus-visible:ring-transparent focus-visible:ring-offset-0"
-            type="text"
+            // The native WebKit clear button is suppressed in favour of the
+            // custom one below, which stays in sync with the URL term.
+            className="h-full w-full border-none bg-transparent px-1 text-current placeholder:text-current focus:shadow-none focus:outline-none focus-visible:shadow-none focus-visible:outline-none focus-visible:ring-transparent focus-visible:ring-offset-0 [&::-webkit-search-cancel-button]:appearance-none"
+            type="search"
             placeholder={compact ? 'Search' : 'Search team...'}
             defaultValue={currentTerm?.toString()}
             ref={inputRef}
