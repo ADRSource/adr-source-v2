@@ -11,6 +11,10 @@ import { IconSearch } from '~/components/icons/IconSearch';
 
 const springTransition = { type: 'spring', stiffness: 120, damping: 14 } as const;
 
+// useLayoutEffect warns during SSR, where it would be a no-op anyway.
+const useIsomorphicLayoutEffect =
+  typeof window === 'undefined' ? React.useEffect : React.useLayoutEffect;
+
 export function SearchInput() {
   const router = useRouter();
   const pathname = usePathname();
@@ -49,12 +53,15 @@ export function SearchInput() {
   const [isSticky, setIsSticky] = React.useState(false);
 
   // Scroll to the search section once a search actually changes the term.
+  // Before paint, not after: fewer results shorten the page, and the browser
+  // clamps scroll to the new bottom — a plain effect paints that clamped frame
+  // (a flash of footer) before this runs.
   const previousTerm = React.useRef(currentTerm);
-  React.useEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     if (previousTerm.current === currentTerm) return;
 
     previousTerm.current = currentTerm;
-    containerRef.current?.parentElement?.scrollIntoView({ block: 'start', behavior: 'smooth' });
+    containerRef.current?.parentElement?.scrollIntoView({ block: 'start', behavior: 'instant' });
   }, [currentTerm]);
 
   React.useEffect(() => {
