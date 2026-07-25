@@ -48,14 +48,12 @@ export function SearchInput() {
   const containerRef = React.useRef<HTMLDivElement>(null);
   const [isSticky, setIsSticky] = React.useState(false);
 
-  // Scroll to the search section after navigation completes.
-  // Fires when searchParams update (not on initial mount).
-  const isInitialRender = React.useRef(true);
+  // Scroll to the search section once a search actually changes the term.
+  const previousTerm = React.useRef(currentTerm);
   React.useEffect(() => {
-    if (isInitialRender.current) {
-      isInitialRender.current = false;
-      return;
-    }
+    if (previousTerm.current === currentTerm) return;
+
+    previousTerm.current = currentTerm;
     containerRef.current?.parentElement?.scrollIntoView({ block: 'start', behavior: 'smooth' });
   }, [currentTerm]);
 
