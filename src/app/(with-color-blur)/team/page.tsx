@@ -55,7 +55,7 @@ export default async function Team(props: PageProps<'/team'>) {
           <div className="mx-auto w-full max-w-block scroll-mt-[var(--nav-spacing)] stack-y-6">
             <SearchInput />
             {noResults && term != null ? (
-              <div className="w-full">
+              <div className="w-full" role="status" aria-live="polite">
                 <p className={heading({ type: '6', className: 'text-center' })}>
                   No Results for &quot;{term}&quot;
                 </p>
