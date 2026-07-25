@@ -41,7 +41,9 @@ export function MemberCardItem({
             {name}
           </Link>
         </div>
-        {role && <p className="text-base/tight text-brand-toffee">{role}</p>}
+        {role != null && role.length > 0 ? (
+          <p className="text-base/tight text-brand-toffee">{role}</p>
+        ) : null}
       </div>
     </motion.div>
   );

@@ -303,7 +303,7 @@ function CaseManagerInfo({ member }: { member: MemberInfoCaseManagerFragment }) 
           const { slug } = memberPage ?? {};
           const { name, headshot } = neutral.info;
 
-          if (!headshot?.url) return null;
+          if (!headshot.url) return null;
 
           return (
             <div
