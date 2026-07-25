@@ -1,6 +1,6 @@
 'use client';
 
-import { useDebouncedCallback } from '@tanstack/react-pacer';
+import { useDebouncer } from '@tanstack/react-pacer';
 import { motion } from 'framer-motion';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import * as React from 'react';
@@ -36,7 +36,11 @@ export function SearchInput() {
     [pathname, router],
   );
 
-  const debouncedHandleSearch = useDebouncedCallback(handleSearch, { wait: 300 });
+  // `useDebouncer` rather than `useDebouncedCallback` so the clear button can
+  // cancel a keystroke that is still waiting out its 300ms — otherwise that
+  // pending call lands after the clear and puts the term back in the URL while
+  // the input sits empty.
+  const searchDebouncer = useDebouncer(handleSearch, { wait: 300 });
   const inputRef = React.useRef<HTMLInputElement>(null);
 
   const containerRef = React.useRef<HTMLDivElement>(null);
@@ -148,7 +152,7 @@ export function SearchInput() {
               setInputFocused(false);
             }}
             onChange={(e) => {
-              debouncedHandleSearch(e.target.value);
+              searchDebouncer.maybeExecute(e.target.value);
             }}
           />
         </motion.div>
@@ -156,6 +160,7 @@ export function SearchInput() {
           <button
             type="button"
             onClick={() => {
+              searchDebouncer.cancel();
               handleSearch('');
               if (inputRef.current) {
                 inputRef.current.value = '';
