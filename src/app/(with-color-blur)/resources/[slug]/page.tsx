@@ -11,11 +11,9 @@ import { PATHS } from '~/constants/paths.constants';
 import { createFluidValue } from '~/utils/create-fluid-value';
 import { getMetadataFromSeo } from '~/utils/seo';
 
-export async function generateMetadata(
-  props: {
-    params: Promise<{ slug: string }>;
-  }
-): Promise<Metadata> {
+export async function generateMetadata(props: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
   const params = await props.params;
   const preview = (await draftMode()).isEnabled;
   try {

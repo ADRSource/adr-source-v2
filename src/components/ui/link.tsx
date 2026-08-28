@@ -4,8 +4,7 @@ import { twMerge } from 'tailwind-merge';
 import { IconArrowTopRight } from '../icons/IconArrowTopRight';
 
 interface IconLinkProps
-  extends Omit<React.ComponentPropsWithoutRef<'a'>, keyof LinkProps>,
-    LinkProps {
+  extends Omit<React.ComponentPropsWithoutRef<'a'>, keyof LinkProps>, LinkProps {
   children?: React.ReactNode;
   icon?: React.ReactNode;
 }

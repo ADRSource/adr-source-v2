@@ -5,7 +5,8 @@ import { cva } from '~/cva.config';
 import { IconArrowTopRight } from '../icons/IconArrowTopRight';
 
 interface ButtonLinkProps
-  extends VariantProps<typeof root>,
+  extends
+    VariantProps<typeof root>,
     Omit<React.ComponentPropsWithoutRef<'a'>, keyof LinkProps>,
     LinkProps {
   children?: React.ReactNode;
@@ -72,7 +73,8 @@ const iconStyles = cva({
 });
 
 interface IconButtonLinkProps
-  extends VariantProps<typeof circleButtonRoot>,
+  extends
+    VariantProps<typeof circleButtonRoot>,
     Omit<React.ComponentPropsWithoutRef<'a'>, keyof LinkProps>,
     LinkProps {
   children?: React.ReactNode;
