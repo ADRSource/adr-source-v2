@@ -15,7 +15,9 @@
     "pretest:e2e:run": "pnpm run build",
     "test:e2e:run": "cross-env CI=true playwright test",
     "test:e2e:install": "pnpm exec playwright install --with-deps chromium",
-    "typecheck": "next typegen && pnpm run gen && tsc --noEmit"
+    "typecheck": "next typegen && pnpm run gen && tsc --noEmit",
+    "audit:seo": "node --env-file-if-exists=.env.local scripts/audit-seo-names.mjs",
+    "audit:seo:test": "node --test scripts/audit-seo-names.test.mjs"
   },
   "dependencies": {
     "@date-fns/tz": "^1.2.0",
