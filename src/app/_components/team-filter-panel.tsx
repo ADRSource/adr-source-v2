@@ -71,14 +71,18 @@ export function TeamFilterPanel({
             <RoleChip
               label="Any"
               selected={role == null}
-              onSelect={() => onRoleChange(undefined)}
+              onSelect={() => {
+                onRoleChange(undefined);
+              }}
             />
             {TEAM_ROLES.map((value) => (
               <RoleChip
                 key={value}
                 label={TEAM_ROLE_LABELS[value]}
                 selected={role === value}
-                onSelect={() => onRoleChange(value)}
+                onSelect={() => {
+                  onRoleChange(value);
+                }}
               />
             ))}
           </div>
@@ -114,14 +118,18 @@ export function TeamFilterPanel({
             <FocusOption
               label="All areas of focus"
               selected={focus == null}
-              onSelect={() => onFocusChange(undefined)}
+              onSelect={() => {
+                onFocusChange(undefined);
+              }}
             />
             {visibleAreas.map((area) => (
               <FocusOption
                 key={area}
                 label={area}
                 selected={focus === area}
-                onSelect={() => onFocusChange(area)}
+                onSelect={() => {
+                  onFocusChange(area);
+                }}
               />
             ))}
             {visibleAreas.length === 0 ? (
