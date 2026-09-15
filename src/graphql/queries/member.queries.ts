@@ -26,6 +26,7 @@ export const GetRecentNeutralList = gql`
       slug
     }
     roleDescription
+    focusAreas
     info {
       name
       headshot {
