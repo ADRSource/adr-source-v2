@@ -28,7 +28,7 @@ export const TEAM_ROLE_MATCH: Record<TeamRole, string> = {
 export const TeamSearchParamSchema = z.object({
   term: z.string().max(100).optional().catch(undefined),
   role: z.enum(TEAM_ROLES).optional().catch(undefined),
-  focus: z.string().min(1).max(100).optional().catch(undefined),
+  focus: z.string().trim().min(1).max(100).optional().catch(undefined),
 });
 
 export type TeamSearchParams = z.infer<typeof TeamSearchParamSchema>;
@@ -48,19 +48,23 @@ export function matchesRole(roleDescription: string | null | undefined, role?: T
  * unprefixed form so a header and an area never collide in the URL.
  */
 export function normalizeFocusArea(area: string): string {
-  return area.startsWith('~') ? area.slice(1) : area;
+  return (area.startsWith('~') ? area.slice(1) : area).trim();
 }
 
 export function isFocusAreaHeader(area: string): boolean {
   return area.startsWith('~');
 }
 
+export function sameFocusArea(a: string, b: string): boolean {
+  return normalizeFocusArea(a).toLowerCase() === normalizeFocusArea(b).toLowerCase();
+}
+
 export function matchesFocusArea(
   focusAreas: readonly string[] | null | undefined,
   focus?: string,
 ): boolean {
-  if (focus == null || focus.length === 0) return true;
-  return (focusAreas ?? []).some((area) => normalizeFocusArea(area) === focus);
+  if (focus == null || focus.trim().length === 0) return true;
+  return (focusAreas ?? []).some((area) => sameFocusArea(area, focus));
 }
 
 export function uniqueFocusAreas(
@@ -73,8 +77,10 @@ export function uniqueFocusAreas(
     for (const area of member.focusAreas ?? []) {
       if (isFocusAreaHeader(area)) continue;
       const label = normalizeFocusArea(area);
-      if (label.length === 0 || seen.has(label)) continue;
-      seen.add(label);
+      if (label.length === 0) continue;
+      const key = label.toLowerCase();
+      if (seen.has(key)) continue;
+      seen.add(key);
       areas.push(label);
     }
   }

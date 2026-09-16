@@ -10,7 +10,7 @@ import { IconLoader } from '~/components/icons/IconLoader';
 import { IconMixerHorizontal } from '~/components/icons/IconMixerHorizontal';
 import { IconSearch } from '~/components/icons/IconSearch';
 import { TeamFilterPanel } from './team-filter-panel';
-import { TEAM_ROLES, countActiveFilters, type TeamRole } from './team-search';
+import { TEAM_ROLES, countActiveFilters, sameFocusArea, type TeamRole } from './team-search';
 
 const springTransition = { type: 'spring', stiffness: 120, damping: 14 } as const;
 
@@ -35,26 +35,35 @@ export function SearchInput({ focusAreas }: { focusAreas: readonly string[] }) {
   const roleParam = searchParams.get('role');
   const currentRole = isTeamRole(roleParam) ? roleParam : undefined;
   const focusParam = searchParams.get('focus');
-  const currentFocus = focusParam != null && focusParam.length > 0 ? focusParam : undefined;
+  const currentFocus =
+    focusParam != null && focusParam.trim().length > 0 ? focusParam.trim() : undefined;
   const activeFilterCount = countActiveFilters({ role: currentRole, focus: currentFocus });
   const panelFocusAreas =
-    currentFocus != null && !focusAreas.includes(currentFocus)
+    currentFocus != null && !focusAreas.some((area) => sameFocusArea(area, currentFocus))
       ? [currentFocus, ...focusAreas]
       : focusAreas;
 
+  // Apply each mutate to a ref immediately. `useSearchParams()` stays on the
+  // pre-navigation snapshot while a transition is pending, so seeding from
+  // that snapshot would drop a role/focus/term set by a previous mutate.
+  const paramsRef = React.useRef(new URLSearchParams(searchParams));
+  React.useEffect(() => {
+    if (isPending) return;
+    paramsRef.current = new URLSearchParams(searchParams);
+  }, [isPending, searchParams]);
+
   const replaceParams = React.useCallback(
     (mutate: (params: URLSearchParams) => void) => {
-      // Seed from the current params so unrelated ones (campaign tags on a
-      // shared link, say) survive a search or filter change.
-      const params = new URLSearchParams(searchParams);
+      const params = new URLSearchParams(paramsRef.current);
       mutate(params);
+      paramsRef.current = params;
 
       startTransition(() => {
         const qs = params.toString();
         router.replace(qs.length > 0 ? `${pathname}?${qs}` : pathname, { scroll: false });
       });
     },
-    [pathname, router, searchParams],
+    [pathname, router],
   );
 
   const handleSearch = React.useCallback(

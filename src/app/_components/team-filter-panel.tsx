@@ -4,7 +4,13 @@ import { FocusScope } from '@react-aria/focus';
 import * as React from 'react';
 import { twMerge } from 'tailwind-merge';
 import { IconSearch } from '~/components/icons/IconSearch';
-import { countActiveFilters, TEAM_ROLE_LABELS, TEAM_ROLES, type TeamRole } from './team-search';
+import {
+  countActiveFilters,
+  sameFocusArea,
+  TEAM_ROLE_LABELS,
+  TEAM_ROLES,
+  type TeamRole,
+} from './team-search';
 
 export function TeamFilterPanel({
   id,
@@ -126,7 +132,7 @@ export function TeamFilterPanel({
               <FocusOption
                 key={area}
                 label={area}
-                selected={focus === area}
+                selected={focus != null && sameFocusArea(area, focus)}
                 onSelect={() => {
                   onFocusChange(area);
                 }}
