@@ -181,8 +181,7 @@ export function SearchInput({ focusAreas }: { focusAreas: readonly string[] }) {
     };
   }, []);
 
-  const compact =
-    isSticky && !isInputFocused && currentTerm == null && !isFilterOpen && activeFilterCount === 0;
+  const compact = isSticky && !isInputFocused && currentTerm == null && !isFilterOpen;
 
   return (
     <motion.div
@@ -191,7 +190,7 @@ export function SearchInput({ focusAreas }: { focusAreas: readonly string[] }) {
       animate={{
         width: compact ? '168px' : '100%',
       }}
-      className="sticky top-[calc(var(--nav-spacing)_+_(theme(spacing.2)_/_2))] z-10 mx-auto flex w-full max-w-lg"
+      className="sticky top-[calc(var(--nav-spacing)_+_(theme(spacing.2)_/_2))] z-10 mx-auto flex w-full max-w-sm"
     >
       <Popover.Root open={isFilterOpen} onOpenChange={setFilterOpen}>
         <motion.div
@@ -268,18 +267,21 @@ export function SearchInput({ focusAreas }: { focusAreas: readonly string[] }) {
             <div className="w-px h-5 shrink-0 self-center bg-brand-copper/50" aria-hidden="true" />
             <Popover.Trigger
               className={twMerge(
-                'flex h-full shrink-0 items-center gap-1 px-2 text-sm text-brand-copper',
-                compact && 'px-1.5',
+                'flex h-full shrink-0 items-center gap-1 border-l border-brand-copper/25 pl-[calc(theme(spacing.1)*2)] pr-2 text-sm text-brand-copper',
+                compact && 'border-none pl-1 pr-[calc(theme(spacing.1)*2)]',
               )}
             >
-              <span className={twMerge('leading-none', compact && 'sr-only')}>Filter</span>
+              <span className="sr-only">Filter</span>
               {activeFilterCount > 0 ? (
                 <>
                   <span
                     aria-hidden="true"
-                    className="grid size-[18px] place-items-center rounded-full bg-brand-copper text-[11px] font-medium leading-none text-brand-black"
+                    className={twMerge(
+                      'grid size-[18px] place-items-center rounded-full bg-brand-copper text-[11px] font-medium leading-none text-brand-black',
+                      compact && 'size-[6px]',
+                    )}
                   >
-                    {activeFilterCount}
+                    <span className={compact ? 'sr-only' : ''}>{activeFilterCount}</span>
                   </span>
                   <span className="sr-only">{`, ${String(activeFilterCount)} applied`}</span>
                 </>
@@ -291,7 +293,7 @@ export function SearchInput({ focusAreas }: { focusAreas: readonly string[] }) {
             <Popover.Positioner side="bottom" align="end" sideOffset={8} className="z-20">
               <Popover.Popup
                 aria-label="Team filters"
-                className="w-[min(20rem,calc(100vw-2rem))] rounded-2xl border border-brand-copper bg-brand-black/90 p-2 text-brand-copper shadow-lg outline-none backdrop-blur-sm backdrop-saturate-150"
+                className="w-[min(20rem,calc(100vw-2rem))] rounded-2xl border border-brand-copper bg-brand-black/90 p-[calc(theme(spacing.1)*2)] text-brand-copper shadow-lg outline-none backdrop-blur-sm backdrop-saturate-150"
               >
                 <TeamFilterPanel
                   role={currentRole}

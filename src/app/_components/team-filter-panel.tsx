@@ -77,7 +77,7 @@ export function TeamFilterPanel({
 
       <hr className="my-2 border-brand-copper/25" />
 
-      <section className="stack-y-1">
+      <section>
         <h3
           id={focusHeadingId}
           className="text-xs font-medium uppercase tracking-[0.12em] text-brand-copper/80"
@@ -98,7 +98,7 @@ export function TeamFilterPanel({
             if (eventDetails.isItemPress === true) eventDetails.cancel();
           }}
         >
-          <div className="flex items-center gap-1 border-b border-brand-copper/25 pb-1">
+          <div className="flex items-center gap-1 border-b border-brand-copper/25 focus-within:border-brand-copper/50">
             <IconSearch aria-hidden="true" className="size-[15px] shrink-0" />
             <label htmlFor={focusInputId} className="sr-only">
               Filter areas
@@ -106,15 +106,15 @@ export function TeamFilterPanel({
             <Combobox.Input
               id={focusInputId}
               placeholder="Filter areas..."
-              className="h-3 w-full border-none bg-transparent text-sm text-brand-copper placeholder:text-brand-copper/70 focus:outline-none focus-visible:outline-none"
+              className="h-3 w-full border-none bg-transparent text-sm text-brand-copper placeholder:text-brand-copper/70 focus:outline-none focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
             />
           </div>
           {selectedFocus.length > 0 ? (
-            <Combobox.Chips className="flex flex-wrap gap-1 pt-1" aria-label="Selected areas">
+            <Combobox.Chips className="flex flex-wrap gap-1 pb-1 pt-1" aria-label="Selected areas">
               {selectedFocus.map((area) => (
                 <Combobox.Chip
                   key={area}
-                  className="gap-0.5 px-1.5 py-0.5 flex items-center rounded-full border border-brand-copper/50 bg-brand-copper/15 text-xs leading-none text-brand-copper"
+                  className="flex items-center gap-[calc(theme(spacing.1)/2)] rounded-full border border-brand-copper/50 bg-brand-copper/15 px-1 py-[calc(theme(spacing.1)/2)] text-xs leading-none text-brand-copper"
                   aria-label={area}
                   aria-description="Press Backspace or Delete to remove"
                 >
@@ -129,7 +129,7 @@ export function TeamFilterPanel({
               ))}
             </Combobox.Chips>
           ) : null}
-          <Combobox.Empty className="px-1 py-1 text-sm text-brand-copper/70">
+          <Combobox.Empty className="px-1 py-1 text-sm text-brand-copper/70 empty:hidden">
             No matching areas
           </Combobox.Empty>
           <Combobox.List className={listScrollbarClassName}>
@@ -157,18 +157,16 @@ export function TeamFilterPanel({
         </Combobox.Root>
       </section>
 
-      <hr className="mb-2 mt-1 border-brand-copper/25" />
-
-      {activeCount === 0 ? (
-        <p className="px-1 text-sm text-brand-copper/80">No filters applied</p>
-      ) : (
-        <button
-          type="button"
-          onClick={onClear}
-          className="px-1 text-sm text-brand-copper underline decoration-transparent transition-colors hover:decoration-current"
-        >
-          Clear filters
-        </button>
+      {activeCount > 0 && (
+        <div className="border-t border-brand-copper/25 pt-1">
+          <button
+            type="button"
+            onClick={onClear}
+            className="px-1 text-xs text-brand-copper underline decoration-transparent transition-colors hover:decoration-current"
+          >
+            Clear filters
+          </button>
+        </div>
       )}
     </>
   );
@@ -181,7 +179,7 @@ function RoleChip({ value, label }: { value: string; label: string }) {
       nativeButton
       render={<button type="button" />}
       className={twMerge(
-        'rounded-full border px-2 py-1 text-sm leading-none transition-colors',
+        'rounded-full border px-[calc(theme(spacing.1)*2)] py-1 text-xs leading-none transition-colors',
         'border-brand-copper/50 text-brand-copper hover:border-brand-copper',
         'data-[checked]:border-brand-copper data-[checked]:bg-brand-copper/15',
       )}
