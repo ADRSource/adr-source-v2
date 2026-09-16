@@ -1,5 +1,7 @@
 'use client';
 
+import * as Popover from '@radix-ui/react-popover';
+import { VisuallyHidden } from '@radix-ui/react-visually-hidden';
 import { useDebouncer } from '@tanstack/react-pacer';
 import { motion } from 'framer-motion';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
@@ -29,7 +31,6 @@ export function SearchInput({ focusAreas }: { focusAreas: readonly string[] }) {
   const [isPending, startTransition] = React.useTransition();
   const [isInputFocused, setInputFocused] = React.useState(false);
   const [isFilterOpen, setFilterOpen] = React.useState(false);
-  const filterPanelId = React.useId();
 
   const currentTerm = searchParams.get('term');
   const roleParam = searchParams.get('role');
@@ -112,10 +113,6 @@ export function SearchInput({ focusAreas }: { focusAreas: readonly string[] }) {
     });
   }, [replaceParams]);
 
-  const handleCloseFilters = React.useCallback(() => {
-    setFilterOpen(false);
-  }, []);
-
   // `useDebouncer` rather than `useDebouncedCallback` so the clear button can
   // cancel a keystroke that is still waiting out its 300ms — otherwise that
   // pending call lands after the clear and puts the term back in the URL while
@@ -190,121 +187,123 @@ export function SearchInput({ focusAreas }: { focusAreas: readonly string[] }) {
       }}
       className="sticky top-[calc(var(--nav-spacing)_+_(theme(spacing.2)_/_2))] z-10 mx-auto flex w-full max-w-lg"
     >
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={springTransition}
-        className="relative w-full"
-      >
+      <Popover.Root open={isFilterOpen} onOpenChange={setFilterOpen}>
         <motion.div
-          className={twMerge(
-            'relative z-0 flex h-[40px] w-full items-center rounded-full border border-brand-copper bg-brand-black/70 text-base text-brand-copper backdrop-blur-sm backdrop-saturate-150 transition-colors placeholder:text-brand-toffee focus-within:ring-2 focus-within:ring-brand-copper focus-within:ring-offset-2 focus-within:ring-offset-brand-black md:text-sm',
-            compact && 'border-brand-copper/40',
-          )}
-          initial={false}
-          animate={{
-            scale: compact ? 0.9 : 1,
-          }}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={springTransition}
+          className="relative w-full"
         >
-          <div
-            className="relative flex min-w-0 flex-1 items-center pl-[calc(theme(spacing.2)_/_2)]"
-            onClick={() => {
-              inputRef.current?.focus();
+          <motion.div
+            className={twMerge(
+              'relative z-0 flex h-[40px] w-full items-center rounded-full border border-brand-copper bg-brand-black/70 text-base text-brand-copper backdrop-blur-sm backdrop-saturate-150 transition-colors placeholder:text-brand-toffee focus-within:ring-2 focus-within:ring-brand-copper focus-within:ring-offset-2 focus-within:ring-offset-brand-black md:text-sm',
+              compact && 'border-brand-copper/40',
+            )}
+            initial={false}
+            animate={{
+              scale: compact ? 0.9 : 1,
             }}
+            transition={springTransition}
           >
-            <div className="relative grid size-[15px] place-items-center">
-              {isPending ? (
-                <IconLoader className="size-[15px]" animate aria-hidden="true" />
-              ) : (
-                <IconSearch aria-hidden="true" />
-              )}
+            <div
+              className="relative flex min-w-0 flex-1 items-center pl-[calc(theme(spacing.2)_/_2)]"
+              onClick={() => {
+                inputRef.current?.focus();
+              }}
+            >
+              <div className="relative grid size-[15px] place-items-center">
+                {isPending ? (
+                  <IconLoader className="size-[15px]" animate aria-hidden="true" />
+                ) : (
+                  <IconSearch aria-hidden="true" />
+                )}
+              </div>
+              <label htmlFor="search" className="sr-only">
+                Search team members by name
+              </label>
+              <input
+                id="search"
+                spellCheck={false}
+                // The native WebKit clear button is suppressed in favour of the
+                // custom one below, which stays in sync with the URL term.
+                className="h-full w-full min-w-0 border-none bg-transparent px-1 pr-3 text-current placeholder:text-current focus:shadow-none focus:outline-none focus-visible:shadow-none focus-visible:outline-none focus-visible:ring-transparent focus-visible:ring-offset-0 [&::-webkit-search-cancel-button]:appearance-none"
+                type="search"
+                placeholder={compact ? 'Search' : 'Search team by name...'}
+                defaultValue={currentTerm?.toString()}
+                ref={inputRef}
+                onFocus={() => {
+                  setInputFocused(true);
+                }}
+                onBlur={() => {
+                  setInputFocused(false);
+                }}
+                onChange={(e) => {
+                  searchDebouncer.maybeExecute(e.target.value);
+                }}
+              />
+              {currentTerm != null ? (
+                <button
+                  type="button"
+                  onClick={() => {
+                    searchDebouncer.cancel();
+                    handleSearch('');
+                    if (inputRef.current) {
+                      inputRef.current.value = '';
+                      inputRef.current.focus();
+                    }
+                  }}
+                  className="absolute right-1 top-1/2 z-10 grid size-2 -translate-y-1/2 place-items-center"
+                >
+                  <IconCrossCircled />
+                  <span className="sr-only">Clear search</span>
+                </button>
+              ) : null}
             </div>
-            <label htmlFor="search" className="sr-only">
-              Search team members by name
-            </label>
-            <input
-              id="search"
-              spellCheck={false}
-              // The native WebKit clear button is suppressed in favour of the
-              // custom one below, which stays in sync with the URL term.
-              className="h-full w-full min-w-0 border-none bg-transparent px-1 pr-3 text-current placeholder:text-current focus:shadow-none focus:outline-none focus-visible:shadow-none focus-visible:outline-none focus-visible:ring-transparent focus-visible:ring-offset-0 [&::-webkit-search-cancel-button]:appearance-none"
-              type="search"
-              placeholder={compact ? 'Search' : 'Search team by name...'}
-              defaultValue={currentTerm?.toString()}
-              ref={inputRef}
-              onFocus={() => {
-                setInputFocused(true);
-              }}
-              onBlur={() => {
-                setInputFocused(false);
-              }}
-              onChange={(e) => {
-                searchDebouncer.maybeExecute(e.target.value);
-              }}
-            />
-            {currentTerm != null ? (
+            <div className="w-px h-5 shrink-0 self-center bg-brand-copper/50" aria-hidden="true" />
+            <Popover.Trigger asChild>
               <button
                 type="button"
-                onClick={() => {
-                  searchDebouncer.cancel();
-                  handleSearch('');
-                  if (inputRef.current) {
-                    inputRef.current.value = '';
-                    inputRef.current.focus();
-                  }
-                }}
-                className="absolute right-1 top-1/2 z-10 grid size-2 -translate-y-1/2 place-items-center"
+                className={twMerge(
+                  'flex h-full shrink-0 items-center gap-1 px-2 text-sm text-brand-copper',
+                  compact && 'px-1.5',
+                )}
               >
-                <IconCrossCircled />
-                <span className="sr-only">Clear search</span>
+                <span className={twMerge('leading-none', compact && 'sr-only')}>Filter</span>
+                {activeFilterCount > 0 ? (
+                  <>
+                    <span
+                      aria-hidden="true"
+                      className="grid size-[18px] place-items-center rounded-full bg-brand-copper text-[11px] font-medium leading-none text-brand-black"
+                    >
+                      {activeFilterCount}
+                    </span>
+                    <VisuallyHidden>{`, ${String(activeFilterCount)} applied`}</VisuallyHidden>
+                  </>
+                ) : null}
+                <IconMixerHorizontal aria-hidden="true" />
               </button>
-            ) : null}
-          </div>
-          <div className="w-px h-5 shrink-0 self-center bg-brand-copper/50" aria-hidden="true" />
-          <button
-            type="button"
-            aria-label="Filter"
-            aria-expanded={isFilterOpen}
-            aria-controls={filterPanelId}
-            aria-haspopup="dialog"
-            onClick={(event) => {
-              event.stopPropagation();
-              setFilterOpen((open) => !open);
-            }}
-            onPointerDown={(event) => {
-              // The panel's outside-click listener lives on `document`.
-              // Without this, clicking Filter to close fires close-then-toggle
-              // and the panel stays open.
-              event.stopPropagation();
-            }}
-            className={twMerge(
-              'flex h-full shrink-0 items-center gap-1 px-2 text-sm text-brand-copper',
-              compact && 'px-1.5',
-            )}
-          >
-            <span className={twMerge('leading-none', compact && 'sr-only')}>Filter</span>
-            {activeFilterCount > 0 ? (
-              <span className="grid size-[18px] place-items-center rounded-full bg-brand-copper text-[11px] font-medium leading-none text-brand-black">
-                {activeFilterCount}
-              </span>
-            ) : null}
-            <IconMixerHorizontal aria-hidden="true" />
-          </button>
+            </Popover.Trigger>
+          </motion.div>
+          <Popover.Portal>
+            <Popover.Content
+              align="end"
+              side="bottom"
+              sideOffset={8}
+              aria-label="Team filters"
+              className="z-20 w-[min(20rem,calc(100vw-2rem))] rounded-2xl border border-brand-copper bg-brand-black/90 p-2 text-brand-copper shadow-lg outline-none backdrop-blur-sm backdrop-saturate-150"
+            >
+              <TeamFilterPanel
+                role={currentRole}
+                focus={currentFocus}
+                focusAreas={panelFocusAreas}
+                onRoleChange={handleRoleChange}
+                onFocusChange={handleFocusChange}
+                onClear={handleClearFilters}
+              />
+            </Popover.Content>
+          </Popover.Portal>
         </motion.div>
-        {isFilterOpen ? (
-          <TeamFilterPanel
-            id={filterPanelId}
-            role={currentRole}
-            focus={currentFocus}
-            focusAreas={panelFocusAreas}
-            onRoleChange={handleRoleChange}
-            onFocusChange={handleFocusChange}
-            onClear={handleClearFilters}
-            onClose={handleCloseFilters}
-          />
-        ) : null}
-      </motion.div>
+      </Popover.Root>
     </motion.div>
   );
 }

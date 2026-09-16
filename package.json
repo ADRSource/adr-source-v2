@@ -21,6 +21,8 @@
     "@date-fns/tz": "^1.2.0",
     "@graphcms/rich-text-react-renderer": "^0.6.2",
     "@hygraph/utils": "^1.2.1",
+    "@radix-ui/react-popover": "^1.1.23",
+    "@radix-ui/react-radio-group": "^1.4.7",
     "@radix-ui/react-visually-hidden": "^1.2.3",
     "@react-aria/focus": "^3.20.5",
     "@react-aria/overlays": "^3.27.3",
