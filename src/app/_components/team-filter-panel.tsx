@@ -24,6 +24,7 @@ export function TeamFilterPanel({
   onRoleChange,
   onFocusChange,
   onClear,
+  layout = 'popover',
 }: {
   role?: TeamRole;
   focus: readonly string[];
@@ -31,6 +32,7 @@ export function TeamFilterPanel({
   onRoleChange: (role?: TeamRole) => void;
   onFocusChange: (focus: string[]) => void;
   onClear: () => void;
+  layout?: 'popover' | 'sheet';
 }) {
   const roleHeadingId = React.useId();
   const focusHeadingId = React.useId();
@@ -45,8 +47,10 @@ export function TeamFilterPanel({
     focus: selectedFocus.length > 0 ? [...selectedFocus] : undefined,
   });
 
+  const isSheet = layout === 'sheet';
+
   return (
-    <>
+    <div>
       <section className="stack-y-1">
         <h3
           id={roleHeadingId}
@@ -106,7 +110,7 @@ export function TeamFilterPanel({
             <Combobox.Input
               id={focusInputId}
               placeholder="Filter areas..."
-              className="h-3 w-full border-none bg-transparent text-sm text-brand-copper placeholder:text-brand-copper/70 focus:outline-none focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
+              className="h-[44px] w-full border-none bg-transparent text-base text-brand-copper placeholder:text-brand-copper/70 focus:outline-none focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 md:h-3 md:text-sm [@media(any-pointer:coarse)]:text-base"
             />
           </div>
           {selectedFocus.length > 0 ? (
@@ -132,7 +136,7 @@ export function TeamFilterPanel({
           <Combobox.Empty className="px-1 py-1 text-sm text-brand-copper/70 empty:hidden">
             No matching areas
           </Combobox.Empty>
-          <Combobox.List className={listScrollbarClassName}>
+          <Combobox.List className={twMerge(listScrollbarClassName, isSheet && 'max-h-none')}>
             {(area: string) => (
               <Combobox.Item
                 key={area}
@@ -168,7 +172,7 @@ export function TeamFilterPanel({
           </button>
         </div>
       )}
-    </>
+    </div>
   );
 }
 

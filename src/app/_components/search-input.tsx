@@ -1,6 +1,5 @@
 'use client';
 
-import { Popover } from '@base-ui/react/popover';
 import { useDebouncer } from '@tanstack/react-pacer';
 import { motion } from 'framer-motion';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
@@ -10,6 +9,7 @@ import { IconCrossCircled } from '~/components/icons/IconCrossCircled';
 import { IconLoader } from '~/components/icons/IconLoader';
 import { IconMixerHorizontal } from '~/components/icons/IconMixerHorizontal';
 import { IconSearch } from '~/components/icons/IconSearch';
+import { TeamFilterOverlay } from './team-filter-overlay';
 import { TeamFilterPanel } from './team-filter-panel';
 import {
   TEAM_ROLES,
@@ -20,6 +20,7 @@ import {
 } from './team-search';
 
 const springTransition = { type: 'spring', stiffness: 120, damping: 14 } as const;
+const expandTransition = { type: 'tween', duration: 0.2, ease: [0.32, 0.72, 0, 1] } as const;
 
 // useLayoutEffect warns during SSR, where it would be a no-op anyway.
 const useIsomorphicLayoutEffect =
@@ -182,132 +183,137 @@ export function SearchInput({ focusAreas }: { focusAreas: readonly string[] }) {
   }, []);
 
   const compact = isSticky && !isInputFocused && currentTerm == null && !isFilterOpen;
+  const pillTransition = compact ? springTransition : expandTransition;
 
   return (
     <motion.div
       ref={containerRef}
-      initial={false}
+      initial={{ opacity: 0, y: 20 }}
       animate={{
+        opacity: 1,
+        y: 0,
         width: compact ? '168px' : '100%',
+      }}
+      transition={{
+        opacity: springTransition,
+        y: springTransition,
+        width: pillTransition,
       }}
       className="sticky top-[calc(var(--nav-spacing)_+_(theme(spacing.2)_/_2))] z-10 mx-auto flex w-full max-w-sm"
     >
-      <Popover.Root open={isFilterOpen} onOpenChange={setFilterOpen}>
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={springTransition}
-          className="relative w-full"
-        >
-          <motion.div
-            className={twMerge(
-              'relative z-0 flex h-[40px] w-full items-center rounded-full border border-brand-copper bg-brand-black/70 text-base text-brand-copper backdrop-blur-sm backdrop-saturate-150 transition-colors placeholder:text-brand-toffee focus-within:ring-2 focus-within:ring-brand-copper focus-within:ring-offset-2 focus-within:ring-offset-brand-black md:text-sm',
-              compact && 'border-brand-copper/40',
-            )}
-            initial={false}
-            animate={{
-              scale: compact ? 0.9 : 1,
-            }}
-            transition={springTransition}
-          >
-            <div
-              className="relative flex min-w-0 flex-1 items-center pl-[calc(theme(spacing.2)_/_2)]"
-              onClick={() => {
-                inputRef.current?.focus();
-              }}
-            >
-              <div className="relative grid size-[15px] place-items-center">
-                {isPending ? (
-                  <IconLoader className="size-[15px]" animate aria-hidden="true" />
-                ) : (
-                  <IconSearch aria-hidden="true" />
-                )}
-              </div>
-              <label htmlFor="search" className="sr-only">
-                Search team members by name
-              </label>
-              <input
-                id="search"
-                spellCheck={false}
-                // The native WebKit clear button is suppressed in favour of the
-                // custom one below, which stays in sync with the URL term.
-                className="h-full w-full min-w-0 border-none bg-transparent px-1 pr-3 text-current placeholder:text-current focus:shadow-none focus:outline-none focus-visible:shadow-none focus-visible:outline-none focus-visible:ring-transparent focus-visible:ring-offset-0 [&::-webkit-search-cancel-button]:appearance-none"
-                type="search"
-                placeholder={compact ? 'Search' : 'Search team by name...'}
-                defaultValue={currentTerm?.toString()}
-                ref={inputRef}
-                onFocus={() => {
-                  setInputFocused(true);
-                }}
-                onBlur={() => {
-                  setInputFocused(false);
-                }}
-                onChange={(e) => {
-                  searchDebouncer.maybeExecute(e.target.value);
-                }}
-              />
-              {currentTerm != null ? (
-                <button
-                  type="button"
-                  onClick={() => {
-                    searchDebouncer.cancel();
-                    handleSearch('');
-                    if (inputRef.current) {
-                      inputRef.current.value = '';
-                      inputRef.current.focus();
-                    }
-                  }}
-                  className="absolute right-1 top-1/2 z-10 grid size-2 -translate-y-1/2 place-items-center"
-                >
-                  <IconCrossCircled />
-                  <span className="sr-only">Clear search</span>
-                </button>
-              ) : null}
-            </div>
-            <div className="w-px h-5 shrink-0 self-center bg-brand-copper/50" aria-hidden="true" />
-            <Popover.Trigger
+      <TeamFilterOverlay
+        open={isFilterOpen}
+        onOpenChange={setFilterOpen}
+        panel={(layout) => (
+          <TeamFilterPanel
+            role={currentRole}
+            focus={currentFocus}
+            focusAreas={panelFocusAreas}
+            onRoleChange={handleRoleChange}
+            onFocusChange={handleFocusChange}
+            onClear={handleClearFilters}
+            layout={layout}
+          />
+        )}
+      >
+        {(Trigger) => (
+          <div className="relative w-full">
+            <motion.div
               className={twMerge(
-                'flex h-full shrink-0 items-center gap-1 border-l border-brand-copper/25 pl-[calc(theme(spacing.1)*2)] pr-2 text-sm text-brand-copper',
-                compact && 'border-none pl-1 pr-[calc(theme(spacing.1)*2)]',
+                'relative z-0 flex h-[40px] w-full items-center rounded-full border border-brand-copper bg-brand-black/70 text-base text-brand-copper backdrop-blur-sm backdrop-saturate-150 transition-colors placeholder:text-brand-toffee focus-within:ring-2 focus-within:ring-brand-copper focus-within:ring-offset-2 focus-within:ring-offset-brand-black md:text-sm [@media(any-pointer:coarse)]:text-base',
+                compact && 'border-brand-copper/40',
               )}
+              initial={false}
+              animate={{
+                scale: compact ? 0.9 : 1,
+              }}
+              transition={pillTransition}
             >
-              <span className="sr-only">Filter</span>
-              {activeFilterCount > 0 ? (
-                <>
-                  <span
-                    aria-hidden="true"
-                    className={twMerge(
-                      'grid size-[18px] place-items-center rounded-full bg-brand-copper text-[11px] font-medium leading-none text-brand-black',
-                      compact && 'size-[6px]',
-                    )}
-                  >
-                    <span className={compact ? 'sr-only' : ''}>{activeFilterCount}</span>
-                  </span>
-                  <span className="sr-only">{`, ${String(activeFilterCount)} applied`}</span>
-                </>
-              ) : null}
-              <IconMixerHorizontal aria-hidden="true" />
-            </Popover.Trigger>
-          </motion.div>
-          <Popover.Portal>
-            <Popover.Positioner side="bottom" align="end" sideOffset={8} className="z-20">
-              <Popover.Popup
-                aria-label="Team filters"
-                className="w-[min(20rem,calc(100vw-2rem))] rounded-2xl border border-brand-copper bg-brand-black/90 p-[calc(theme(spacing.1)*2)] text-brand-copper shadow-lg outline-none backdrop-blur-sm backdrop-saturate-150"
+              <div
+                className="relative flex min-w-0 flex-1 items-center pl-[calc(theme(spacing.2)_/_2)]"
+                onClick={() => {
+                  inputRef.current?.focus();
+                }}
               >
-                <TeamFilterPanel
-                  role={currentRole}
-                  focus={currentFocus}
-                  focusAreas={panelFocusAreas}
-                  onRoleChange={handleRoleChange}
-                  onFocusChange={handleFocusChange}
-                  onClear={handleClearFilters}
+                <div className="relative grid size-[15px] place-items-center">
+                  {isPending ? (
+                    <IconLoader className="size-[15px]" animate aria-hidden="true" />
+                  ) : (
+                    <IconSearch aria-hidden="true" />
+                  )}
+                </div>
+                <label htmlFor="search" className="sr-only">
+                  Search team members by name
+                </label>
+                <input
+                  id="search"
+                  spellCheck={false}
+                  // The native WebKit clear button is suppressed in favour of the
+                  // custom one below, which stays in sync with the URL term.
+                  className="h-full w-full min-w-0 border-none bg-transparent px-1 pr-3 text-current placeholder:text-current focus:shadow-none focus:outline-none focus-visible:shadow-none focus-visible:outline-none focus-visible:ring-transparent focus-visible:ring-offset-0 [&::-webkit-search-cancel-button]:appearance-none"
+                  type="search"
+                  placeholder={compact ? 'Search' : 'Search team by name...'}
+                  defaultValue={currentTerm?.toString()}
+                  ref={inputRef}
+                  onFocus={() => {
+                    setInputFocused(true);
+                  }}
+                  onBlur={() => {
+                    setInputFocused(false);
+                  }}
+                  onChange={(e) => {
+                    searchDebouncer.maybeExecute(e.target.value);
+                  }}
                 />
-              </Popover.Popup>
-            </Popover.Positioner>
-          </Popover.Portal>
-        </motion.div>
-      </Popover.Root>
+                {currentTerm != null ? (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      searchDebouncer.cancel();
+                      handleSearch('');
+                      if (inputRef.current) {
+                        inputRef.current.value = '';
+                        inputRef.current.focus();
+                      }
+                    }}
+                    className="absolute right-1 top-1/2 z-10 grid size-2 -translate-y-1/2 place-items-center"
+                  >
+                    <IconCrossCircled />
+                    <span className="sr-only">Clear search</span>
+                  </button>
+                ) : null}
+              </div>
+              <div
+                className="w-px h-5 shrink-0 self-center bg-brand-copper/50"
+                aria-hidden="true"
+              />
+              <Trigger
+                className={twMerge(
+                  'flex h-full shrink-0 items-center gap-1 border-l border-brand-copper/25 pl-[calc(theme(spacing.1)*2)] pr-2 text-sm text-brand-copper',
+                  compact && 'border-none pl-1 pr-[calc(theme(spacing.1)*2)]',
+                )}
+              >
+                <span className="sr-only">Filter</span>
+                {activeFilterCount > 0 ? (
+                  <>
+                    <span
+                      aria-hidden="true"
+                      className={twMerge(
+                        'grid size-[18px] place-items-center rounded-full bg-brand-copper text-[11px] font-medium leading-none text-brand-black',
+                        compact && 'size-[6px]',
+                      )}
+                    >
+                      <span className={compact ? 'sr-only' : ''}>{activeFilterCount}</span>
+                    </span>
+                    <span className="sr-only">{`, ${String(activeFilterCount)} applied`}</span>
+                  </>
+                ) : null}
+                <IconMixerHorizontal aria-hidden="true" />
+              </Trigger>
+            </motion.div>
+          </div>
+        )}
+      </TeamFilterOverlay>
     </motion.div>
   );
 }
