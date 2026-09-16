@@ -1,6 +1,6 @@
-'use client';
-
-import * as RadioGroup from '@radix-ui/react-radio-group';
+import { Combobox } from '@base-ui/react/combobox';
+import { Radio } from '@base-ui/react/radio';
+import { RadioGroup } from '@base-ui/react/radio-group';
 import * as React from 'react';
 import { twMerge } from 'tailwind-merge';
 import { IconSearch } from '~/components/icons/IconSearch';
@@ -13,7 +13,9 @@ import {
 } from './team-search';
 
 const ANY_ROLE = 'any';
-const ALL_FOCUS = '__all__';
+
+const listScrollbarClassName =
+  'max-h-[min(16rem,40vh)] min-h-0 overflow-y-auto py-1 [scrollbar-width:thin] [scrollbar-color:rgb(248_197_150_/_0.3)_transparent] [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-brand-copper/30';
 
 export function TeamFilterPanel({
   role,
@@ -24,23 +26,24 @@ export function TeamFilterPanel({
   onClear,
 }: {
   role?: TeamRole;
-  focus?: string;
+  focus: readonly string[];
   focusAreas: readonly string[];
   onRoleChange: (role?: TeamRole) => void;
-  onFocusChange: (focus?: string) => void;
+  onFocusChange: (focus: string[]) => void;
   onClear: () => void;
 }) {
-  const [areaQuery, setAreaQuery] = React.useState('');
   const roleHeadingId = React.useId();
   const focusHeadingId = React.useId();
-  const areaFilter = areaQuery.trim().toLowerCase();
-  const visibleAreas =
-    areaFilter.length > 0
-      ? focusAreas.filter((area) => area.toLowerCase().includes(areaFilter))
-      : [...focusAreas];
-  const selectedFocus =
-    focus == null ? ALL_FOCUS : (focusAreas.find((area) => sameFocusArea(area, focus)) ?? focus);
-  const activeCount = countActiveFilters({ role, focus });
+  const focusInputId = React.useId();
+  const selectedFocus = React.useMemo(
+    () =>
+      focus.map((selected) => focusAreas.find((area) => sameFocusArea(area, selected)) ?? selected),
+    [focus, focusAreas],
+  );
+  const activeCount = countActiveFilters({
+    role,
+    focus: selectedFocus.length > 0 ? [...selectedFocus] : undefined,
+  });
 
   return (
     <>
@@ -51,9 +54,8 @@ export function TeamFilterPanel({
         >
           Role
         </h3>
-        <RadioGroup.Root
+        <RadioGroup
           aria-labelledby={roleHeadingId}
-          orientation="horizontal"
           value={role ?? ANY_ROLE}
           onValueChange={(value) => {
             if (value === ANY_ROLE) {
@@ -70,7 +72,7 @@ export function TeamFilterPanel({
           {TEAM_ROLES.map((value) => (
             <RoleChip key={value} value={value} label={TEAM_ROLE_LABELS[value]} />
           ))}
-        </RadioGroup.Root>
+        </RadioGroup>
       </section>
 
       <hr className="my-2 border-brand-copper/25" />
@@ -82,39 +84,77 @@ export function TeamFilterPanel({
         >
           Areas of Focus
         </h3>
-        <div className="flex items-center gap-1 border-b border-brand-copper/25 pb-1">
-          <IconSearch aria-hidden="true" className="size-[15px] shrink-0" />
-          <label htmlFor="filter-areas" className="sr-only">
-            Filter areas
-          </label>
-          <input
-            id="filter-areas"
-            type="search"
-            value={areaQuery}
-            onChange={(event) => {
-              setAreaQuery(event.target.value);
-            }}
-            placeholder="Filter areas..."
-            className="h-3 w-full border-none bg-transparent text-sm text-brand-copper placeholder:text-brand-copper/70 focus:outline-none focus-visible:outline-none [&::-webkit-search-cancel-button]:appearance-none"
-          />
-        </div>
-        <RadioGroup.Root
-          aria-labelledby={focusHeadingId}
-          orientation="vertical"
-          value={selectedFocus}
-          onValueChange={(value) => {
-            onFocusChange(value === ALL_FOCUS ? undefined : value);
+        <Combobox.Root
+          items={[...focusAreas]}
+          multiple
+          inline
+          open
+          value={[...selectedFocus]}
+          onValueChange={(next) => {
+            onFocusChange(next);
           }}
-          className="max-h-48 overflow-y-auto py-1"
+          isItemEqualToValue={sameFocusArea}
+          onInputValueChange={(_value, eventDetails) => {
+            if (eventDetails.isItemPress === true) eventDetails.cancel();
+          }}
         >
-          <FocusOption value={ALL_FOCUS} label="All areas of focus" />
-          {visibleAreas.map((area) => (
-            <FocusOption key={area} value={area} label={area} />
-          ))}
-          {visibleAreas.length === 0 ? (
-            <p className="px-1 py-1 text-sm text-brand-copper/70">No matching areas</p>
+          <div className="flex items-center gap-1 border-b border-brand-copper/25 pb-1">
+            <IconSearch aria-hidden="true" className="size-[15px] shrink-0" />
+            <label htmlFor={focusInputId} className="sr-only">
+              Filter areas
+            </label>
+            <Combobox.Input
+              id={focusInputId}
+              placeholder="Filter areas..."
+              className="h-3 w-full border-none bg-transparent text-sm text-brand-copper placeholder:text-brand-copper/70 focus:outline-none focus-visible:outline-none"
+            />
+          </div>
+          {selectedFocus.length > 0 ? (
+            <Combobox.Chips className="flex flex-wrap gap-1 pt-1" aria-label="Selected areas">
+              {selectedFocus.map((area) => (
+                <Combobox.Chip
+                  key={area}
+                  className="gap-0.5 px-1.5 py-0.5 flex items-center rounded-full border border-brand-copper/50 bg-brand-copper/15 text-xs leading-none text-brand-copper"
+                  aria-label={area}
+                  aria-description="Press Backspace or Delete to remove"
+                >
+                  {area}
+                  <Combobox.ChipRemove
+                    className="grid size-[14px] place-items-center text-brand-copper/80 hover:text-brand-copper"
+                    aria-label={`Remove ${area}`}
+                  >
+                    <XIcon />
+                  </Combobox.ChipRemove>
+                </Combobox.Chip>
+              ))}
+            </Combobox.Chips>
           ) : null}
-        </RadioGroup.Root>
+          <Combobox.Empty className="px-1 py-1 text-sm text-brand-copper/70">
+            No matching areas
+          </Combobox.Empty>
+          <Combobox.List className={listScrollbarClassName}>
+            {(area: string) => (
+              <Combobox.Item
+                key={area}
+                value={area}
+                className={twMerge(
+                  'group flex w-full cursor-default items-center gap-1 rounded-lg px-1 py-1 text-left text-sm leading-tight',
+                  'data-[highlighted]:bg-brand-copper/5 data-[selected]:bg-brand-copper/10',
+                )}
+              >
+                <span
+                  aria-hidden="true"
+                  className="grid size-[14px] shrink-0 place-items-center rounded-sm border border-brand-copper/50 group-data-[selected]:border-brand-copper"
+                >
+                  <Combobox.ItemIndicator>
+                    <CheckIcon />
+                  </Combobox.ItemIndicator>
+                </span>
+                {area}
+              </Combobox.Item>
+            )}
+          </Combobox.List>
+        </Combobox.Root>
       </section>
 
       <hr className="mb-2 mt-1 border-brand-copper/25" />
@@ -136,38 +176,44 @@ export function TeamFilterPanel({
 
 function RoleChip({ value, label }: { value: string; label: string }) {
   return (
-    <RadioGroup.Item
+    <Radio.Root
       value={value}
+      nativeButton
+      render={<button type="button" />}
       className={twMerge(
         'rounded-full border px-2 py-1 text-sm leading-none transition-colors',
         'border-brand-copper/50 text-brand-copper hover:border-brand-copper',
-        'data-[state=checked]:border-brand-copper data-[state=checked]:bg-brand-copper/15',
+        'data-[checked]:border-brand-copper data-[checked]:bg-brand-copper/15',
       )}
     >
       {label}
-    </RadioGroup.Item>
+    </Radio.Root>
   );
 }
 
-function FocusOption({ value, label }: { value: string; label: string }) {
+function CheckIcon() {
   return (
-    <RadioGroup.Item
-      value={value}
-      className={twMerge(
-        'group flex w-full items-center gap-1 rounded-lg px-1 py-1 text-left text-sm leading-tight transition-colors',
-        'hover:bg-brand-copper/5 data-[state=checked]:bg-brand-copper/10',
-      )}
-    >
-      <span
-        aria-hidden="true"
-        className={twMerge(
-          'grid size-[14px] shrink-0 place-items-center rounded-full border border-brand-copper/50',
-          'group-data-[state=checked]:border-brand-copper',
-        )}
-      >
-        <RadioGroup.Indicator className="size-[6px] rounded-full bg-brand-copper" />
-      </span>
-      {label}
-    </RadioGroup.Item>
+    <svg width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden="true">
+      <path
+        d="M2 5.2 4.1 7.2 8 2.8"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+function XIcon() {
+  return (
+    <svg width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden="true">
+      <path
+        d="M2.5 2.5 7.5 7.5M7.5 2.5 2.5 7.5"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+      />
+    </svg>
   );
 }

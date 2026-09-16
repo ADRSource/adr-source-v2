@@ -21,20 +21,35 @@ export const TEAM_ROLE_MATCH: Record<TeamRole, string> = {
   'special-magistrate': 'Special Magistrate',
 };
 
+const focusParam = z.string().trim().min(1).max(100);
+
 // Cap query values so overlong `?term=` / `?focus=` can't be forwarded
-// verbatim. Repeated keys arrive as arrays and fail `z.string()`, which
-// the catch turns into "no filter" rather than an empty-string term
-// (that would otherwise render `No Results for ""`).
+// verbatim. A single `?focus=` is a string; repeats (`?focus=a&focus=b`)
+// arrive as arrays. Invalid values catch to "no filter".
 export const TeamSearchParamSchema = z.object({
   term: z.string().max(100).optional().catch(undefined),
   role: z.enum(TEAM_ROLES).optional().catch(undefined),
-  focus: z.string().trim().min(1).max(100).optional().catch(undefined),
+  focus: z
+    .union([focusParam, z.array(focusParam)])
+    .transform((value) => (Array.isArray(value) ? value : [value]))
+    .pipe(z.array(focusParam).min(1).max(20))
+    .optional()
+    .catch(undefined),
 });
 
 export type TeamSearchParams = z.infer<typeof TeamSearchParamSchema>;
 
 export function countActiveFilters(filters: Pick<TeamSearchParams, 'role' | 'focus'>): number {
-  return (filters.role != null ? 1 : 0) + (filters.focus != null ? 1 : 0);
+  return (filters.role != null ? 1 : 0) + (filters.focus?.length ?? 0);
+}
+
+export function parseFocusSearchParams(searchParams: {
+  getAll: (name: string) => string[];
+}): string[] {
+  return searchParams
+    .getAll('focus')
+    .map((value) => value.trim())
+    .filter((value) => value.length > 0);
 }
 
 export function matchesRole(roleDescription: string | null | undefined, role?: TeamRole): boolean {
@@ -61,10 +76,10 @@ export function sameFocusArea(a: string, b: string): boolean {
 
 export function matchesFocusArea(
   focusAreas: readonly string[] | null | undefined,
-  focus?: string,
+  focus?: readonly string[],
 ): boolean {
-  if (focus == null || focus.trim().length === 0) return true;
-  return (focusAreas ?? []).some((area) => sameFocusArea(area, focus));
+  if (focus == null || focus.length === 0) return true;
+  return focus.some((selected) => (focusAreas ?? []).some((area) => sameFocusArea(area, selected)));
 }
 
 export function uniqueFocusAreas(

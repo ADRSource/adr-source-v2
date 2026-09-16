@@ -50,8 +50,8 @@ export default async function Team(props: PageProps<'/team'>) {
     ) ?? [];
   const focusAreas = uniqueFocusAreas(allNeutralsResult.neutralList?.neutrals ?? []);
   const noResults = neutrals.length === 0 && caseManagers.length === 0;
-  const hasQuery = term != null || role != null || focus != null;
-  const resultsKey = `${term ?? ''}:${role ?? ''}:${focus ?? ''}`;
+  const hasQuery = term != null || role != null || (focus != null && focus.length > 0);
+  const resultsKey = `${term ?? ''}:${role ?? ''}:${(focus ?? []).join('\t')}`;
 
   return (
     <div className="isolate">

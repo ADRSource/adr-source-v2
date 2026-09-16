@@ -1,7 +1,6 @@
 'use client';
 
-import * as Popover from '@radix-ui/react-popover';
-import { VisuallyHidden } from '@radix-ui/react-visually-hidden';
+import { Popover } from '@base-ui/react/popover';
 import { useDebouncer } from '@tanstack/react-pacer';
 import { motion } from 'framer-motion';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
@@ -12,7 +11,13 @@ import { IconLoader } from '~/components/icons/IconLoader';
 import { IconMixerHorizontal } from '~/components/icons/IconMixerHorizontal';
 import { IconSearch } from '~/components/icons/IconSearch';
 import { TeamFilterPanel } from './team-filter-panel';
-import { TEAM_ROLES, countActiveFilters, sameFocusArea, type TeamRole } from './team-search';
+import {
+  TEAM_ROLES,
+  countActiveFilters,
+  parseFocusSearchParams,
+  sameFocusArea,
+  type TeamRole,
+} from './team-search';
 
 const springTransition = { type: 'spring', stiffness: 120, damping: 14 } as const;
 
@@ -35,14 +40,16 @@ export function SearchInput({ focusAreas }: { focusAreas: readonly string[] }) {
   const currentTerm = searchParams.get('term');
   const roleParam = searchParams.get('role');
   const currentRole = isTeamRole(roleParam) ? roleParam : undefined;
-  const focusParam = searchParams.get('focus');
-  const currentFocus =
-    focusParam != null && focusParam.trim().length > 0 ? focusParam.trim() : undefined;
-  const activeFilterCount = countActiveFilters({ role: currentRole, focus: currentFocus });
+  const currentFocus = parseFocusSearchParams(searchParams);
+  const activeFilterCount = countActiveFilters({
+    role: currentRole,
+    focus: currentFocus.length > 0 ? currentFocus : undefined,
+  });
+  const extraFocusAreas = currentFocus.filter(
+    (selected) => !focusAreas.some((area) => sameFocusArea(area, selected)),
+  );
   const panelFocusAreas =
-    currentFocus != null && !focusAreas.some((area) => sameFocusArea(area, currentFocus))
-      ? [currentFocus, ...focusAreas]
-      : focusAreas;
+    extraFocusAreas.length > 0 ? [...extraFocusAreas, ...focusAreas] : focusAreas;
 
   // Apply each mutate to a ref immediately. `useSearchParams()` stays on the
   // pre-navigation snapshot while a transition is pending, so seeding from
@@ -94,12 +101,11 @@ export function SearchInput({ focusAreas }: { focusAreas: readonly string[] }) {
   );
 
   const handleFocusChange = React.useCallback(
-    (focus?: string) => {
+    (focus: string[]) => {
       replaceParams((params) => {
-        if (focus != null && focus.length > 0) {
-          params.set('focus', focus);
-        } else {
-          params.delete('focus');
+        params.delete('focus');
+        for (const area of focus) {
+          if (area.length > 0) params.append('focus', area);
         }
       });
     },
@@ -127,7 +133,7 @@ export function SearchInput({ focusAreas }: { focusAreas: readonly string[] }) {
   // the results. Before paint, not after: fewer results shorten the page, and
   // the browser clamps scroll to the new bottom — a plain effect paints that
   // clamped frame (a flash of footer) before this runs.
-  const resultsKey = `${currentTerm ?? ''}\t${currentRole ?? ''}\t${currentFocus ?? ''}`;
+  const resultsKey = `${currentTerm ?? ''}\t${currentRole ?? ''}\t${currentFocus.join('\t')}`;
   const previousResultsKey = React.useRef(resultsKey);
   useIsomorphicLayoutEffect(() => {
     if (previousResultsKey.current === resultsKey) return;
@@ -260,47 +266,43 @@ export function SearchInput({ focusAreas }: { focusAreas: readonly string[] }) {
               ) : null}
             </div>
             <div className="w-px h-5 shrink-0 self-center bg-brand-copper/50" aria-hidden="true" />
-            <Popover.Trigger asChild>
-              <button
-                type="button"
-                className={twMerge(
-                  'flex h-full shrink-0 items-center gap-1 px-2 text-sm text-brand-copper',
-                  compact && 'px-1.5',
-                )}
-              >
-                <span className={twMerge('leading-none', compact && 'sr-only')}>Filter</span>
-                {activeFilterCount > 0 ? (
-                  <>
-                    <span
-                      aria-hidden="true"
-                      className="grid size-[18px] place-items-center rounded-full bg-brand-copper text-[11px] font-medium leading-none text-brand-black"
-                    >
-                      {activeFilterCount}
-                    </span>
-                    <VisuallyHidden>{`, ${String(activeFilterCount)} applied`}</VisuallyHidden>
-                  </>
-                ) : null}
-                <IconMixerHorizontal aria-hidden="true" />
-              </button>
+            <Popover.Trigger
+              className={twMerge(
+                'flex h-full shrink-0 items-center gap-1 px-2 text-sm text-brand-copper',
+                compact && 'px-1.5',
+              )}
+            >
+              <span className={twMerge('leading-none', compact && 'sr-only')}>Filter</span>
+              {activeFilterCount > 0 ? (
+                <>
+                  <span
+                    aria-hidden="true"
+                    className="grid size-[18px] place-items-center rounded-full bg-brand-copper text-[11px] font-medium leading-none text-brand-black"
+                  >
+                    {activeFilterCount}
+                  </span>
+                  <span className="sr-only">{`, ${String(activeFilterCount)} applied`}</span>
+                </>
+              ) : null}
+              <IconMixerHorizontal aria-hidden="true" />
             </Popover.Trigger>
           </motion.div>
           <Popover.Portal>
-            <Popover.Content
-              align="end"
-              side="bottom"
-              sideOffset={8}
-              aria-label="Team filters"
-              className="z-20 w-[min(20rem,calc(100vw-2rem))] rounded-2xl border border-brand-copper bg-brand-black/90 p-2 text-brand-copper shadow-lg outline-none backdrop-blur-sm backdrop-saturate-150"
-            >
-              <TeamFilterPanel
-                role={currentRole}
-                focus={currentFocus}
-                focusAreas={panelFocusAreas}
-                onRoleChange={handleRoleChange}
-                onFocusChange={handleFocusChange}
-                onClear={handleClearFilters}
-              />
-            </Popover.Content>
+            <Popover.Positioner side="bottom" align="end" sideOffset={8} className="z-20">
+              <Popover.Popup
+                aria-label="Team filters"
+                className="w-[min(20rem,calc(100vw-2rem))] rounded-2xl border border-brand-copper bg-brand-black/90 p-2 text-brand-copper shadow-lg outline-none backdrop-blur-sm backdrop-saturate-150"
+              >
+                <TeamFilterPanel
+                  role={currentRole}
+                  focus={currentFocus}
+                  focusAreas={panelFocusAreas}
+                  onRoleChange={handleRoleChange}
+                  onFocusChange={handleFocusChange}
+                  onClear={handleClearFilters}
+                />
+              </Popover.Popup>
+            </Popover.Positioner>
           </Popover.Portal>
         </motion.div>
       </Popover.Root>
