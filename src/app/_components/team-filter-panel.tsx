@@ -50,8 +50,23 @@ export function TeamFilterPanel({
   const isSheet = layout === 'sheet';
 
   return (
-    <div>
-      <section className="stack-y-1">
+    <div
+      className={
+        isSheet ? 'relative flex min-h-0 flex-1 flex-col gap-4' : 'relative flex flex-col gap-2'
+      }
+    >
+      {activeCount > 0 ? (
+        <button
+          type="button"
+          onClick={onClear}
+          className="absolute right-0 top-0 flex shrink-0 items-center gap-[calc(theme(spacing.1)/2)] py-[4px] text-xs text-brand-copper underline decoration-transparent transition-colors hover:decoration-current"
+        >
+          <XIcon />
+          Clear
+        </button>
+      ) : null}
+
+      <section className="mt-1 stack-y-[calc(theme(spacing.1)*2)]">
         <h3
           id={roleHeadingId}
           className="text-xs font-medium uppercase tracking-[0.12em] text-brand-copper/80"
@@ -79,9 +94,7 @@ export function TeamFilterPanel({
         </RadioGroup>
       </section>
 
-      <hr className="my-2 border-brand-copper/25" />
-
-      <section>
+      <section className={isSheet ? 'flex min-h-0 flex-1 flex-col' : 'flex flex-col gap-1'}>
         <h3
           id={focusHeadingId}
           className="text-xs font-medium uppercase tracking-[0.12em] text-brand-copper/80"
@@ -102,76 +115,72 @@ export function TeamFilterPanel({
             if (eventDetails.isItemPress === true) eventDetails.cancel();
           }}
         >
-          <div className="flex items-center gap-1 border-b border-brand-copper/25 focus-within:border-brand-copper/50">
-            <IconSearch aria-hidden="true" className="size-[15px] shrink-0" />
-            <label htmlFor={focusInputId} className="sr-only">
-              Filter areas
-            </label>
-            <Combobox.Input
-              id={focusInputId}
-              placeholder="Filter areas..."
-              className="h-[44px] w-full border-none bg-transparent text-base text-brand-copper placeholder:text-brand-copper/70 focus:outline-none focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 md:h-3 md:text-sm [@media(any-pointer:coarse)]:text-base"
-            />
-          </div>
-          {selectedFocus.length > 0 ? (
-            <Combobox.Chips className="flex flex-wrap gap-1 pb-1 pt-1" aria-label="Selected areas">
-              {selectedFocus.map((area) => (
-                <Combobox.Chip
-                  key={area}
-                  className="flex items-center gap-[calc(theme(spacing.1)/2)] rounded-full border border-brand-copper/50 bg-brand-copper/15 px-1 py-[calc(theme(spacing.1)/2)] text-xs leading-none text-brand-copper"
-                  aria-label={area}
-                  aria-description="Press Backspace or Delete to remove"
-                >
-                  {area}
-                  <Combobox.ChipRemove
-                    className="grid size-[14px] place-items-center text-brand-copper/80 hover:text-brand-copper"
-                    aria-label={`Remove ${area}`}
-                  >
-                    <XIcon />
-                  </Combobox.ChipRemove>
-                </Combobox.Chip>
-              ))}
-            </Combobox.Chips>
-          ) : null}
-          <Combobox.Empty className="px-1 py-1 text-sm text-brand-copper/70 empty:hidden">
-            No matching areas
-          </Combobox.Empty>
-          <Combobox.List className={twMerge(listScrollbarClassName, isSheet && 'max-h-none')}>
-            {(area: string) => (
-              <Combobox.Item
-                key={area}
-                value={area}
-                className={twMerge(
-                  'group flex w-full cursor-default items-center gap-1 rounded-lg px-1 py-1 text-left text-sm leading-tight',
-                  'data-[highlighted]:bg-brand-copper/5 data-[selected]:bg-brand-copper/10',
-                )}
+          <div className={isSheet ? 'flex min-h-0 flex-1 flex-col' : undefined}>
+            <div className="flex items-center gap-1 border-b border-brand-copper/25 focus-within:border-brand-copper/50">
+              <IconSearch aria-hidden="true" className="size-[15px] shrink-0" />
+              <label htmlFor={focusInputId} className="sr-only">
+                Filter areas
+              </label>
+              <Combobox.Input
+                id={focusInputId}
+                placeholder="Filter areas..."
+                className="h-[44px] w-full border-none bg-transparent text-base text-brand-copper placeholder:text-brand-copper/70 focus:outline-none focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 md:h-3 md:text-sm [@media(any-pointer:coarse)]:text-base"
+              />
+            </div>
+            {selectedFocus.length > 0 ? (
+              <Combobox.Chips
+                className="flex flex-wrap gap-1 pb-1 pt-[calc(theme(spacing.1)*2)]"
+                aria-label="Selected areas"
               >
-                <span
-                  aria-hidden="true"
-                  className="grid size-[14px] shrink-0 place-items-center rounded-sm border border-brand-copper/50 group-data-[selected]:border-brand-copper"
+                {selectedFocus.map((area) => (
+                  <Combobox.Chip
+                    key={area}
+                    className="flex items-center gap-[calc(theme(spacing.1)/2)] rounded-full border border-brand-copper/50 bg-brand-copper/15 px-1 py-[calc(theme(spacing.1)/2)] text-xs leading-none text-brand-copper"
+                    aria-label={area}
+                    aria-description="Press Backspace or Delete to remove"
+                  >
+                    {area}
+                    <Combobox.ChipRemove
+                      className="grid size-[14px] place-items-center text-brand-copper/80 hover:text-brand-copper"
+                      aria-label={`Remove ${area}`}
+                    >
+                      <XIcon />
+                    </Combobox.ChipRemove>
+                  </Combobox.Chip>
+                ))}
+              </Combobox.Chips>
+            ) : null}
+            <Combobox.Empty className="px-1 py-1 text-sm text-brand-copper/70 empty:hidden">
+              No matching areas
+            </Combobox.Empty>
+            <Combobox.List
+              data-base-ui-swipe-ignore=""
+              className={twMerge(listScrollbarClassName, isSheet && 'max-h-none min-h-0 flex-1')}
+            >
+              {(area: string) => (
+                <Combobox.Item
+                  key={area}
+                  value={area}
+                  className={twMerge(
+                    'group flex w-full cursor-default items-center gap-1 rounded-lg px-1 py-1 text-left text-sm leading-tight',
+                    'data-[highlighted]:bg-brand-copper/5 data-[selected]:bg-brand-copper/10',
+                  )}
                 >
-                  <Combobox.ItemIndicator>
-                    <CheckIcon />
-                  </Combobox.ItemIndicator>
-                </span>
-                {area}
-              </Combobox.Item>
-            )}
-          </Combobox.List>
+                  <span
+                    aria-hidden="true"
+                    className="grid size-[14px] shrink-0 place-items-center rounded-sm border border-brand-copper/50 group-data-[selected]:border-brand-copper"
+                  >
+                    <Combobox.ItemIndicator>
+                      <CheckIcon />
+                    </Combobox.ItemIndicator>
+                  </span>
+                  {area}
+                </Combobox.Item>
+              )}
+            </Combobox.List>
+          </div>
         </Combobox.Root>
       </section>
-
-      {activeCount > 0 && (
-        <div className="border-t border-brand-copper/25 pt-1">
-          <button
-            type="button"
-            onClick={onClear}
-            className="px-1 text-xs text-brand-copper underline decoration-transparent transition-colors hover:decoration-current"
-          >
-            Clear filters
-          </button>
-        </div>
-      )}
     </div>
   );
 }
