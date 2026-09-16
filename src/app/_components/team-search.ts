@@ -74,12 +74,15 @@ export function sameFocusArea(a: string, b: string): boolean {
   return normalizeFocusArea(a).toLowerCase() === normalizeFocusArea(b).toLowerCase();
 }
 
+/** True when the member has every selected area (AND). An empty selection matches all members. */
 export function matchesFocusArea(
   focusAreas: readonly string[] | null | undefined,
   focus?: readonly string[],
 ): boolean {
   if (focus == null || focus.length === 0) return true;
-  return focus.some((selected) => (focusAreas ?? []).some((area) => sameFocusArea(area, selected)));
+  return focus.every((selected) =>
+    (focusAreas ?? []).some((area) => sameFocusArea(area, selected)),
+  );
 }
 
 export function uniqueFocusAreas(
