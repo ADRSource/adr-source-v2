@@ -250,7 +250,7 @@ export function SearchInput({ focusAreas }: { focusAreas: readonly string[] }) {
                   spellCheck={false}
                   // The native WebKit clear button is suppressed in favour of the
                   // custom one below, which stays in sync with the URL term.
-                  className="h-full w-full min-w-0 border-none bg-transparent px-1 pr-3 text-current placeholder:text-current focus:shadow-none focus:outline-none focus-visible:shadow-none focus-visible:outline-none focus-visible:ring-transparent focus-visible:ring-offset-0 [&::-webkit-search-cancel-button]:appearance-none"
+                  className="h-full w-full min-w-0 border-none bg-transparent px-1 pr-2 text-current placeholder:text-current focus:shadow-none focus:outline-none focus-visible:shadow-none focus-visible:outline-none focus-visible:ring-transparent focus-visible:ring-offset-0 [&::-webkit-search-cancel-button]:appearance-none"
                   type="search"
                   placeholder={compact ? 'Search' : 'Search team by name...'}
                   defaultValue={currentTerm?.toString()}
