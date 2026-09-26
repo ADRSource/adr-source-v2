@@ -52,7 +52,7 @@ export function TeamFilterPanel({
   return (
     <div
       className={
-        isSheet ? 'relative flex min-h-0 flex-1 flex-col gap-4' : 'relative flex flex-col gap-2'
+        isSheet ? 'relative flex min-h-0 flex-1 flex-col gap-4' : 'relative flex min-h-0 flex-col gap-2'
       }
     >
       {activeCount > 0 ? (
@@ -94,7 +94,7 @@ export function TeamFilterPanel({
         </RadioGroup>
       </section>
 
-      <section className={isSheet ? 'flex min-h-0 flex-1 flex-col' : 'flex flex-col gap-1'}>
+      <section className={isSheet ? 'flex min-h-0 flex-1 flex-col' : 'flex min-h-0 flex-col gap-1'}>
         <h3
           id={focusHeadingId}
           className="text-xs font-medium uppercase tracking-[0.12em] text-brand-copper/80"
@@ -115,7 +115,7 @@ export function TeamFilterPanel({
             if (eventDetails.isItemPress === true) eventDetails.cancel();
           }}
         >
-          <div className={isSheet ? 'flex min-h-0 flex-1 flex-col' : undefined}>
+          <div className={isSheet ? 'flex min-h-0 flex-1 flex-col' : 'flex min-h-0 flex-col'}>
             <div className="flex items-center gap-1 border-b border-brand-copper/25 focus-within:border-brand-copper/50">
               <IconSearch aria-hidden="true" className="size-[15px] shrink-0" />
               <label htmlFor={focusInputId} className="sr-only">

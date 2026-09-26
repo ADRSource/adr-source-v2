@@ -40,13 +40,20 @@ export function TeamFilterOverlay({
 
   if (isDesktop) {
     return (
-      <Popover.Root open={open} onOpenChange={onOpenChange}>
+      <Popover.Root open={open} modal={true} onOpenChange={onOpenChange}>
         {children(Popover.Trigger)}
         <Popover.Portal keepMounted>
-          <Popover.Positioner side="bottom" align="end" sideOffset={8} className="z-20">
+          {/* Always below the pill; the popup shrinks to fit instead of flipping sides. */}
+          <Popover.Positioner
+            side="bottom"
+            align="end"
+            sideOffset={8}
+            collisionAvoidance={{ side: 'none' }}
+            className="z-20"
+          >
             <Popover.Popup
               aria-label="Team filters"
-              className="w-[min(20rem,calc(100vw-2rem))] origin-[var(--transform-origin)] rounded-2xl border border-brand-copper bg-brand-black/90 p-[calc(theme(spacing.1)*2)] text-brand-copper shadow-lg outline-none backdrop-blur-sm backdrop-saturate-150 transition-[opacity,transform] duration-200 ease-[cubic-bezier(0.32,0.72,0,1)] data-[ending-style]:translate-y-1 data-[starting-style]:translate-y-1 data-[ending-style]:opacity-0 data-[starting-style]:opacity-0 [&[hidden]]:hidden"
+              className="flex max-h-[var(--available-height)] w-[min(20rem,calc(100vw-2rem))] origin-[var(--transform-origin)] flex-col rounded-2xl border border-brand-copper bg-brand-black/90 p-[calc(theme(spacing.1)*2)] text-brand-copper shadow-lg outline-none backdrop-blur-sm backdrop-saturate-150 transition-[opacity,transform] duration-200 ease-[cubic-bezier(0.32,0.72,0,1)] data-[ending-style]:translate-y-1 data-[starting-style]:translate-y-1 data-[ending-style]:opacity-0 data-[starting-style]:opacity-0 [&[hidden]]:hidden"
             >
               {panel('popover')}
             </Popover.Popup>
