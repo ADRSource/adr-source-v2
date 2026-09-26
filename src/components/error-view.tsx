@@ -34,11 +34,11 @@ export function ErrorView({ children, type }: ErrorViewProps) {
           <div className="pointer-events-none absolute inset-0 isolate z-10 h-full w-full overflow-x-clip">
             <div
               aria-hidden
-              className="pointer-events-none absolute bottom-0 left-0 z-10 aspect-square w-[50%] -translate-x-1/2 translate-y-[33%] rounded-full bg-brand-blue opacity-10 blur-[70px]"
+              className="pointer-events-none absolute bottom-0 left-0 z-10 aspect-square w-[50%] -translate-x-1/2 translate-y-[33%] bg-[radial-gradient(closest-side,theme(colors.brand.blue),transparent)] opacity-10"
             />
             <div
               aria-hidden
-              className="pointer-events-none absolute right-0 top-0 z-10 aspect-square w-[50%] -translate-y-[33%] translate-x-1/2 rounded-full bg-brand-red opacity-20 blur-[70px]"
+              className="pointer-events-none absolute right-0 top-0 z-10 aspect-square w-[50%] -translate-y-[33%] translate-x-1/2 bg-[radial-gradient(closest-side,theme(colors.brand.red),transparent)] opacity-20"
             />
           </div>
         </main>
