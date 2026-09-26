@@ -184,11 +184,11 @@ function MobileNavigationDrawer() {
         >
           <div
             aria-hidden
-            className="pointer-events-none absolute left-0 top-1/2 z-10 aspect-square w-[50%] -translate-y-1/2 rounded-full bg-brand-blue opacity-10 blur-[70px]"
+            className="pointer-events-none absolute left-0 top-1/2 z-10 aspect-square w-[50%] -translate-y-1/2 bg-[radial-gradient(closest-side,theme(colors.brand.blue),transparent)] opacity-10"
           />
           <div
             aria-hidden
-            className="pointer-events-none absolute right-0 top-0 z-10 aspect-square w-[50%] -translate-y-[33%] translate-x-1/2 rounded-full bg-brand-red opacity-20 blur-[70px]"
+            className="pointer-events-none absolute right-0 top-0 z-10 aspect-square w-[50%] -translate-y-[33%] translate-x-1/2 bg-[radial-gradient(closest-side,theme(colors.brand.red),transparent)] opacity-20"
           />
         </div>
       </FocusScope>
@@ -212,13 +212,18 @@ interface NavigationDrawerProviderProps {
 function NavigationDrawerProvider({ children }: NavigationDrawerProviderProps) {
   const [trigger, setTrigger] = React.useState<HTMLButtonElement | null>(null);
   const [isOpen, setIsOpen] = React.useState(false);
+  const isOpenRef = React.useRef(false);
 
   const actions = React.useMemo(() => {
     return {
       open() {
+        isOpenRef.current = true;
         setIsOpen(true);
       },
       close() {
+        // Already closed (e.g. the route-change effect on mount): don't steal focus.
+        if (!isOpenRef.current) return;
+        isOpenRef.current = false;
         setIsOpen(false);
 
         // Putting this in the setTimeout in order to give `FocusScope` time to clear out its state
