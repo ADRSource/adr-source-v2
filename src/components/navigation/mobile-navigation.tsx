@@ -212,13 +212,18 @@ interface NavigationDrawerProviderProps {
 function NavigationDrawerProvider({ children }: NavigationDrawerProviderProps) {
   const [trigger, setTrigger] = React.useState<HTMLButtonElement | null>(null);
   const [isOpen, setIsOpen] = React.useState(false);
+  const isOpenRef = React.useRef(false);
 
   const actions = React.useMemo(() => {
     return {
       open() {
+        isOpenRef.current = true;
         setIsOpen(true);
       },
       close() {
+        // Already closed (e.g. the route-change effect on mount): don't steal focus.
+        if (!isOpenRef.current) return;
+        isOpenRef.current = false;
         setIsOpen(false);
 
         // Putting this in the setTimeout in order to give `FocusScope` time to clear out its state
