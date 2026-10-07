@@ -38,6 +38,35 @@ export function RichText({
               </p>
             );
           },
+          ul: ({ children }) => {
+            return (
+              <ul
+                className={text({
+                  type: 'body',
+                  className:
+                    'my-[1em] list-disc pl-[1.25em] marker:text-brand-toffee space-y-[0.5em]',
+                })}
+              >
+                {children}
+              </ul>
+            );
+          },
+          ol: ({ children }) => {
+            return (
+              <ol
+                className={text({
+                  type: 'body',
+                  className:
+                    'my-[1em] list-decimal pl-[1.5em] marker:font-medium marker:tabular-nums marker:text-brand-toffee space-y-[0.5em]',
+                })}
+              >
+                {children}
+              </ol>
+            );
+          },
+          li: ({ children }) => {
+            return <li className="pl-[0.25em]">{children}</li>;
+          },
           img: ({ altText, src, width, height }) => {
             if (src == null) return <></>;
             return (

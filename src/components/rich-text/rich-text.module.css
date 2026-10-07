@@ -11,4 +11,14 @@
   img + * {
     margin-top: 0;
   }
+  li > p {
+    margin-block: 0;
+  }
+  li > :is(ul, ol) {
+    margin-top: 0.5em;
+    margin-bottom: 0;
+  }
+  li > ul {
+    list-style-type: circle;
+  }
 }
