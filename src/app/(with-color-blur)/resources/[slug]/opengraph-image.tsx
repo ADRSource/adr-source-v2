@@ -14,9 +14,9 @@ export const size = {
 };
 export const contentType = 'image/png';
 
-export default async function Image({ params }: { params: { slug: string } }) {
+export default async function Image({ params }: { params: Promise<{ slug: string }> }) {
   const preview = (await draftMode()).isEnabled;
-  const { slug } = params;
+  const { slug } = await params;
   const data = await getInternalResourceBySlug(slug, preview);
   const { internalResource } = data;
 
