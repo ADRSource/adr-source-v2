@@ -56,7 +56,7 @@ export function Footer() {
         </div>
 
         {/* TAGLINE */}
-        <p className="font-base border-t border-solid border-brand-black/25 px-2 py-2 text-center font-sans font-medium">
+        <p className="border-t border-solid border-brand-black/25 px-2 py-2 text-center font-sans font-medium">
           Solving the world&apos;s problems&hellip;one case at a time
         </p>
       </div>
@@ -99,7 +99,7 @@ function FooterInternalLink({ children, href }: FooterInternalLinkProps) {
   return (
     <Link
       href={href}
-      className="decoration-none text-xs uppercase leading-none focus-visible:ring-brand-black focus-visible:ring-offset-brand-copper"
+      className="text-xs uppercase leading-none focus-visible:ring-brand-black focus-visible:ring-offset-brand-copper"
     >
       {children}
     </Link>
@@ -114,7 +114,7 @@ function FooterExternalLink({ children, href }: FooterExternalLinkProps) {
   return (
     <a
       href={href}
-      className="decoration-none text-xs uppercase leading-none focus-visible:ring-brand-black focus-visible:ring-offset-brand-copper"
+      className="text-xs uppercase leading-none focus-visible:ring-brand-black focus-visible:ring-offset-brand-copper"
     >
       {children}
     </a>

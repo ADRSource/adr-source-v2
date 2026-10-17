@@ -15,7 +15,7 @@ export function Slideshow({ urls }: SlideshowProps) {
   const [currentImageIndex, setCurrentImageIndex] = React.useState(0);
   const [isTransitioning, setIsTransitioning] = React.useState(false);
 
-  // Change image every 5 seconds
+  // Advance one slide every SLIDE_DURATION_MS
   React.useEffect(() => {
     let timeout: ReturnType<typeof setTimeout> | undefined;
     const interval = setInterval(() => {

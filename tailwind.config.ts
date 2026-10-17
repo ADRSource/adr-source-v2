@@ -52,7 +52,7 @@ const config: Config = {
       'nav-height': 'var(--nav-height)',
     },
   },
-  plugins: [stack, linkbox, debug, inset, require('@tailwindcss/typography')],
+  plugins: [stack, linkbox, debug, inset],
   future: {
     hoverOnlyWhenSupported: true,
   },
