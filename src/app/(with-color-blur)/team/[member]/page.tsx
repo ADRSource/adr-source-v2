@@ -19,7 +19,6 @@ import {
   MemberInfoNeutralFragment,
   MemberPageMember,
 } from '~/graphql/generated/cms.generated';
-import { previewTag, type PreviewTag } from '~/utils/preview-tag';
 import { getMetadataFromSeo } from '~/utils/seo';
 
 export async function generateMetadata(props: {
@@ -54,16 +53,14 @@ export default async function Member(props: { params: Promise<{ member: string }
 
   const { memberPage } = data;
   const { member } = memberPage;
+  const { info } = member ?? {};
 
   // A member page with no member attached has nothing to show.
-  if (member?.info == null) {
+  if (!info) {
     return notFound();
   }
 
-  const { info } = member;
   const { name, postNominalTitles, headshot, bio } = info;
-  const memberTag = previewTag(preview, member.id);
-  const infoTag = previewTag(preview, member.id, { fieldApiId: 'info', instanceId: info.id });
 
   return (
     <div className="isolate">
@@ -77,26 +74,18 @@ export default async function Member(props: { params: Promise<{ member: string }
                   'mb-6 flex-wrap items-baseline justify-center text-balance text-center stack-x-2/inline md:mb-0',
               })}
             >
-              <span {...infoTag('name')}>{name}</span>
+              <span>{name}</span>
               {postNominalTitles != null && (
-                <span
-                  className="text-heading-5 text-brand-toffee"
-                  {...infoTag('postNominalTitles')}
-                >
-                  {postNominalTitles}
-                </span>
+                <span className="text-heading-5 text-brand-toffee">{postNominalTitles}</span>
               )}
             </h1>
             <div className="hidden md:block">
-              <CallToActionBar role={member.__typename} info={info} tag={infoTag} />
+              <CallToActionBar role={member?.__typename} info={info} />
             </div>
           </header>
           <section className="grid grid-cols-1 justify-items-center gap-y-4 divide-brand-copper/40 border-b border-brand-copper/40 md:grid-cols-2 md:divide-x">
             <div className="px-2 stack-y-5 md:py-6 md:stack-y-4">
-              <div
-                className="relative aspect-[4/5] w-full max-w-[449px] overflow-clip rounded-lg"
-                {...infoTag('headshot')}
-              >
+              <div className="relative aspect-[4/5] w-full max-w-[449px] overflow-clip rounded-lg">
                 <Image
                   priority
                   alt={`${info.name} Headshot`}
@@ -109,7 +98,7 @@ export default async function Member(props: { params: Promise<{ member: string }
               </div>
 
               <div className="block md:hidden">
-                <CallToActionBar role={member.__typename} info={info} tag={infoTag} />
+                <CallToActionBar role={member?.__typename} info={info} />
               </div>
 
               <div
@@ -118,23 +107,20 @@ export default async function Member(props: { params: Promise<{ member: string }
                   className: 'w-full max-w-[449px] px-2 stack-y-3 md:px-0',
                 })}
               >
-                <div className="border-b border-brand-copper">
-                  <h2
-                    className="pb-1 text-lg font-semibold uppercase md:text-xl"
-                    {...memberTag('roleDescription')}
-                  >
-                    {member.roleDescription}
-                  </h2>
-                </div>
+                {member?.roleDescription != null && (
+                  <div className="border-b border-brand-copper">
+                    <h2 className="pb-1 text-lg font-semibold uppercase md:text-xl">
+                      {member.roleDescription}
+                    </h2>
+                  </div>
+                )}
 
-                <div className="stack-y-3" {...infoTag('bio')}>
-                  <RichText content={bio.raw as RichTextContent} />
-                </div>
+                <RichText content={bio.raw as RichTextContent} />
               </div>
             </div>
             <div className="w-full px-2 pb-6 md:py-6">
               <div className="mx-auto max-w-[449px] stack-y-4">
-                <MemberInfo name={name} member={member} memberTag={memberTag} infoTag={infoTag} />
+                {member?.__typename != null && <MemberInfo name={name} member={member} />}
               </div>
             </div>
           </section>
@@ -147,17 +133,13 @@ export default async function Member(props: { params: Promise<{ member: string }
 function MemberInfo({
   member,
   name,
-  memberTag,
-  infoTag,
 }: {
   member: MemberInfoCaseManagerFragment | MemberInfoNeutralFragment;
   name: string;
-  memberTag: PreviewTag;
-  infoTag: PreviewTag;
 }) {
   switch (member.__typename) {
     case 'Neutral': {
-      return <NeutralInfo name={name} member={member} memberTag={memberTag} infoTag={infoTag} />;
+      return <NeutralInfo name={name} member={member} />;
     }
     case 'CaseManager': {
       return <CaseManagerInfo member={member} />;
@@ -191,17 +173,7 @@ const DEFAULT_SCHEDULING_COPY = (
   </>
 );
 
-function NeutralInfo({
-  member,
-  name,
-  memberTag,
-  infoTag,
-}: {
-  member: MemberInfoNeutralFragment;
-  name: string;
-  memberTag: PreviewTag;
-  infoTag: PreviewTag;
-}) {
+function NeutralInfo({ member, name }: { member: MemberInfoNeutralFragment; name: string }) {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const { id, nadnId, focusAreas, caseManager, availabilityStartDate, info } = member;
   const customCopy = CUSTOM_SCHEDULING_COPY[id]?.copy ?? DEFAULT_SCHEDULING_COPY;
@@ -217,15 +189,12 @@ function NeutralInfo({
             className: 'scroll-mt-[calc(var(--nav-height)_+_(theme(spacing.2)_*_2))] text-balance',
           })}
         >
-          Schedule with <span {...infoTag('informalName')}>{info.informalName ?? name}</span>
+          Schedule with {info.informalName ?? name}
         </h2>
         <div className="stack-y-3">
           <div className="stack-y-1">
             {availabilityStartDate != null && typeof availabilityStartDate === 'string' && (
-              <Availability
-                dateStr={availabilityStartDate}
-                attributes={memberTag('availabilityStartDate')}
-              />
+              <Availability dateStr={availabilityStartDate} />
             )}
             <div className="stack-y-[1rem]">
               {customCopy}
@@ -235,10 +204,7 @@ function NeutralInfo({
               </p>
             </div>
           </div>
-          <div
-            className="mx-auto w-full max-w-[449px] self-center overflow-y-auto rounded-lg border border-solid border-brand-copper bg-white/70 backdrop-blur-[2px] backdrop-saturate-150 md:p-2"
-            {...memberTag('nadnId')}
-          >
+          <div className="mx-auto w-full max-w-[449px] self-center overflow-y-auto rounded-lg border border-solid border-brand-copper bg-white/70 backdrop-blur-[2px] backdrop-saturate-150 md:p-2">
             <div className="mx-auto w-full rounded-lg bg-white p-1">
               <iframe
                 width="310"
@@ -271,7 +237,7 @@ function NeutralInfo({
       {/* AREA OF FOCUS */}
       <div className="stack-y-3">
         <h2 className={heading({ type: '6' })}>Areas of focus</h2>
-        <ul className="flex flex-col gap-y-1" {...memberTag('focusAreas')}>
+        <ul className="flex flex-col gap-y-1">
           {focusAreas.map((area) => {
             // We use a magic character (~) to denote a list item that should be styled differently. The character is removed before rendering.
             // * This is to fill the request from the client to have a list item that is bolded and uppercase.
@@ -297,13 +263,7 @@ function NeutralInfo({
   );
 }
 
-function Availability({
-  dateStr,
-  attributes,
-}: {
-  dateStr: string;
-  attributes: ReturnType<PreviewTag>;
-}) {
+function Availability({ dateStr }: { dateStr: string }) {
   const currentDate = new TZDateMini(new Date(), 'America/New_York');
   const date = new TZDateMini(parse(dateStr, 'yyyy-MM-dd', new Date(dateStr)), 'America/New_York');
   const hasPast = isAfter(currentDate, date);
@@ -316,7 +276,7 @@ function Availability({
   }).format(date);
 
   return (
-    <div className="inline-flex px-2 md:px-0" {...attributes}>
+    <div className="inline-flex px-2 md:px-0">
       <div className="items-center stack-x-1">
         <div className="relative flex h-1 w-1">
           <div className="absolute inline-flex h-full w-full animate-ping rounded-full bg-brand-copper opacity-90" />
@@ -382,15 +342,7 @@ function CaseManagerInfo({ member }: { member: MemberInfoCaseManagerFragment }) 
   ) : null;
 }
 
-function CallToActionBar({
-  role,
-  info,
-  tag,
-}: {
-  role?: Role;
-  info: BaseMemberInfoFragment;
-  tag: PreviewTag;
-}) {
+function CallToActionBar({ role, info }: { role?: Role; info: BaseMemberInfoFragment }) {
   const { email, phone, linkedIn } = info;
 
   return (
@@ -398,21 +350,18 @@ function CallToActionBar({
       <Link
         className="block py-2 text-xs font-medium uppercase leading-none md:py-0 md:text-center"
         href={`mailto:${email}`}
-        {...tag('email')}
       >
         {email}
       </Link>
       <Link
         className="block py-2 text-xs font-medium uppercase leading-none md:py-0 md:text-center"
         href={`tel:${phone}`}
-        {...tag('phone')}
       >
         {phone}
       </Link>
       <Link
         className="block py-2 text-xs font-medium uppercase leading-none md:py-0 md:text-center"
         href={linkedIn}
-        {...tag('linkedIn')}
       >
         LinkedIn
       </Link>
