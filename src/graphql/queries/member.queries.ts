@@ -117,6 +117,7 @@ export const GetMemberPageBySlug = gql`
   }
 
   fragment BaseMemberInfo on BaseMemberInfo {
+    id
     name
     informalName
     postNominalTitles

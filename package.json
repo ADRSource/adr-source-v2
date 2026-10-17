@@ -20,6 +20,7 @@
   "dependencies": {
     "@date-fns/tz": "^1.2.0",
     "@graphcms/rich-text-react-renderer": "^0.6.2",
+    "@hygraph/preview-sdk": "1.2.0",
     "@hygraph/utils": "^1.2.1",
     "@react-aria/focus": "^3.20.5",
     "@react-aria/overlays": "^3.27.3",
