@@ -1,8 +1,6 @@
 import { Metadata } from 'next';
 import { draftMode } from 'next/headers';
 import { getHomePage } from '~/api/home';
-import { getRecentNeutralsList } from '~/api/member';
-import { getResources } from '~/api/resource';
 import { BlockAbout } from '~/components/blocks/block-about';
 import { BlockHero } from '~/components/blocks/block-hero/block-hero';
 import { BlockResources } from '~/components/blocks/block-resources';
@@ -24,11 +22,7 @@ export async function generateMetadata(): Promise<Metadata> {
   }
 }
 
-export default async function Home() {
-  const preview = (await draftMode()).isEnabled;
-  const _neutralsPrefetch = await getRecentNeutralsList(preview);
-  const _resourcesPrefetch = await getResources(3, 0, preview);
-
+export default function Home() {
   return (
     <main className="min-h-screen">
       <div className="relative z-0">

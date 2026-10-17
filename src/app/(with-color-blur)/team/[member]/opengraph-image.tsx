@@ -6,7 +6,7 @@ import { ogImageTemplate } from '~/app/_utils/og-image-template';
 
 // Route segment config
 export const runtime = 'edge';
-export const alt = 'Resource';
+export const alt = 'ADRsource team member';
 
 export const size = {
   width: 1200,
