@@ -16,7 +16,7 @@ export function ResourceCard({
   type,
 }: {
   resource: InternalResourceInfoFragment | ExternalResourceInfoFragment;
-  type?: string;
+  type?: string | null;
 }) {
   switch (resource.__typename) {
     case 'InternalResource': {

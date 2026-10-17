@@ -50,8 +50,7 @@ export default async function Image({ params }: { params: Promise<{ slug: string
                 transform: 'translateY(-200%)',
               }}
             >
-              {/* Falls back to the ResourceType relation until it's removed. */}
-              {resource?.type ?? resource?.resourceType?.type}
+              {resource?.type}
             </p>
             <h1
               tw="m-0 mb-[28px]"
