@@ -11,13 +11,18 @@ import { PageHeader } from '~/components/ui/page-header';
 import { PATHS } from '~/constants/paths.constants';
 import { getMetadataFromSeo } from '~/utils/seo';
 
-export async function generateMetadata(): Promise<Metadata> {
+export async function generateMetadata(props: {
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
+}): Promise<Metadata> {
   const preview = (await draftMode()).isEnabled;
+  // Later pages are canonical to themselves, not page 1, so their resources stay indexable.
+  const page = getPageParam(PARAM_KEY, await props.searchParams);
+  const query = page > 1 ? `?${PARAM_KEY}=${page.toString()}` : '';
   try {
     const data = await getResourcesPage(preview);
     const { seo } = data.resourcesPage ?? {};
 
-    return getMetadataFromSeo(`${PATHS.absolute}${PATHS.resources}`, seo);
+    return getMetadataFromSeo(`${PATHS.absolute}${PATHS.resources}${query}`, seo);
   } catch (_error) {
     console.error('Error generating metadata for resources page');
 

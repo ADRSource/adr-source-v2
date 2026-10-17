@@ -9,6 +9,7 @@ export function getMetadataFromSeo(url: string, seo?: SeoInfoFragment) {
     title,
     description,
     robots: index ? 'index, follow' : 'noindex, nofollow',
+    alternates: { canonical: url },
     openGraph: {
       title,
       description,
