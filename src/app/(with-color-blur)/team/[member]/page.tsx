@@ -55,7 +55,10 @@ export default async function Member(props: { params: Promise<{ member: string }
   const { member } = memberPage;
   const { info } = member ?? {};
 
-  if (!info) return null;
+  // A member page with no member attached has nothing to show.
+  if (!info) {
+    return notFound();
+  }
 
   const { name, postNominalTitles, headshot, bio } = info;
 
