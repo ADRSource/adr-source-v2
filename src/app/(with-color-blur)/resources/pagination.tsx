@@ -36,7 +36,7 @@ export function Pagination({ pageSize, paramKey, siblingCount, searchParams }: P
               </CircleButton>
             </li>
             <li>
-              <ul className="stack-x-1">
+              <ul className="stack-x-[4px] sm:stack-x-1">
                 {pages.map((page, i) => {
                   if (page.type === 'page')
                     return (
@@ -106,45 +106,21 @@ function transform(items: (string | number)[]) {
 
 const ELLIPSIS = 'ellipsis';
 function getRange({ siblingCount, page, totalPages }: PaginationContext) {
-  /**
-   * `2 * ctx.siblingCount + 5` explanation:
-   * 2 * ctx.siblingCount for left/right siblings
-   * 5 for 2x left/right ellipsis, 2x first/last page + 1x current page
-   *
-   * For some page counts (e.g. totalPages: 8, siblingCount: 2),
-   * calculated max page is higher than total pages,
-   * so we need to take the minimum of both.
-   */
-  const totalPageNumbers = Math.min(2 * siblingCount + 5, totalPages);
+  // First, last, current, siblings, and two gap slots: always this many items.
+  const slots = 2 * siblingCount + 5;
+  if (totalPages <= slots) return range(1, totalPages);
 
-  const firstPageIndex = 1;
-  const lastPageIndex = totalPages;
+  // Keep the sibling window clear of pages 1-2 and the last two, so a gap always hides 2+ pages.
+  const start = Math.max(Math.min(page - siblingCount, totalPages - 2 * siblingCount - 2), 3);
+  const end = Math.min(Math.max(page + siblingCount, 2 * siblingCount + 3), totalPages - 2);
 
-  const leftSiblingIndex = Math.max(page - siblingCount, firstPageIndex);
-  const rightSiblingIndex = Math.min(page + siblingCount, lastPageIndex);
-
-  const showLeftEllipsis = leftSiblingIndex > firstPageIndex + 1;
-  const showRightEllipsis = rightSiblingIndex < lastPageIndex - 1;
-
-  const itemCount = totalPageNumbers - 2; // 2 stands for one ellipsis and either first or last page
-
-  if (!showLeftEllipsis && showRightEllipsis) {
-    const leftRange = range(1, itemCount);
-    return [...leftRange, ELLIPSIS, lastPageIndex];
-  }
-
-  if (showLeftEllipsis && !showRightEllipsis) {
-    const rightRange = range(lastPageIndex - itemCount + 1, lastPageIndex);
-    return [firstPageIndex, ELLIPSIS, ...rightRange];
-  }
-
-  if (showLeftEllipsis && showRightEllipsis) {
-    const middleRange = range(leftSiblingIndex, rightSiblingIndex);
-    return [firstPageIndex, ELLIPSIS, ...middleRange, ELLIPSIS, lastPageIndex];
-  }
-
-  const fullRange = range(firstPageIndex, lastPageIndex);
-  return fullRange;
+  return [
+    1,
+    start > 3 ? ELLIPSIS : 2,
+    ...range(start, end),
+    end < totalPages - 2 ? ELLIPSIS : totalPages - 1,
+    totalPages,
+  ];
 }
 
 function getTransformedRange(ctx: PaginationContext) {
