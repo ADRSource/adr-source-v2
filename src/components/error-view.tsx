@@ -22,7 +22,7 @@ export function ErrorView({ children, type }: ErrorViewProps) {
             <p
               className={heading({
                 type: '5',
-                className: '[text-wrap: balance] mx-auto text-center',
+                className: 'mx-auto text-balance text-center',
               })}
             >
               {content.body}
