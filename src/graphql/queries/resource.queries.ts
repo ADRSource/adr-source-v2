@@ -95,6 +95,9 @@ export const GetInternalResourceBySlug = gql`
           ... on Asset {
             id
             mimeType
+            url
+            width
+            height
           }
         }
       }

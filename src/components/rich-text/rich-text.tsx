@@ -44,7 +44,7 @@ export function RichText({
                 className={text({
                   type: 'body',
                   className:
-                    'my-[1em] list-disc pl-[1.25em] marker:text-brand-toffee space-y-[0.5em]',
+                    'my-[1em] list-disc space-y-[0.5em] pl-[1.25em] marker:text-brand-toffee',
                 })}
               >
                 {children}
@@ -57,7 +57,7 @@ export function RichText({
                 className={text({
                   type: 'body',
                   className:
-                    'my-[1em] list-decimal pl-[1.5em] marker:font-medium marker:tabular-nums marker:text-brand-toffee space-y-[0.5em]',
+                    'my-[1em] list-decimal space-y-[0.5em] pl-[1.5em] marker:font-medium marker:tabular-nums marker:text-brand-toffee',
                 })}
               >
                 {children}
@@ -85,10 +85,10 @@ export function RichText({
             return (
               <Link
                 href={href}
+                {...rest}
                 {...((openInNewTab ?? false)
                   ? { target: '_blank', rel: 'noopener noreferrer' }
                   : {})}
-                {...rest}
                 className="text-brand-toffee underline"
               >
                 {children}
