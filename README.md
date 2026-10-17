@@ -55,6 +55,15 @@ The CMS getters in `src/api` cache with `unstable_cache` and no tags. Next attac
 
 Configure a single webhook in Hygraph (Project Settings → Webhooks) covering all content models and all publish/unpublish/delete events, targeting `POST /api/revalidate`. No query parameters are required.
 
+### CMS Preview
+
+`src/app/api/draft/route.ts` enables Next's draft mode and redirects to the page being previewed. Each model's Preview widget in Hygraph (Schema → model → Sidebar → Preview) points at it in one of two ways:
+
+- `https://www.adrsource.com/api/draft?secret=<DRAFT_SECRET>&slug=/resources/{slug}` for models that own their page path: InternalResource, MemberPage (`/team/{slug}`), and singletons with a fixed path (`/about`, `/team`, ...).
+- `https://www.adrsource.com/api/draft?secret=<DRAFT_SECRET>&id={id}` for models whose page lives on a related entry: Neutral and CaseManager (their MemberPage) and Resource (its InternalResource, or `/resources` for external ones).
+
+The draft cookie is set `Partitioned` so it survives Studio's live preview, a cross-site iframe, in browsers that block third-party cookies.
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:
