@@ -1,5 +1,5 @@
-import { draftMode } from 'next/headers';
 import { redirect } from 'next/navigation';
+import { enableDraftMode } from '~/utils/draft-mode';
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
@@ -20,7 +20,7 @@ export async function GET(request: Request) {
     return new Response('Invalid slug', { status: 400 });
   }
 
-  (await draftMode()).enable();
+  await enableDraftMode();
 
   redirect(`${destination.pathname}${destination.search}${destination.hash}`);
 }

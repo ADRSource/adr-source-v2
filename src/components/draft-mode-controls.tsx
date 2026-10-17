@@ -1,10 +1,11 @@
 import { draftMode } from 'next/headers';
 import { redirect } from 'next/navigation';
 import { root } from '~/components/ui/button';
+import { disableDraftMode } from '~/utils/draft-mode';
 
 async function disableDraft() {
   'use server';
-  (await draftMode()).disable();
+  await disableDraftMode();
   redirect('/');
 }
 
