@@ -33,7 +33,7 @@ export function NavigationLink({ href, children, onLinkClick, className }: Navig
     <Link
       href={href}
       className={twMerge(
-        'decoration-none relative py-[calc(theme(spacing.1)/2)] text-center text-xs font-medium uppercase leading-none text-white',
+        'relative py-[calc(theme(spacing.1)/2)] text-center text-xs font-medium uppercase leading-none text-white',
         className,
       )}
       onMouseEnter={() => {

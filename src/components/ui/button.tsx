@@ -36,7 +36,7 @@ export const ButtonLink = React.forwardRef<HTMLAnchorElement, ButtonLinkProps>(
 ButtonLink.displayName = 'ButtonLink';
 
 export const root = cva({
-  base: 'decoration-inherit font-sans stack-x-[4px]/inline items-center bg-white border border-solid rounded-full uppercase font-medium leading-none select-none scale-1 will-change-transform active:scale-[0.97] transition-transform hover:scale-[1.03]',
+  base: 'decoration-inherit font-sans stack-x-[4px]/inline items-center bg-white border border-solid rounded-full uppercase font-medium leading-none select-none will-change-transform active:scale-[0.97] transition-transform hover:scale-[1.03]',
   variants: {
     size: {
       small: 'min-h-[30px] px-2 py-1 text-xs text-brand-black stack-x-[4px]/inline',
