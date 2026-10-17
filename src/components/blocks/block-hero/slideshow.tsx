@@ -15,12 +15,6 @@ export function Slideshow({ urls }: SlideshowProps) {
   const [currentImageIndex, setCurrentImageIndex] = React.useState(0);
   const [isTransitioning, setIsTransitioning] = React.useState(false);
 
-  // Preload the next image when the current index changes
-  React.useEffect(() => {
-    const nextIndex = (currentImageIndex + 1) % urls.length;
-    preloadImage(urls[nextIndex]);
-  }, [currentImageIndex, urls]);
-
   // Change image every 5 seconds
   React.useEffect(() => {
     let timeout: ReturnType<typeof setTimeout> | undefined;
@@ -70,11 +64,4 @@ export function Slideshow({ urls }: SlideshowProps) {
       })}
     </div>
   );
-}
-
-function preloadImage(url: string | undefined) {
-  if (typeof url !== 'string') return;
-
-  const image = new Image();
-  image.src = url;
 }
