@@ -16,7 +16,7 @@ export async function POST(request: Request) {
 
   const rawPayload = await request.text();
 
-  if (!verifyWebhookSignature({ rawPayload, signature, secret })) {
+  if (!isValidSignature(rawPayload, signature, secret)) {
     return NextResponse.json({ message: 'Invalid signature' }, { status: 403 });
   }
 
@@ -24,4 +24,13 @@ export async function POST(request: Request) {
   revalidatePath('/', 'layout');
 
   return NextResponse.json({ message: 'Revalidated', now: Date.now() });
+}
+
+// The library throws on a header that isn't `sign=…, env=…, t=…`; treat that as invalid.
+function isValidSignature(rawPayload: string, signature: string, secret: string) {
+  try {
+    return verifyWebhookSignature({ rawPayload, signature, secret });
+  } catch {
+    return false;
+  }
 }

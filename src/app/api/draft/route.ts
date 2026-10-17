@@ -14,7 +14,13 @@ export async function GET(request: Request) {
     return new Response('Missing slug', { status: 400 });
   }
 
+  // Resolve against our own origin so only same-site paths are followed.
+  const destination = new URL(slug, request.url);
+  if (destination.origin !== new URL(request.url).origin) {
+    return new Response('Invalid slug', { status: 400 });
+  }
+
   (await draftMode()).enable();
 
-  redirect(slug);
+  redirect(`${destination.pathname}${destination.search}${destination.hash}`);
 }
