@@ -1,5 +1,5 @@
 export const PATHS = {
-  absolute: 'https://adrsource.com',
+  absolute: 'https://www.adrsource.com',
   home: '/',
   about: '/about',
   team: '/team',
