@@ -23,10 +23,11 @@ export function Slideshow({ urls }: SlideshowProps) {
 
   // Change image every 5 seconds
   React.useEffect(() => {
+    let timeout: ReturnType<typeof setTimeout> | undefined;
     const interval = setInterval(() => {
       setIsTransitioning(true);
       // Wait for the fade out transition to complete before changing the image
-      setTimeout(() => {
+      timeout = setTimeout(() => {
         setCurrentImageIndex((current) => (current + 1) % urls.length);
         setIsTransitioning(false);
       }, TRANSITION_DURATION); // Transition duration
@@ -34,6 +35,7 @@ export function Slideshow({ urls }: SlideshowProps) {
 
     return () => {
       clearInterval(interval);
+      clearTimeout(timeout);
     };
   }, [urls.length]);
 

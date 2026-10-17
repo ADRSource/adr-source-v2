@@ -26,7 +26,7 @@ export async function BlockTeam() {
     <AnimatedSection>
       <div className="relative py-6 stack-y-4">
         <div className="stack-y-2">
-          <ul className="gap-y-0.5 flex flex-col items-center justify-center px-2 text-center text-sm/snug font-medium uppercase tracking-wider text-brand-toffee sm:flex-row lg:text-base/snug">
+          <ul className="flex flex-col items-center justify-center gap-y-[4px] px-2 text-center text-sm/snug font-medium uppercase tracking-wider text-brand-toffee sm:flex-row lg:text-base/snug">
             {services.map((service) => (
               <li
                 key={service}

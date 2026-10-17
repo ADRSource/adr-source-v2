@@ -20,11 +20,12 @@ export function Marquee({ text }: { text: string }) {
       <motion.p
         className="leading-0 absolute left-0 top-0 whitespace-nowrap text-center font-serif text-[max(128px,14.5vw)] leading-none"
         ref={textMeasureRef}
+        // Shift by one copy so the loop restarts on identical text instead of a blank strip.
         animate={{
-          x: [0, -width],
+          x: [0, -width / REPEAT_COUNT],
           transition: {
             x: {
-              duration: 300,
+              duration: 300 / REPEAT_COUNT,
               repeat: Infinity,
               repeatType: 'loop',
               ease: 'linear',
