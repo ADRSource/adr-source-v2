@@ -27,10 +27,13 @@ export async function BlockResources() {
             </h2>
             <AutoGrid count={3} itemMinWidth={350} gapX="24px" gapY="24px" className="relative z-20">
               {resources.map((r, i) => {
-                const { resource, resourceType } = r;
+                const { resource, type, resourceType } = r;
                 if (resource == null) return null;
 
-                return <ResourceCard key={i} resource={resource} type={resourceType?.type} />;
+                // Falls back to the ResourceType relation until it's removed.
+                return (
+                  <ResourceCard key={i} resource={resource} type={type ?? resourceType?.type} />
+                );
               })}
             </AutoGrid>
             <div className="flex justify-center">

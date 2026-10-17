@@ -16,6 +16,7 @@ export const GetResources = gql`
   query GetResources($first: Int = 12, $skip: Int = 0) {
     resources(first: $first, skip: $skip, orderBy: publishDate_DESC) {
       id
+      type
       resourceType {
         type
       }
@@ -57,6 +58,7 @@ export const GetInternalResourceBySlug = gql`
       }
       resource {
         publishDate
+        type
         resourceType {
           type
         }
