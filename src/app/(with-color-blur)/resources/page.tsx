@@ -61,10 +61,11 @@ export default async function Resources(props: {
           stagger
         >
           {resources.map((r, i) => {
-            const { resource, resourceType } = r;
+            const { resource, type, resourceType } = r;
             if (resource == null) return null;
 
-            return <ResourceCard key={i} resource={resource} type={resourceType?.type} />;
+            // Falls back to the ResourceType relation until it's removed.
+            return <ResourceCard key={i} resource={resource} type={type ?? resourceType?.type} />;
           })}
         </AutoGrid>
         {pageSize > 0 && (
