@@ -1,9 +1,13 @@
 import { Metadata } from 'next';
 import { draftMode } from 'next/headers';
-import { z } from 'zod';
 import { getCaseManagersList, getNeutralsList } from '~/api/member';
 import { getTeamPage } from '~/api/team';
 import { SearchInput } from '~/app/_components/search-input';
+import {
+  TeamSearchParamSchema,
+  memberMatchesFilters,
+  uniqueFocusAreas,
+} from '~/app/_components/team-search';
 import { AutoGrid } from '~/components/auto-grid/auto-grid';
 import { MemberCardItem } from '~/components/member-card-item';
 import { extractMemberFromNeutral } from '~/components/member-list-item/extract-member-neutral';
@@ -25,26 +29,29 @@ export async function generateMetadata(): Promise<Metadata> {
   }
 }
 
-// Cap the term so an overlong `?term=` can't be forwarded to the CMS verbatim.
-// Anything that fails to parse — too long, or repeated `?term=a&term=b`, which
-// arrives as an array — falls back to no search rather than an empty-string
-// term, which would otherwise render 'No Results for ""'.
-const TeamSearchParamSchema = z.object({
-  term: z.string().max(100).optional().catch(undefined),
-});
-
 export default async function Team(props: PageProps<'/team'>) {
   const searchParams = await props.searchParams;
-  const { term } = TeamSearchParamSchema.parse(searchParams);
+  const { term, role, focus } = TeamSearchParamSchema.parse(searchParams);
   const preview = (await draftMode()).isEnabled;
-  const [neutralsResult, caseManagersResult] = await Promise.all([
+  const [neutralsResult, caseManagersResult, allNeutralsResult] = await Promise.all([
     getNeutralsList(preview, term),
     getCaseManagersList(preview, term),
+    // Always the cached unfiltered list so the Areas of Focus options stay
+    // complete even when a name search has already narrowed the results.
+    getNeutralsList(preview),
   ]);
-  const { neutralList } = neutralsResult;
-  const { caseManagerList } = caseManagersResult;
-  const noResults =
-    neutralList?.neutrals.length === 0 && caseManagerList?.caseManagers.length === 0;
+  const neutrals =
+    neutralsResult.neutralList?.neutrals.filter((neutral) =>
+      memberMatchesFilters(neutral, { role, focus }),
+    ) ?? [];
+  const caseManagers =
+    caseManagersResult.caseManagerList?.caseManagers.filter((caseManager) =>
+      memberMatchesFilters(caseManager, { role, focus }),
+    ) ?? [];
+  const focusAreas = uniqueFocusAreas(allNeutralsResult.neutralList?.neutrals ?? []);
+  const noResults = neutrals.length === 0 && caseManagers.length === 0;
+  const hasQuery = term != null || role != null || (focus != null && focus.length > 0);
+  const resultsKey = `${term ?? ''}:${role ?? ''}:${(focus ?? []).join('\t')}`;
 
   return (
     <div className="isolate">
@@ -53,15 +60,15 @@ export default async function Team(props: PageProps<'/team'>) {
           <PageHeader className="text-center">Team</PageHeader>
 
           <div className="mx-auto w-full max-w-block scroll-mt-[var(--nav-spacing)] stack-y-6">
-            <SearchInput />
-            {noResults && term != null ? (
+            <SearchInput focusAreas={focusAreas} />
+            {noResults && hasQuery ? (
               <div className="w-full" role="status" aria-live="polite">
                 <p className={heading({ type: '6', className: 'text-center' })}>
-                  No Results for &quot;{term}&quot;
+                  {term != null ? `No Results for "${term}"` : 'No Results'}
                 </p>
               </div>
             ) : null}
-            {neutralList?.neutrals != null && neutralList.neutrals.length > 0 && (
+            {neutrals.length > 0 && (
               <div className="px-3 stack-y-4">
                 <h2 className={heading({ type: '5', className: 'normal-case tracking-tight' })}>
                   Neutrals
@@ -72,10 +79,10 @@ export default async function Team(props: PageProps<'/team'>) {
                   gapX="24px"
                   gapY="64px"
                   className="relative"
-                  stagger={term == null}
-                  key={term}
+                  stagger={!hasQuery}
+                  key={resultsKey}
                 >
-                  {neutralList.neutrals.map((neutral) => {
+                  {neutrals.map((neutral) => {
                     const member = extractMemberFromNeutral(neutral);
 
                     if (!member) return null;
@@ -86,7 +93,7 @@ export default async function Team(props: PageProps<'/team'>) {
               </div>
             )}
 
-            {caseManagerList?.caseManagers != null && caseManagerList.caseManagers.length > 0 && (
+            {caseManagers.length > 0 && (
               <div className="px-3 stack-y-4">
                 <h2 className={heading({ type: '5', className: 'normal-case tracking-tight' })}>
                   Case Managers
@@ -97,10 +104,10 @@ export default async function Team(props: PageProps<'/team'>) {
                   gapX="24px"
                   gapY="64px"
                   className="relative"
-                  stagger={term == null}
-                  key={term}
+                  stagger={!hasQuery}
+                  key={resultsKey}
                 >
-                  {caseManagerList.caseManagers.map((caseManager) => {
+                  {caseManagers.map((caseManager) => {
                     const { memberPage } = caseManager;
                     const { slug } = memberPage ?? {};
 

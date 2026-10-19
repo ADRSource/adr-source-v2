@@ -64,15 +64,15 @@ export function BlockHero() {
       >
         <div
           aria-hidden
-          className="pointer-events-none absolute bottom-0 left-0 z-10 aspect-square w-[50%] -translate-x-1/2 translate-y-[33%] rounded-full bg-brand-blue opacity-10 blur-[70px] will-change-transform"
+          className="pointer-events-none absolute bottom-0 left-0 z-10 aspect-square w-[50%] -translate-x-1/2 translate-y-[33%] bg-[radial-gradient(closest-side,theme(colors.brand.blue),transparent)] opacity-10"
         />
         <div
           aria-hidden
-          className="pointer-events-none absolute right-0 top-0 z-10 aspect-square w-[50%] -translate-y-[33%] translate-x-1/2 rounded-full bg-brand-red opacity-40 blur-[70px] will-change-transform"
+          className="pointer-events-none absolute right-0 top-0 z-10 aspect-square w-[50%] -translate-y-[33%] translate-x-1/2 bg-[radial-gradient(closest-side,theme(colors.brand.red),transparent)] opacity-40"
         />
         <div
           aria-hidden
-          className="pointer-events-none absolute bottom-0 right-1/2 z-10 aspect-square w-[50%] translate-x-1/2 translate-y-[66%] rounded-full bg-brand-green opacity-20 blur-[70px] will-change-transform"
+          className="pointer-events-none absolute bottom-0 right-1/2 z-10 aspect-square w-[50%] translate-x-1/2 translate-y-[66%] bg-[radial-gradient(closest-side,theme(colors.brand.green),transparent)] opacity-20"
         />
       </div>
       <div

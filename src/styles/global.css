@@ -23,6 +23,11 @@
     @apply font-sans text-base text-brand-copper;
   }
 
+  /* iOS Safari positions Drawer backdrop absolutely; body must be a containing block. */
+  body {
+    position: relative;
+  }
+
   *:focus:not(:focus-visible) {
     @apply !outline-none;
   }

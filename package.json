@@ -18,6 +18,7 @@
     "typecheck": "next typegen && pnpm run gen && tsc --noEmit"
   },
   "dependencies": {
+    "@base-ui/react": "^1.8.0",
     "@date-fns/tz": "^1.2.0",
     "@graphcms/rich-text-react-renderer": "^0.6.2",
     "@hygraph/utils": "^1.2.1",
